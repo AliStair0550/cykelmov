@@ -1,0 +1,34 @@
+---
+import { nav } from '../lib/site';
+
+export interface Props {
+  /** Mørk header (bruges på herre-/værkstedssider med mørk baggrund). */
+  moerk?: boolean;
+}
+const { moerk = false } = Astro.props;
+
+const sti = Astro.url.pathname.replace(/\/$/, '') || '/';
+const erAktiv = (match: string) => sti === match || sti.startsWith(match + '/');
+---
+
+<header
+  class="site-header"
+  style={moerk ? 'background:rgba(20,20,25,.9);border-bottom-color:rgba(245,243,237,.14)' : undefined}
+>
+  <div class="wrap header-inner" style={moerk ? 'color:var(--kridt)' : undefined}>
+    <a href="/" class="logo" aria-label="Cykelmov, til forsiden">
+      <svg class="hjul" style={moerk ? 'color:var(--signal)' : undefined} viewBox="0 0 34 22" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 16 16 12 7 21 7 16 16M12 7 8 16M21 7 26 16"/><path d="M12 7V4.4"/><path d="M10.5 4.2H13.6" stroke-width="1.8"/><path d="M21 7V4.4M18.6 4.4H23.2" stroke-width="1.4"/><g class="hjul-spin"><circle cx="8" cy="16" r="5"/><path d="M8 11.2v9.6M3.2 16h9.6M4.6 12.6l6.8 6.8M11.4 12.6l-6.8 6.8" stroke-width="1"/></g><g class="hjul-spin"><circle cx="26" cy="16" r="5"/><path d="M26 11.2v9.6M21.2 16h9.6M22.6 12.6l6.8 6.8M29.4 12.6l-6.8 6.8" stroke-width="1"/></g></g></svg>Cykel<em style={moerk ? 'color:var(--signal)' : undefined}>mov</em>
+    </a>
+    <nav class="nav-links" aria-label="Hovedmenu">
+      {nav.map((n) => (
+        <a href={n.href} class={erAktiv(n.match) ? 'aktiv' : undefined}>{n.label}</a>
+      ))}
+      <a href="/vaerksted#book" class="nav-cta">Book tid</a>
+    </nav>
+    <button class="burger" aria-label="Menu" aria-expanded="false">
+      <span style={moerk ? 'background:var(--kridt)' : undefined}></span>
+      <span style={moerk ? 'background:var(--kridt)' : undefined}></span>
+      <span style={moerk ? 'background:var(--kridt)' : undefined}></span>
+    </button>
+  </div>
+</header>

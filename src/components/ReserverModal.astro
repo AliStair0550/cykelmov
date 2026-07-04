@@ -1,0 +1,139 @@
+---
+import { tidValg } from '../lib/site';
+// Fælles reservations-/booking-modal. Ét eksemplar pr. side (via Layout).
+// Åbnes af knapper med [data-reserver] (se ReserverKnap.astro).
+---
+
+<div class="modal-bag" id="reserver-bag" role="dialog" aria-modal="true" aria-labelledby="reserver-titel" aria-hidden="true">
+  <div class="modal">
+    <div class="modal-hoved">
+      <h3 id="reserver-titel">Reservér & afhent</h3>
+      <button class="luk" type="button" aria-label="Luk">×</button>
+    </div>
+    <div class="modal-krop">
+      <div class="valgt-cykel" id="reserver-objekt" hidden>
+        <img id="reserver-objekt-foto" src="" alt="" hidden />
+        <div>
+          <b id="reserver-objekt-navn"></b>
+          <div class="p" id="reserver-objekt-pris" hidden></div>
+        </div>
+      </div>
+
+      <form id="reserver-form" action="/api/reserver" method="POST">
+        <input type="hidden" name="type" id="rf-type" value="cykel" />
+        <input type="hidden" name="objekt" id="rf-objekt" value="" />
+        <input type="hidden" name="reference" id="rf-reference" value="" />
+        <!-- Honeypot mod spam (Web3Forms botcheck) -->
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="felt">
+          <label for="rf-navn">Navn</label>
+          <input id="rf-navn" name="navn" type="text" required autocomplete="name" placeholder="Dit fulde navn" />
+        </div>
+        <div class="felt">
+          <label for="rf-tlf">Telefon</label>
+          <input id="rf-tlf" name="telefon" type="tel" required autocomplete="tel" placeholder="Så vi kan bekræfte" />
+        </div>
+        <div class="felt">
+          <label for="rf-email">E-mail</label>
+          <input id="rf-email" name="email" type="email" required autocomplete="email" placeholder="dig@eksempel.dk" />
+        </div>
+        <div class="felt">
+          <label for="rf-tid">Ønsket tid</label>
+          <select id="rf-tid" name="tid">
+            {tidValg.map((t) => <option value={t.value}>{t.label}</option>)}
+          </select>
+        </div>
+        <div class="felt">
+          <label for="rf-besked">Besked (valgfri)</label>
+          <textarea id="rf-besked" name="besked" rows="3" placeholder="Størrelse, farve eller spørgsmål ..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-cobalt" id="rf-submit">
+          Send reservation <span class="pil">→</span>
+        </button>
+        <p style="font-size:.8rem;color:var(--grå);text-align:center;margin-top:12px">
+          Ingen betaling nu. Vi vender tilbage inden for én arbejdsdag.
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const bag = document.getElementById('reserver-bag');
+  if (bag) {
+    const titel = document.getElementById('reserver-titel');
+    const objektBoks = document.getElementById('reserver-objekt');
+    const objektFoto = document.getElementById('reserver-objekt-foto') as HTMLImageElement | null;
+    const objektNavn = document.getElementById('reserver-objekt-navn');
+    const objektPris = document.getElementById('reserver-objekt-pris');
+    const fType = document.getElementById('rf-type') as HTMLInputElement | null;
+    const fObjekt = document.getElementById('rf-objekt') as HTMLInputElement | null;
+    const fRef = document.getElementById('rf-reference') as HTMLInputElement | null;
+    const submitKnap = document.getElementById('rf-submit');
+
+    function aaben() {
+      bag!.classList.add('aaben');
+      bag!.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function luk() {
+      bag!.classList.remove('aaben');
+      bag!.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // Åbn fra en hvilken som helst [data-reserver]-knap.
+    document.addEventListener('click', (ev) => {
+      const knap = (ev.target as HTMLElement)?.closest('[data-reserver]') as HTMLElement | null;
+      if (knap) {
+        ev.preventDefault();
+        const type = knap.dataset.reserver || 'cykel';
+        const navn = knap.dataset.navn || '';
+        const ref = knap.dataset.ref || '';
+        const pris = knap.dataset.pris || '';
+        const img = knap.dataset.img || '';
+
+        if (fType) fType.value = type;
+        if (fObjekt) fObjekt.value = navn;
+        if (fRef) fRef.value = ref;
+        if (titel) titel.textContent = type === 'ydelse' ? 'Book værkstedstid' : 'Reservér & afhent';
+        if (submitKnap) submitKnap.firstChild!.textContent = type === 'ydelse' ? 'Send booking ' : 'Send reservation ';
+
+        if (navn && objektNavn && objektBoks) {
+          objektNavn.textContent = navn;
+          objektBoks.hidden = false;
+          if (objektFoto) {
+            if (img) {
+              objektFoto.src = img;
+              objektFoto.alt = navn;
+              objektFoto.hidden = false;
+            } else {
+              objektFoto.hidden = true;
+            }
+          }
+          if (objektPris) {
+            if (pris) {
+              objektPris.textContent = pris;
+              objektPris.hidden = false;
+            } else {
+              objektPris.hidden = true;
+            }
+          }
+        } else if (objektBoks) {
+          objektBoks.hidden = true;
+        }
+        aaben();
+        return;
+      }
+      // Luk
+      const target = ev.target as HTMLElement;
+      if (target === bag || target.closest('.luk')) luk();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') luk();
+    });
+  }
+</script>

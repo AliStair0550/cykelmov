@@ -1,0 +1,48 @@
+---
+import type { Billede } from '../lib/types';
+export interface Props {
+  billeder: Billede[];
+}
+const { billeder } = Astro.props;
+const foerste = billeder[0];
+---
+
+<div class="galleri">
+  <div class="galleri-stort">
+    {foerste ? (
+      <img id="galleri-hoved" src={foerste.url} alt={foerste.alt} width="1100" height="950" />
+    ) : (
+      <img id="galleri-hoved" src="/assets/butik-hjul.jpg" alt="Cykel" />
+    )}
+  </div>
+  {billeder.length > 1 && (
+    <div class="galleri-thumbs">
+      {billeder.map((b, i) => (
+        <button
+          class={`galleri-thumb${i === 0 ? ' aktiv' : ''}`}
+          type="button"
+          data-src={b.url}
+          data-alt={b.alt}
+          aria-label={`Vis billede ${i + 1}`}
+        >
+          <img src={b.thumbUrl} alt="" loading="lazy" />
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+
+<script>
+  const hoved = document.getElementById('galleri-hoved') as HTMLImageElement | null;
+  const thumbs = document.querySelectorAll<HTMLButtonElement>('.galleri-thumb');
+  thumbs.forEach((t) => {
+    t.addEventListener('click', () => {
+      if (hoved) {
+        hoved.src = t.dataset.src || hoved.src;
+        hoved.alt = t.dataset.alt || '';
+      }
+      thumbs.forEach((x) => x.classList.remove('aktiv'));
+      t.classList.add('aktiv');
+    });
+  });
+</script>

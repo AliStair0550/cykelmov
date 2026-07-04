@@ -1,0 +1,145 @@
+---
+import { typeLabel } from '../lib/site';
+export interface Props {
+  typer: string[];
+  brands: string[];
+}
+const { typer, brands } = Astro.props;
+---
+
+<!-- Mobil: knap der åbner filter-panelet -->
+<div class="filter-baand">
+  <button class="btn btn-cobalt" id="filter-aabn" type="button" style="padding:12px 22px">
+    Filtre
+  </button>
+  <span class="antal-viste" id="antal-viste-mobil"></span>
+</div>
+
+<aside class="filtre" id="filtre" aria-label="Filtrér cykler">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+    <h3>Filtre</h3>
+    <button class="filter-nulstil" id="filter-nulstil" type="button">Nulstil</button>
+  </div>
+
+  {typer.length > 0 && (
+    <div class="filter-gruppe">
+      <label>Type</label>
+      <div class="filter-valg">
+        {typer.map((t) => (
+          <label>
+            <input type="checkbox" data-filter="type" value={t} />
+            {typeLabel[t] ?? t}
+          </label>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {brands.length > 0 && (
+    <div class="filter-gruppe">
+      <label>Brand</label>
+      <div class="filter-valg">
+        {brands.map((b) => (
+          <label>
+            <input type="checkbox" data-filter="brand" value={b} />
+            {b}
+          </label>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <div class="filter-gruppe">
+    <label>Pris (kr.)</label>
+    <div class="pris-felter">
+      <input type="number" id="pris-min" placeholder="Fra" min="0" inputmode="numeric" />
+      <span>–</span>
+      <input type="number" id="pris-max" placeholder="Til" min="0" inputmode="numeric" />
+    </div>
+  </div>
+
+  <div class="filter-gruppe">
+    <div class="filter-valg">
+      <label><input type="checkbox" id="kun-lager" /> Kun på lager</label>
+    </div>
+  </div>
+
+  <div class="filter-bund">
+    <button class="btn btn-cobalt" id="filter-anvend" type="button">Vis resultater</button>
+  </div>
+</aside>
+
+<script>
+  const grid = document.getElementById('produkt-grid');
+  const antalEl = document.getElementById('antal-viste');
+  const antalMobil = document.getElementById('antal-viste-mobil');
+  const ingen = document.getElementById('ingen-resultater');
+  const panel = document.getElementById('filtre');
+
+  if (grid) {
+    const kort = Array.from(grid.querySelectorAll<HTMLElement>('.produkt'));
+    const ialt = kort.length;
+
+    const typeInputs = () =>
+      Array.from(document.querySelectorAll<HTMLInputElement>('input[data-filter="type"]:checked')).map((i) => i.value);
+    const brandInputs = () =>
+      Array.from(document.querySelectorAll<HTMLInputElement>('input[data-filter="brand"]:checked')).map((i) => i.value);
+    const prisMin = () => document.getElementById('pris-min') as HTMLInputElement | null;
+    const prisMax = () => document.getElementById('pris-max') as HTMLInputElement | null;
+    const kunLager = () => (document.getElementById('kun-lager') as HTMLInputElement | null)?.checked;
+
+    function filtrer() {
+      const typer = typeInputs();
+      const brands = brandInputs();
+      const min = parseInt(prisMin()?.value || '', 10);
+      const max = parseInt(prisMax()?.value || '', 10);
+      const lager = kunLager();
+      let vist = 0;
+
+      kort.forEach((k) => {
+        const type = k.dataset.type || '';
+        const brand = k.dataset.brand || '';
+        const pris = parseInt(k.dataset.pris || '0', 10);
+        const paaLager = k.dataset.lager === '1';
+
+        const okType = typer.length === 0 || typer.includes(type);
+        const okBrand = brands.length === 0 || brands.includes(brand);
+        const okMin = isNaN(min) || pris >= min;
+        const okMax = isNaN(max) || pris <= max;
+        const okLager = !lager || paaLager;
+
+        const vis = okType && okBrand && okMin && okMax && okLager;
+        k.classList.toggle('skjult', !vis);
+        if (vis) vist++;
+      });
+
+      const tekst = `${vist} af ${ialt} cykler`;
+      if (antalEl) antalEl.textContent = tekst;
+      if (antalMobil) antalMobil.textContent = tekst;
+      if (ingen) ingen.hidden = vist !== 0;
+    }
+
+    // Lyt på alle filterændringer
+    document.querySelectorAll('input[data-filter], #pris-min, #pris-max, #kun-lager').forEach((el) => {
+      el.addEventListener('input', filtrer);
+      el.addEventListener('change', filtrer);
+    });
+
+    function nulstil() {
+      document.querySelectorAll<HTMLInputElement>('#filtre input[type="checkbox"]').forEach((i) => (i.checked = false));
+      const mi = prisMin();
+      const ma = prisMax();
+      if (mi) mi.value = '';
+      if (ma) ma.value = '';
+      filtrer();
+    }
+    document.getElementById('filter-nulstil')?.addEventListener('click', nulstil);
+    document.getElementById('ingen-nulstil')?.addEventListener('click', nulstil);
+
+    // Mobil: åbn/luk panel
+    document.getElementById('filter-aabn')?.addEventListener('click', () => panel?.classList.add('aaben'));
+    document.getElementById('filter-anvend')?.addEventListener('click', () => panel?.classList.remove('aaben'));
+
+    filtrer();
+  }
+</script>

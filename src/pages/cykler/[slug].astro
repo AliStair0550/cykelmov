@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Billedgalleri from '../../components/Billedgalleri.astro';
+import ReserverKnap from '../../components/ReserverKnap.astro';
+import PortableText from '../../components/PortableText.astro';
+import CykelKort from '../../components/CykelKort.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { hentCykler, hentRelaterede } from '../../lib/data';
+import { kr, rabatProcent } from '../../lib/format';
+import { koenLabel, statusLabel, typeLabel } from '../../lib/site';
+import { produktSchema, absUrl } from '../../lib/schema';
+import type { Cykel } from '../../lib/types';
+
+export async function getStaticPaths() {
+  const cykler = await hentCykler();
+  return cykler.map((cykel) => ({ params: { slug: cykel.slug }, props: { cykel } }));
+}
+
+interface Props {
+  cykel: Cykel;
+}
+const { cykel } = Astro.props;
+
+const relaterede = await hentRelaterede(cykel);
+const rabat = rabatProcent(cykel.pris, cykel.foerpris);
+const spar = cykel.foerpris ? cykel.foerpris - cykel.pris : 0;
+const udsolgt = cykel.status === 'udsolgt';
+
+// Body-klasse så relaterede kort matcher køns-universet.
+const bodyKlasse = cykel.koen === 'dame' ? 'dame-side' : cykel.koen === 'herre' ? 'herre-side' : '';
+const knapKlasse =
+  cykel.koen === 'dame' ? 'btn btn-hindbaer' : cykel.koen === 'herre' ? 'btn btn-signal' : 'btn btn-cobalt';
+
+const sideUrl = new URL(`/cykler/${cykel.slug}`, Astro.site ?? undefined).href;
+const schema = produktSchema(cykel, sideUrl);
+
+// Specifikationsrækker
+const spec = cykel.specifikationer;
+const specRaekker: Array<[string, string]> = [
+  ['Brand', cykel.brand],
+  ['Type', typeLabel[cykel.type] ?? cykel.type],
+];
+if (spec?.gear) specRaekker.push(['Gear', spec.gear]);
+if (spec?.stoerrelser?.length) specRaekker.push(['Størrelser', spec.stoerrelser.join(', ')]);
+if (spec?.vaegt) specRaekker.push(['Vægt', `${spec.vaegt} kg`]);
+if (spec?.farver?.length) specRaekker.push(['Farver', spec.farver.join(', ')]);
+specRaekker.push(['Status', statusLabel[cykel.status]]);
+
+const ogBillede = cykel.billeder[0] ? absUrl(cykel.billeder[0].url) : '/assets/hero-butik.jpg';
+---
+
+<Layout
+  title={cykel.seoTitel ?? `${cykel.titel}`}
+  description={cykel.seoBeskrivelse ?? cykel.kortBeskrivelse}
+  ogBillede={ogBillede}
+  bodyKlasse={bodyKlasse}
+>
+  <StructuredData slot="head" data={schema} />
+
+  <section class="produkt-side">
+    <div class="wrap">
+      <nav class="broedkrumme" aria-label="Sti">
+        <a href="/">Forsiden</a> ·
+        <a href="/cykler">Cykler</a> ·
+        <a href={`/cykler/${cykel.koen}`}>{koenLabel[cykel.koen]}</a> ·
+        <span>{cykel.titel}</span>
+      </nav>
+
+      <div class="produkt-top">
+        <div>
+          <Billedgalleri billeder={cykel.billeder} />
+        </div>
+
+        <div class="produkt-hoved">
+          <span class={`status-badge status-${cykel.status}`}>{statusLabel[cykel.status]}</span>
+          <h1>{cykel.titel}</h1>
+          <p class="model">{cykel.brand} · {typeLabel[cykel.type] ?? cykel.type}</p>
+
+          <div class="produkt-pris-blok">
+            <span class="pris">{kr(cykel.pris)}</span>
+            {cykel.foerpris && <span class="foer-pris">{kr(cykel.foerpris)}</span>}
+            {rabat && <span class="spar">Spar {spar} kr. (-{rabat}%)</span>}
+          </div>
+
+          <p class="produkt-kort-besk">{cykel.kortBeskrivelse}</p>
+
+          <div class="produkt-handling">
+            <ReserverKnap
+              type="cykel"
+              navn={cykel.titel}
+              reference={cykel._id}
+              pris={kr(cykel.pris)}
+              billede={cykel.billeder[0]?.url ?? ''}
+              klasse={knapKlasse}
+              deaktiveret={udsolgt}
+            />
+            <a href={`tel:+4531727888`} class="btn btn-ghost">Ring og spørg</a>
+          </div>
+
+          <h2 class="blok-titel">Specifikationer</h2>
+          <table class="spec-tabel">
+            <tbody>
+              {specRaekker.map(([navn, vaerdi]) => (
+                <tr>
+                  <th scope="row">{navn}</th>
+                  <td>{vaerdi}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {cykel.langBeskrivelse && cykel.langBeskrivelse.length > 0 && (
+        <div style="margin-top:64px">
+          <h2 class="blok-titel">Om cyklen</h2>
+          <PortableText value={cykel.langBeskrivelse} />
+        </div>
+      )}
+    </div>
+  </section>
+
+  {relaterede.length > 0 && (
+    <section style="background:var(--kridt-2)">
+      <div class="wrap">
+        <div class="sektion-hoved reveal">
+          <div><h2 class="display-l">Måske også</h2></div>
+          <a href={`/cykler/${cykel.koen}`} class="btn btn-ghost">
+            Se alle {koenLabel[cykel.koen].toLowerCase()}cykler <span class="pil">→</span>
+          </a>
+        </div>
+        <div class="produkt-grid">
+          {relaterede.map((c) => <CykelKort cykel={c} />)}
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>

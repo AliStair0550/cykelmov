@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cykelmov.dk/sitemap-index.xml

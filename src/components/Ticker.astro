@@ -1,0 +1,15 @@
+---
+export interface Props {
+  items: string[];
+  gul?: boolean;
+}
+const { items, gul = false } = Astro.props;
+// Dubler listen, så animationen looper sømløst (translateX(-50%)).
+const dobbelt = [...items, ...items];
+---
+
+<div class={`ticker${gul ? ' gul' : ''}`} aria-hidden="true">
+  <div class="ticker-track">
+    {dobbelt.map((t) => <span>{t}</span>)}
+  </div>
+</div>

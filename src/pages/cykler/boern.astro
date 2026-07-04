@@ -1,0 +1,78 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Ticker from '../../components/Ticker.astro';
+import KatalogSektion from '../../components/KatalogSektion.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { hentCyklerEfterKoen } from '../../lib/data';
+import { itemListSchema } from '../../lib/schema';
+
+const cykler = await hentCyklerEfterKoen('boern');
+const schema = itemListSchema(cykler, 'Børnecykler hos Cykelmov');
+---
+
+<Layout
+  title="Børnecykler København"
+  description="Børnecykler hos Cykelmov på Nørrebro. Solide cykler i 20 og 24 tommer til skolevejen, med fodbremse, skærme og støttehjul. Reservér online, afhent i dag."
+>
+  <StructuredData slot="head" data={schema} />
+
+  <section class="univers-hero" style="padding:0;color:#fff;background:var(--cobalt)">
+    <div class="bg" style="background-image:url('/assets/butik-cykelvaeg.jpg');background-position:center;opacity:.42"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,62,227,.55),rgba(20,20,25,.82))"></div>
+    <div class="wrap inner" style="position:relative;z-index:2">
+      <h1 class="display-xl">Klar til<br><span style="color:var(--signal)">skolevejen.</span></h1>
+      <p class="lead" style="color:rgba(255,255,255,.92);margin-top:18px">
+        Solide børnecykler i 20 og 24 tommer. Lav standover-højde, fodbremse og skærme, så de kan
+        lære og køre trygt, uanset vejr.
+      </p>
+    </div>
+  </section>
+
+  <Ticker
+    items={[
+      'Støttehjul med i købet',
+      '20 & 24 tommer på lager',
+      'Justeres, så cyklen vokser med barnet',
+      'Reservér nu, afhent i dag',
+    ]}
+  />
+
+  <section>
+    <div class="wrap" style="margin-bottom:8px">
+      <div class="sektion-hoved reveal" style="margin-bottom:32px">
+        <div><h2 class="display-l">Vores børnecykler</h2></div>
+        <p class="lead" style="max-width:40ch">
+          Vi indstiller sadel og styr efter barnet i butikken, inden I kører. Reservér uden
+          betaling.
+        </p>
+      </div>
+    </div>
+    <KatalogSektion cykler={cykler} />
+  </section>
+
+  <section class="usp-baand">
+    <div class="wrap">
+      <div class="usp-grid">
+        <div class="usp reveal"><div class="tal">20-24"</div><h3>Rette hjulstørrelse</h3><p>Vi finder størrelsen, der passer til barnets højde og alder.</p></div>
+        <div class="usp reveal"><div class="tal">Fod</div><h3>Fodbremse</h3><p>Nem og sikker opbremsning for små ben, plus håndbremse.</p></div>
+        <div class="usp reveal"><div class="tal">Vokser</div><h3>Med barnet</h3><p>Sadel og styr justeres i højden, så cyklen holder et par år.</p></div>
+        <div class="usp reveal"><div class="tal">Klar</div><h3>Til gaden</h3><p>Skærme, kædeskærm og refleks efter loven, monteret fra start.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="seo-tekst">
+    <div class="wrap">
+      <h2>Børnecykler i København til skole og fritid</h2>
+      <p>
+        Cykelmov på Nørrebrogade 74 fører børnecykler i 20 og 24 tommer med fodbremse, fulde skærme
+        og refleks efter dansk lov. Vi indstiller sadel og styr efter barnet, inden I forlader
+        butikken, så cyklen sidder rigtigt fra første tur.
+      </p>
+      <p>
+        Reservér børnecyklen online og afhent den samme dag i vores butik på Nørrebro i 2200
+        København N. Støttehjul følger med og kan tages af, når barnet er klar.
+      </p>
+    </div>
+  </section>
+</Layout>

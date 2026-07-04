@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Ticker from '../../components/Ticker.astro';
+import KatalogSektion from '../../components/KatalogSektion.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { hentCykler } from '../../lib/data';
+import { itemListSchema } from '../../lib/schema';
+
+const cykler = await hentCykler();
+const schema = itemListSchema(cykler, 'Cykler hos Cykelmov');
+---
+
+<Layout
+  title="Alle cykler"
+  description="Se alle cykler hos Cykelmov på Nørrebro. Bycykler, mountainbikes, elcykler og mere til dame, herre og børn. Filtrér på type, brand og pris. Reservér online."
+>
+  <StructuredData slot="head" data={schema} />
+
+  <section class="side-hero" style="padding:110px 0 70px">
+    <div class="wrap">
+      <span class="eyebrow">Butikken</span>
+      <h1 class="display-xl" style="margin-top:14px">Alle cykler</h1>
+      <p class="lead">
+        Hele lageret ét sted. Filtrér på type, brand og pris, og find den, der passer til dig og
+        din vej gennem byen.
+      </p>
+    </div>
+  </section>
+
+  <Ticker
+    items={[
+      'Reservér online, afhent i dag',
+      '2 års garanti',
+      'Gratis serviceaftale ved køb',
+      'Samlet & køreklar fra butikken',
+    ]}
+  />
+
+  <section>
+    <KatalogSektion cykler={cykler} />
+  </section>
+</Layout>

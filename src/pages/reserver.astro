@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Tak for din reservation"
+  description="Tak for din henvendelse til Cykelmov. Vi vender tilbage inden for én arbejdsdag."
+  medModal={false}
+>
+  <section class="tak-side">
+    <div class="tak-kort reveal synlig">
+      <div class="flueben">✓</div>
+      <h1 id="tak-titel">Den holder klar til dig</h1>
+      <p id="tak-tekst">
+        Tak. Vi har modtaget din reservation og vender tilbage inden for én arbejdsdag for at
+        bekræfte tid og detaljer.
+      </p>
+      <p style="color:var(--grå);font-size:.95rem">
+        Har du travlt, er du altid velkommen til at ringe på
+        <a href="tel:+4531727888" style="color:var(--cobalt);text-decoration:underline">31 72 78 88</a>.
+      </p>
+      <div class="knapper">
+        <a href="/cykler" class="btn btn-cobalt">Se flere cykler <span class="pil">→</span></a>
+        <a href="/" class="btn btn-ghost">Til forsiden</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Uden ?tak=1 (direkte besøg) vises en mere generel invitation.
+    if (!new URLSearchParams(location.search).has('tak')) {
+      const t = document.getElementById('tak-titel');
+      const p = document.getElementById('tak-tekst');
+      if (t) t.textContent = 'Reservér din cykel online';
+      if (p)
+        p.textContent =
+          'Find din cykel, tryk Reservér, og udfyld dine oplysninger. Så står den klar med dit navn på, og du betaler først i butikken.';
+    }
+  </script>
+</Layout>

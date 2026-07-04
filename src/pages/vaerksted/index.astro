@@ -1,0 +1,168 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Ticker from '../../components/Ticker.astro';
+import YdelseKort from '../../components/YdelseKort.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { hentYdelser } from '../../lib/data';
+
+const ydelser = await hentYdelser();
+
+const kategoriLabel: Record<string, string> = {
+  service: 'Service',
+  reparation: 'Reparation',
+  daek: 'Dæk og slanger',
+  elcykel: 'Elcykel-service',
+};
+const kategoriRaekke = ['service', 'reparation', 'daek', 'elcykel'];
+const grupper = kategoriRaekke
+  .map((kat) => ({ kat, label: kategoriLabel[kat], ydelser: ydelser.filter((y) => y.kategori === kat) }))
+  .filter((g) => g.ydelser.length > 0);
+
+const faq = [
+  {
+    sp: 'Hvad koster et slangeskift?',
+    svar:
+      '249 kr. inklusive ny slange og montering. Kan slangen lappes, klarer vi det for 99 kr., som regel mens du venter.',
+  },
+  {
+    sp: 'Kan I lave min cykel samme dag?',
+    svar:
+      'Ja, i langt de fleste tilfælde. Kommer du inden kl. 14 på hverdage, er cyklen typisk klar samme eftermiddag. Lapning og mindre justeringer klares ofte, mens du venter.',
+  },
+  {
+    sp: 'Reparerer I elcykler?',
+    svar:
+      'Ja. Vi servicerer alle cykelmærker, også elcykler. Et fuldt elcykel-eftersyn med motor-, batteri- og elektroniktjek koster fra 699 kr.',
+  },
+  {
+    sp: 'Skal jeg booke tid, eller kan jeg bare komme forbi?',
+    svar:
+      'Du er altid velkommen til at trille direkte ind fra gaden. Men booker du online, springer du køen over og har en mekaniker klar på dit tidspunkt.',
+  },
+  {
+    sp: 'Hvad hvis reparationen bliver dyrere end prislisten?',
+    svar:
+      'Så ringer vi, før vi gør noget. Prislisten dækker arbejdet; skal der nye dele på, får du prisen først og bestemmer selv.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.sp,
+    acceptedAnswer: { '@type': 'Answer', text: f.svar },
+  })),
+};
+---
+
+<Layout
+  title="Cykelværksted Nørrebro"
+  description="Cykelværksted på Nørrebro med faste priser: serviceeftersyn, slangeskift, gearjustering og elcykel-service. Book tid online, ofte samme dag. Alle mærker, også elcykler."
+  ogBillede="/assets/vaerksted-vaerktoej.jpg"
+  headerMoerk
+>
+  <StructuredData slot="head" data={faqSchema} />
+
+  <section class="univers-hero" style="padding:0;color:#fff;background:var(--asfalt)">
+    <div class="bg" style="background-image:url('/assets/vaerksted-vaerktoej.jpg');background-position:center"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,25,.4),rgba(20,20,25,.85))"></div>
+    <div class="wrap inner" style="position:relative;z-index:2">
+      <h1 class="display-xl">Fast pris.<br><span style="color:var(--signal)">Færdig i dag.</span></h1>
+      <p class="lead" style="color:rgba(255,255,255,.92);margin:18px 0 30px">
+        Ingen "vi ringer med et tilbud". Prisen står herunder, og lapning klarer vi, mens du drikker
+        en kaffe hos naboen. Kom inden kl. 14, så er cyklen typisk klar samme dag.
+      </p>
+      <a href="#book" class="btn btn-signal">Se priser & book tid <span class="pil">↓</span></a>
+    </div>
+  </section>
+
+  <Ticker
+    items={[
+      'Lapning 99 kr., mens du venter',
+      'Book online & spring køen over',
+      'Alle mærker, også elcykler',
+      'Kom inden kl. 14 = klar samme dag',
+    ]}
+  />
+
+  <section id="book">
+    <div class="wrap">
+      <div class="sektion-hoved reveal">
+        <div><h2 class="display-l">Prisliste, sort på hvidt</h2></div>
+        <p class="lead" style="max-width:42ch">
+          Vælg din reparation, book et tidspunkt, og kør forbi. Du betaler først, når arbejdet er
+          lavet.
+        </p>
+      </div>
+
+      {grupper.map((g) => (
+        <div class="ydelse-gruppe">
+          <div class="kat-titel reveal">
+            <h3>{g.label}</h3>
+            <span>{g.ydelser.length} {g.ydelser.length === 1 ? 'ydelse' : 'ydelser'}</span>
+          </div>
+          <div class="ydelse-grid">
+            {g.ydelser.map((y) => <YdelseKort ydelse={y} />)}
+          </div>
+        </div>
+      ))}
+
+      <p style="margin-top:22px;color:var(--grå);font-size:.92rem">
+        Reservedele afregnes til dagspris, du får altid prisen at vide, <b>før</b> vi skruer. Vask og
+        smøring af alle cykler tilbydes også i butikken.
+      </p>
+    </div>
+  </section>
+
+  <section class="tryghed">
+    <div class="wrap tryghed-grid">
+      <div class="tryghed-foto reveal">
+        <img src="/assets/vaerksted-daek.jpg" alt="Nye cykeldæk på lager i Cykelmovs værksted på Nørrebro" loading="lazy" />
+      </div>
+      <div class="reveal">
+        <h2 class="display-l" style="margin-bottom:20px">Vi lever af,<br>at den kører</h2>
+        <p class="lead" style="margin-bottom:24px">
+          Dæk, slanger og reservedele ligger på hylden, vi skal ikke bestille hjem først. Det er
+          derfor, vi kan love samme dags-service på det meste.
+        </p>
+        <ul class="tjek-liste">
+          <li><span class="tjek">✓</span><span><b>Erfarne mekanikere</b> Vi har skruet på Nørrebros cykler siden 2021, alle mærker, alle årgange.</span></li>
+          <li><span class="tjek">✓</span><span><b>Lånecykel mens du venter</b> Skal cyklen blive natten over, kan du låne en af vores.</span></li>
+          <li><span class="tjek">✓</span><span><b>Ingen skjulte tillæg</b> Fast pris på arbejdet. Dele til dagspris, godkendt af dig først.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="background:var(--kridt-2)">
+    <div class="wrap" style="max-width:860px">
+      <div class="sektion-hoved reveal"><div><h2 class="display-l">FAQ</h2></div></div>
+      <div class="faq reveal">
+        {faq.map((f) => (
+          <details>
+            <summary>{f.sp}</summary>
+            <div class="svar">{f.svar}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="seo-tekst">
+    <div class="wrap">
+      <h2>Cykelværksted på Nørrebro, reparation af alle cykler</h2>
+      <p>
+        Cykelmovs værksted på Nørrebrogade 74 i 2200 København N reparerer alle typer cykler:
+        bycykler, damecykler, herrecykler, børnecykler og elcykler. Vi tilbyder lapning,
+        slangeskift, gearjustering, bremsejustering, hjulopretning, serviceeftersyn og stor service,
+        alt sammen til faste, gennemsigtige priser, som du kan se, før du booker.
+      </p>
+      <p>
+        Book en tid til cykelreparation online og spring køen over, eller kig forbi butikken. Hurtig
+        og billig lapning mens du venter, og de fleste reparationer er klar samme dag.
+      </p>
+    </div>
+  </section>
+</Layout>

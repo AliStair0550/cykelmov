@@ -1,0 +1,35 @@
+// ============================================================
+// Sanity-klient. Bruges ved build-time til at hente cykler og ydelser.
+// Hvis PUBLIC_SANITY_PROJECT_ID ikke er sat, kører sitet på demo-data
+// (se data.ts), så det aldrig står tomt før Sanity er koblet på.
+// ============================================================
+import { createClient, type SanityClient } from '@sanity/client';
+import imageUrlBuilder from '@sanity/image-url';
+
+/** Et Sanity-image-objekt (asset-reference med valgfri alt-tekst). */
+export type SanityImage = { _type?: string; asset?: { _ref?: string }; alt?: string } & Record<string, unknown>;
+
+export const projectId = (import.meta.env.PUBLIC_SANITY_PROJECT_ID as string) || '';
+export const dataset = (import.meta.env.PUBLIC_SANITY_DATASET as string) || 'production';
+export const apiVersion = (import.meta.env.PUBLIC_SANITY_API_VERSION as string) || '2024-01-01';
+
+/** Er der overhovedet et Sanity-projekt at hente fra? */
+export const sanityKonfigureret = projectId.length > 0;
+
+export const sanityClient: SanityClient | null = sanityKonfigureret
+  ? createClient({
+      projectId,
+      dataset,
+      apiVersion,
+      useCdn: true,
+      perspective: 'published',
+    })
+  : null;
+
+const builder = sanityKonfigureret ? imageUrlBuilder({ projectId, dataset }) : null;
+
+/** Byg en billed-URL fra et Sanity-image. Returnerer null hvis ikke konfigureret. */
+export function urlFor(kilde: SanityImage | undefined | null) {
+  if (!builder || !kilde) return null;
+  return builder.image(kilde as never);
+}

@@ -1,0 +1,57 @@
+---
+import type { Cykel } from '../lib/types';
+import { kr, rabatProcent } from '../lib/format';
+import { statusLabel, typeLabel } from '../lib/site';
+
+export interface Props {
+  cykel: Cykel;
+}
+const { cykel } = Astro.props;
+
+const foto = cykel.billeder[0];
+const rabat = rabatProcent(cykel.pris, cykel.foerpris);
+const spar = cykel.foerpris ? cykel.foerpris - cykel.pris : 0;
+const href = `/cykler/${cykel.slug}`;
+
+// Op til tre specs-chips: geartype, cykeltype, første størrelse.
+const specs: string[] = [];
+if (cykel.specifikationer?.gear) specs.push(cykel.specifikationer.gear);
+specs.push(typeLabel[cykel.type] ?? cykel.type);
+if (cykel.specifikationer?.stoerrelser?.length) specs.push(cykel.specifikationer.stoerrelser[0]);
+
+const paaLager = cykel.status === 'paa_lager';
+const lagerKlasse =
+  cykel.status === 'kommer_snart' ? ' kommer' : cykel.status === 'udsolgt' ? ' udsolgt' : '';
+---
+
+<article
+  class="produkt reveal"
+  data-type={cykel.type}
+  data-brand={cykel.brand}
+  data-pris={cykel.pris}
+  data-lager={paaLager ? '1' : '0'}
+>
+  <a href={href} class="produkt-foto-link" aria-label={cykel.titel}>
+    <div class="produkt-foto">
+      {foto ? (
+        <img src={foto.url} alt={foto.alt} loading="lazy" width="1100" height="950" />
+      ) : (
+        <img src="/assets/butik-hjul.jpg" alt={cykel.titel} loading="lazy" />
+      )}
+      {rabat && <span class="rabat-tag">-{rabat}%</span>}
+      <span class={`lager-tag${lagerKlasse}`}>{statusLabel[cykel.status]}</span>
+    </div>
+  </a>
+  <div class="produkt-info">
+    <a href={href}><h3>{cykel.titel}</h3></a>
+    <div class="produkt-specs">
+      {specs.map((s) => <span class="spec">{s}</span>)}
+    </div>
+    <div class="pris-raekke">
+      <span class="pris">{kr(cykel.pris)}</span>
+      {cykel.foerpris && <span class="foer-pris">{kr(cykel.foerpris)}</span>}
+      {spar > 0 && <span class="spar">Spar {spar}</span>}
+    </div>
+    <a href={href} class="btn btn-cobalt">Se cykel <span class="pil">→</span></a>
+  </div>
+</article>

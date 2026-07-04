@@ -1,0 +1,33 @@
+---
+import Filtre from './Filtre.astro';
+import CykelKort from './CykelKort.astro';
+import { unikkeBrands, unikkeTyper } from '../lib/data';
+import type { Cykel } from '../lib/types';
+
+export interface Props {
+  cykler: Cykel[];
+  /** Lys tekstfarve til antal-tælleren (på mørk baggrund, fx herre-universet). */
+  lysTekst?: boolean;
+}
+const { cykler, lysTekst = false } = Astro.props;
+const typer = unikkeTyper(cykler);
+const brands = unikkeBrands(cykler);
+---
+
+<div class="wrap">
+  <div class="katalog">
+    <Filtre typer={typer} brands={brands} />
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+        <span class="antal-viste" id="antal-viste" style={lysTekst ? 'color:rgba(245,243,237,.72)' : undefined}></span>
+      </div>
+      <div class="produkt-grid" id="produkt-grid">
+        {cykler.map((c) => <CykelKort cykel={c} />)}
+      </div>
+      <div class="ingen-resultater" id="ingen-resultater" hidden>
+        <p style="margin-bottom:12px">Ingen cykler matcher dine filtre.</p>
+        <button class="filter-nulstil" id="ingen-nulstil" type="button">Nulstil filtre</button>
+      </div>
+    </div>
+  </div>
+</div>

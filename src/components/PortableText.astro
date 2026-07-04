@@ -1,0 +1,82 @@
+---
+// Minimal Portable Text-renderer. Dækker afsnit, overskrifter (h3/h4),
+// citat, punktlister og nummererede lister samt strong/em/links.
+// Nok til produkt- og ydelsesbeskrivelser.
+import type { PortableBlock } from '../lib/types';
+
+export interface Props {
+  value: PortableBlock[] | null | undefined;
+}
+const { value } = Astro.props;
+const blokke = Array.isArray(value) ? value : [];
+
+function esc(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function inline(blok: PortableBlock): string {
+  const markDefs = blok.markDefs ?? [];
+  return (blok.children ?? [])
+    .map((child) => {
+      let html = esc(child.text ?? '');
+      for (const mark of child.marks ?? []) {
+        const def = markDefs.find((d) => d._key === mark);
+        if (def && def._type === 'link' && def.href) {
+          html = `<a href="${esc(def.href)}" rel="noopener">${html}</a>`;
+        } else if (mark === 'strong') {
+          html = `<strong>${html}</strong>`;
+        } else if (mark === 'em') {
+          html = `<em>${html}</em>`;
+        }
+      }
+      return html;
+    })
+    .join('');
+}
+
+// Gruppér blokke: løbende listItem-blokke samles i én liste.
+type Node =
+  | { slags: 'blok'; blok: PortableBlock }
+  | { slags: 'liste'; ordnet: boolean; punkter: PortableBlock[] };
+
+const noder: Node[] = [];
+for (const blok of blokke) {
+  if (blok._type !== 'block') continue;
+  if (blok.listItem) {
+    const ordnet = blok.listItem === 'number';
+    const sidste = noder[noder.length - 1];
+    if (sidste && sidste.slags === 'liste' && sidste.ordnet === ordnet) {
+      sidste.punkter.push(blok);
+    } else {
+      noder.push({ slags: 'liste', ordnet, punkter: [blok] });
+    }
+  } else {
+    noder.push({ slags: 'blok', blok });
+  }
+}
+---
+<div class="rig-tekst">
+  {noder.map((node) =>
+    node.slags === 'liste' ? (
+      node.ordnet ? (
+        <ol>{node.punkter.map((p) => <li set:html={inline(p)} />)}</ol>
+      ) : (
+        <ul>{node.punkter.map((p) => <li set:html={inline(p)} />)}</ul>
+      )
+    ) : node.blok.style === 'h2' ? (
+      <h3 set:html={inline(node.blok)} />
+    ) : node.blok.style === 'h3' ? (
+      <h3 set:html={inline(node.blok)} />
+    ) : node.blok.style === 'h4' ? (
+      <h4 set:html={inline(node.blok)} />
+    ) : node.blok.style === 'blockquote' ? (
+      <blockquote set:html={inline(node.blok)} />
+    ) : (
+      <p set:html={inline(node.blok)} />
+    ),
+  )}
+</div>

@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Ticker from '../../components/Ticker.astro';
+import KatalogSektion from '../../components/KatalogSektion.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { hentCyklerEfterKoen } from '../../lib/data';
+import { itemListSchema } from '../../lib/schema';
+
+const cykler = await hentCyklerEfterKoen('dame');
+const schema = itemListSchema(cykler, 'Damecykler hos Cykelmov');
+---
+
+<Layout
+  title="Damecykler København"
+  description="Damecykler hos Cykelmov på Nørrebro. Klassiske bycykler med kurv og lav indstigning, elcykler og mere. 2 års garanti og gratis serviceaftale. Reservér online, afhent i dag."
+  bodyKlasse="dame-side univers-dame"
+>
+  <StructuredData slot="head" data={schema} />
+
+  <section class="univers-hero" style="padding:0;color:#fff">
+    <div class="bg" style="background-image:url('/assets/produkter/dame-merla.jpg');background-position:center 45%"></div>
+    <div class="wrap inner" style="position:relative;z-index:2">
+      <h1 class="display-xl">Byen er<br><span style="color:var(--hindbaer)">din.</span></h1>
+      <p class="lead" style="color:rgba(255,255,255,.92);margin-top:18px">
+        Lav indstigning, oprejst holdning og kurv til det hele. Klassiske bycykler og elcykler, der
+        er lige så nemme at hoppe på i frakke som i træningstøj.
+      </p>
+    </div>
+  </section>
+
+  <Ticker
+    gul
+    items={[
+      'Kurv & lygter monteret gratis',
+      'Lav indstigning på alle modeller',
+      'Reservér nu, afhent i dag',
+      '2 års garanti',
+      'Gratis serviceaftale ved køb',
+    ]}
+  />
+
+  <section>
+    <div class="wrap" style="margin-bottom:8px">
+      <div class="sektion-hoved reveal" style="margin-bottom:32px">
+        <div><h2 class="display-l">Vores damecykler</h2></div>
+        <p class="lead" style="max-width:40ch">
+          Reservér uden betaling. Cyklen står klar med dit navn på, vi holder den i 48 timer.
+        </p>
+      </div>
+    </div>
+    <KatalogSektion cykler={cykler} />
+  </section>
+
+  <section class="usp-baand" style="background:var(--hindbaer)">
+    <div class="wrap">
+      <div class="usp-grid">
+        <div class="usp reveal" style="border-color:#fff"><div class="tal" style="color:#fff">Lav</div><h3>Indstigning</h3><p style="color:rgba(255,255,255,.85)">Nem at komme på og af, også med nederdel eller frakke.</p></div>
+        <div class="usp reveal" style="border-color:#fff"><div class="tal" style="color:#fff">Kurv</div><h3>Med i prisen</h3><p style="color:rgba(255,255,255,.85)">Front- eller bagkurv monteret gratis, når du henter cyklen.</p></div>
+        <div class="usp reveal" style="border-color:#fff"><div class="tal" style="color:#fff">48 t</div><h3>Reservation holder</h3><p style="color:rgba(255,255,255,.85)">Reservér online, cyklen står med dit navn i to døgn.</p></div>
+        <div class="usp reveal" style="border-color:#fff"><div class="tal" style="color:#fff">0 kr.</div><h3>Serviceaftale</h3><p style="color:rgba(255,255,255,.85)">Gratis eftersyn efter 1-2 måneder med i købet.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="seo-tekst" style="background:var(--creme)">
+    <div class="wrap">
+      <h2>Damecykler i København med kurv og lav indstigning</h2>
+      <p>
+        Cykelmov på Nørrebrogade 74 fører damecykler i klassisk stil med lav indstigning, oprejst
+        siddestilling og kurv. Vi har både klassiske bycykler med 7 gear og elcykler med lang
+        rækkevidde, alle leveret 100 % samlet og køreklare.
+      </p>
+      <p>
+        Reservér din damecykel online og afhent den samme dag i vores butik på Nørrebro i 2200
+        København N. Med hver cykel følger 2 års garanti og en gratis serviceaftale.
+      </p>
+    </div>
+  </section>
+</Layout>

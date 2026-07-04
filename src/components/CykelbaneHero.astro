@@ -1,0 +1,53 @@
+---
+// Forsidens hero med animeret cykelbane. Genbrugt 1:1 fra det eksisterende site.
+export interface Props {
+  bgBillede: string;
+  /** Linje 1 (før linjeskift). */
+  foer: string;
+  /** Linje 2, almindelig tekst før den fremhævede (gule) del. */
+  midt?: string;
+  /** Fremhævet (signalgul) del af overskriften. */
+  fremhaev: string;
+  lead: string;
+  /** Rundt badge øverst til højre, fx "Op til -25% lige nu". Sæt til null for at skjule. */
+  badge?: string | null;
+}
+const { bgBillede, foer, midt, fremhaev, lead, badge } = Astro.props;
+---
+
+<section class="hero" style="padding:0">
+  <div class="hero-bg" style={`background-image:url('${bgBillede}')`}></div>
+  {badge && <div class="hero-badge" set:html={badge}></div>}
+  <div class="wrap hero-inner">
+    <h1 class="display-xl">
+      {foer}<br />{midt ? midt + ' ' : ''}<span class="streg">{fremhaev}</span>
+    </h1>
+    <p class="lead">{lead}</p>
+    <div class="hero-cta">
+      <slot />
+    </div>
+  </div>
+
+  <!-- Signatur: cykelbanen med kørende rytter -->
+  <div class="cykelbane" aria-hidden="true">
+    <div class="midterstribe"></div>
+    <svg class="rytter" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#fff" stroke-width="3" stroke-linecap="round">
+        <g class="hjul-svg" style="transform-box:fill-box">
+          <circle cx="24" cy="52" r="14" />
+          <path d="M24 38v28M10 52h28M14 42l20 20M34 42l-20 20" stroke-width="1.6" opacity=".8" />
+        </g>
+        <g class="hjul-svg" style="transform-box:fill-box">
+          <circle cx="92" cy="52" r="14" />
+          <path d="M92 38v28M78 52h28M82 42l20 20M102 42l-20 20" stroke-width="1.6" opacity=".8" />
+        </g>
+        <path d="M24 52 46 30h22M46 30 58 52h34M58 52H24M68 30 92 52" />
+        <path d="M64 30l-4-8h10M44 26l-6-4" />
+        <path d="M44 31 Q46 17 49 15 Q53 17 51 31 Z" fill="#fff" stroke="none" />
+        <circle cx="50" cy="8" r="6" fill="#fff" stroke="none" />
+        <path d="M49 19 65 29" stroke-width="4" />
+        <path d="M47 31 58 50M46 31 40 50" stroke-width="4" />
+      </g>
+    </svg>
+  </div>
+</section>

@@ -1,0 +1,80 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Ticker from '../../components/Ticker.astro';
+import KatalogSektion from '../../components/KatalogSektion.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { hentCyklerEfterKoen } from '../../lib/data';
+import { itemListSchema } from '../../lib/schema';
+
+const cykler = await hentCyklerEfterKoen('herre');
+const schema = itemListSchema(cykler, 'Herrecykler hos Cykelmov');
+---
+
+<Layout
+  title="Herrecykler København"
+  description="Herrecykler hos Cykelmov på Nørrebro. Bycykler, mountainbikes og elcykler med stålstel og Shimano-gear. 2 års garanti og gratis serviceaftale. Reservér online, afhent i dag."
+  bodyKlasse="herre-side univers-herre"
+  headerMoerk
+>
+  <StructuredData slot="head" data={schema} />
+
+  <section class="univers-hero" style="padding:0;color:#fff">
+    <div class="bg" style="background-image:url('/assets/produkter/herre-oscar.jpg');background-position:center 60%"></div>
+    <div class="wrap inner" style="position:relative;z-index:2">
+      <h1 class="display-xl">Bygget til<br><span style="color:var(--signal)">brosten.</span></h1>
+      <p class="lead" style="color:rgba(255,255,255,.92);margin-top:18px">
+        Stålstel der holder til Nørrebros huller, gear der aldrig brokker sig, og plads til kassen
+        med øl eller værktøj. Ingen pynt, bare en cykel, der virker hver morgen.
+      </p>
+    </div>
+  </section>
+
+  <Ticker
+    items={[
+      'Op til -20% på herrecykler',
+      'Frontlad monteret gratis',
+      'Reservér nu, afhent i dag',
+      '2 års garanti · op til 15 år på stellet',
+      'Rustfri kæde & eger',
+    ]}
+  />
+
+  <section>
+    <div class="wrap" style="color:var(--kridt);margin-bottom:8px">
+      <div class="sektion-hoved reveal" style="margin-bottom:32px">
+        <div><h2 class="display-l">Vores herrecykler</h2></div>
+        <p class="lead" style="max-width:40ch;color:rgba(245,243,237,.75)">
+          Reservér uden betaling. Cyklen står klar med dit navn på, vi holder den i 48 timer.
+        </p>
+      </div>
+    </div>
+    <KatalogSektion cykler={cykler} lysTekst />
+  </section>
+
+  <section class="usp-baand" style="background:var(--cobalt)">
+    <div class="wrap">
+      <div class="usp-grid">
+        <div class="usp reveal"><div class="tal">55-59</div><h3>Stelstørrelser i cm</h3><p>Vi måler dig i butikken og indstiller sadlen, inden du kører.</p></div>
+        <div class="usp reveal"><div class="tal">15 år</div><h3>Garanti på stellet</h3><p>Stål bøjer sig ikke for brosten. Det gør vi heller ikke.</p></div>
+        <div class="usp reveal"><div class="tal">48 t</div><h3>Reservation holder</h3><p>Reservér online, cyklen står med dit navn i to døgn.</p></div>
+        <div class="usp reveal"><div class="tal">0 kr.</div><h3>Montering af tilbehør</h3><p>Lås, lygter og frontlad sidder på, når du henter.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="seo-tekst" style="background:var(--asfalt-2)">
+    <div class="wrap" style="color:rgba(245,243,237,.85)">
+      <h2 style="color:var(--kridt)">Herrecykler i København, stål, gear og ingen bøvl</h2>
+      <p>
+        Cykelmov på Nørrebrogade 74 fører herrecykler i klassisk stil med robuste stålstel,
+        vedligeholdelsesfrie Shimano-navgear og mulighed for frontlad til transport af tasker og
+        indkøb. Alle cykler leveres 100 % samlet med rustfri kæde og reflekser efter dansk lov.
+      </p>
+      <p>
+        Vi giver 2 års garanti på cyklen og op til 15 års garanti på stellet, plus gratis
+        serviceaftale. Reservér din herrecykel online og afhent den samme dag i vores butik på
+        Nørrebro i 2200 København N.
+      </p>
+    </div>
+  </section>
+</Layout>

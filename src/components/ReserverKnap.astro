@@ -1,0 +1,45 @@
+---
+// Knap der åbner reservations-/booking-modalen med forudfyldt kontekst.
+export interface Props {
+  type?: 'cykel' | 'ydelse';
+  navn: string;
+  reference?: string;
+  /** Formateret pris til modalens opsummering, fx "4.999 kr." */
+  pris?: string;
+  billede?: string;
+  klasse?: string;
+  label?: string;
+  /** Deaktivér (fx udsolgt cykel). */
+  deaktiveret?: boolean;
+}
+const {
+  type = 'cykel',
+  navn,
+  reference = '',
+  pris = '',
+  billede = '',
+  klasse = 'btn btn-cobalt',
+  label,
+  deaktiveret = false,
+} = Astro.props;
+
+const tekst = label ?? (type === 'ydelse' ? 'Book tid' : 'Reservér & afhent');
+---
+
+{
+  deaktiveret ? (
+    <button class={klasse} disabled style="opacity:.5;cursor:not-allowed">Udsolgt</button>
+  ) : (
+    <button
+      class={klasse}
+      type="button"
+      data-reserver={type}
+      data-navn={navn}
+      data-ref={reference}
+      data-pris={pris}
+      data-img={billede}
+    >
+      {tekst} <span class="pil">→</span>
+    </button>
+  )
+}

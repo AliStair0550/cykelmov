@@ -1,0 +1,591 @@
+/* ============================================================
+   CYKELMOV — GADENS CYKELBUTIK
+   Brand system v1.0 · Alius
+   Farver: Asfalt / Kridt / Cobalt (cykelbanen) / Signalgul
+   Dame-univers: Creme + Hindbær · Herre-univers: Asfalt + Signal
+   Typografi: Bricolage Grotesque / Schibsted Grotesk / Space Grotesk
+   ============================================================ */
+
+:root{
+  --asfalt:#141419;
+  --asfalt-2:#1e1e26;
+  --kridt:#F5F3ED;
+  --kridt-2:#ECE8DE;
+  --cobalt:#1D3EE3;
+  --cobalt-dyb:#142CB0;
+  --signal:#FFD02F;
+  --hindbaer:#E84F8A;
+  --creme:#F7F0E6;
+  --moerk-tekst:#141419;
+  --grå:#6d6d78;
+  --linje:rgba(20,20,25,.14);
+  --radius:18px;
+  --font-display:"Bricolage Grotesque", sans-serif;
+  --font-body:"Schibsted Grotesk", sans-serif;
+  --font-label:"Space Grotesk", monospace;
+  --maxw:1240px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--kridt);
+  color:var(--moerk-tekst);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+/* ---------- Typografi ---------- */
+h1,h2,h3{font-family:var(--font-display);font-weight:800;line-height:1.02;letter-spacing:-.01em}
+.display-xl{font-size:clamp(2.6rem,7.5vw,6rem);text-transform:uppercase}
+.display-l{font-size:clamp(2rem,5vw,3.8rem);text-transform:uppercase}
+.display-m{font-size:clamp(1.5rem,3vw,2.3rem)}
+.eyebrow{
+  font-family:var(--font-label);
+  font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:10px;font-weight:500;
+}
+.eyebrow::before{content:"";width:26px;height:3px;background:var(--cobalt);display:inline-block}
+.eyebrow.gul::before{background:var(--signal)}
+.eyebrow.pink::before{background:var(--hindbaer)}
+.lead{font-size:clamp(1.05rem,1.6vw,1.25rem);color:#3c3c46;max-width:56ch}
+
+/* ---------- Knapper ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-label);font-weight:700;font-size:.95rem;
+  letter-spacing:.03em;text-transform:uppercase;
+  padding:16px 28px;border-radius:999px;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s;
+  will-change:transform;
+}
+.btn:active{transform:scale(.97)}
+.btn-cobalt{background:var(--cobalt);color:#fff}
+.btn-cobalt:hover{background:var(--cobalt-dyb);transform:translateY(-2px);box-shadow:0 10px 26px rgba(29,62,227,.35)}
+.btn-signal{background:var(--signal);color:var(--asfalt)}
+.btn-signal:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(255,208,47,.45)}
+.btn-ghost{border:2px solid currentColor;background:transparent}
+.btn-ghost:hover{background:var(--asfalt);color:var(--kridt);border-color:var(--asfalt)}
+.btn-hindbaer{background:var(--hindbaer);color:#fff}
+.btn-hindbaer:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(232,79,138,.4)}
+.btn-lys{background:#fff;color:var(--asfalt)}
+.btn .pil{transition:transform .18s}
+.btn:hover .pil{transform:translateX(4px)}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:sticky;top:0;z-index:60;
+  background:rgba(245,243,237,.88);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--linje);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo{font-family:var(--font-display);font-weight:800;font-size:1.45rem;letter-spacing:-.02em;display:flex;align-items:center;gap:9px;text-transform:uppercase}
+.logo .hjul{width:34px;height:auto;flex-shrink:0;color:var(--cobalt);overflow:visible}
+.logo .hjul .hjul-spin{transform-box:fill-box;transform-origin:center;animation:spin 1.4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.logo em{font-style:normal;color:var(--cobalt)}
+.nav-links{display:flex;gap:6px;align-items:center}
+.nav-links a{
+  font-family:var(--font-label);font-size:.86rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;
+  padding:10px 16px;border-radius:999px;transition:background .15s;
+}
+.nav-links a:hover{background:var(--kridt-2)}
+.nav-links a.aktiv{background:var(--asfalt);color:var(--kridt)}
+.nav-links .nav-cta{background:var(--cobalt);color:#fff}
+.nav-links .nav-cta:hover{background:var(--cobalt-dyb)}
+.burger{display:none;width:44px;height:44px;flex-direction:column;gap:6px;align-items:center;justify-content:center}
+.burger span{width:24px;height:3px;background:var(--asfalt);border-radius:2px;transition:.2s}
+
+/* ---------- Ticker ---------- */
+.ticker{
+  background:var(--cobalt);color:#fff;overflow:hidden;white-space:nowrap;
+  font-family:var(--font-label);font-weight:700;font-size:.88rem;letter-spacing:.06em;text-transform:uppercase;
+  padding:11px 0;border-top:3px solid var(--asfalt);border-bottom:3px solid var(--asfalt);
+}
+.ticker-track{display:inline-flex;gap:0;animation:ticker 28s linear infinite}
+.ticker span{padding:0 26px;position:relative}
+.ticker span::after{content:"●";position:absolute;right:-8px;color:var(--signal);font-size:.6rem;top:3px}
+@keyframes ticker{to{transform:translateX(-50%)}}
+.ticker.gul{background:var(--signal);color:var(--asfalt)}
+.ticker.gul span::after{color:var(--cobalt)}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;min-height:88vh;display:flex;align-items:flex-end;
+  color:#fff;overflow:hidden;background:var(--asfalt);
+}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 62%;animation:kenburns 14s ease-in-out infinite alternate;filter:saturate(1.2) contrast(1.28) brightness(1.16)}
+.hero-bg::after{content:"";position:absolute;inset:0;pointer-events:none;background:inherit;filter:saturate(1.2) contrast(1.28) brightness(1.16) blur(9px);-webkit-mask-image:linear-gradient(90deg,transparent 62%,#000 96%),linear-gradient(180deg,#000 42%,transparent 66%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 62%,#000 96%),linear-gradient(180deg,#000 42%,transparent 66%);mask-composite:intersect}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.11) translateY(-1.8%)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,25,.16) 0%,rgba(20,20,25,.05) 42%,rgba(20,20,25,.74) 100%)}
+.hero-inner{position:relative;z-index:2;width:100%;padding:120px 0 150px}
+.hero h1{max-width:13ch;text-shadow:0 4px 40px rgba(0,0,0,.35)}
+.hero h1 .streg{color:var(--signal)}
+.hero .lead{color:rgba(255,255,255,.92);margin:22px 0 34px;text-shadow:0 2px 18px rgba(0,0,0,.4)}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-badge{
+  position:absolute;top:96px;right:24px;z-index:3;
+  background:var(--signal);color:var(--asfalt);
+  font-family:var(--font-label);font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+  padding:18px 20px;border-radius:50%;width:132px;height:132px;
+  display:flex;align-items:center;justify-content:center;text-align:center;font-size:.86rem;line-height:1.25;
+  transform:rotate(8deg);box-shadow:0 12px 32px rgba(0,0,0,.3);
+  animation:svaj 5s ease-in-out infinite;
+}
+@keyframes svaj{0%,100%{transform:rotate(8deg)}50%{transform:rotate(2deg)}}
+
+/* ---- Cykelbanen: signaturelementet. Blå bane med kørende cykel ---- */
+.cykelbane{
+  position:absolute;left:0;right:0;bottom:0;height:74px;z-index:4;
+  background:var(--asfalt-2);
+  border-top:4px solid #fff;
+  overflow:hidden;
+}
+.cykelbane .midterstribe{
+  position:absolute;top:50%;left:0;right:0;height:0;
+  border-top:4px dashed rgba(255,255,255,.75);
+  transform:translateY(-50%);
+}
+.rytter{
+  position:absolute;bottom:9px;left:-140px;width:110px;height:auto;
+  animation:koer 13s linear infinite;
+}
+@keyframes koer{
+  0%{left:-140px}
+  100%{left:calc(100% + 60px)}
+}
+.rytter .hjul-svg{transform-origin:center;animation:spin 1.1s linear infinite}
+.cykelbane.statisk{position:relative;height:56px;background:var(--cobalt)}
+.cykelbane.statisk .rytter{width:84px;bottom:6px;animation-duration:16s}
+
+/* ---------- Sektioner ---------- */
+section{padding:96px 0}
+.sektion-hoved{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:52px;flex-wrap:wrap}
+.sektion-hoved h2{margin-top:14px}
+
+/* ---------- Kategori-portaler (Dame/Herre/Værksted) ---------- */
+.portaler{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.portal{
+  position:relative;border-radius:var(--radius);overflow:hidden;min-height:480px;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:30px;color:#fff;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.portal:hover{transform:translateY(-8px);box-shadow:0 24px 50px rgba(20,20,25,.22)}
+.portal .bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .5s ease}
+.portal:hover .bg{transform:scale(1.06)}
+.portal::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(20,20,25,.86))}
+.portal>*{position:relative;z-index:2}
+.portal .tag{
+  position:absolute;top:20px;left:20px;z-index:3;
+  font-family:var(--font-label);font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:8px 14px;border-radius:999px;
+}
+.portal h3{font-size:clamp(1.6rem,2.4vw,2.2rem);text-transform:uppercase;margin-bottom:8px}
+.portal p{color:rgba(255,255,255,.85);margin-bottom:18px;font-size:.98rem}
+.portal .pris-fra{font-family:var(--font-label);font-weight:700;color:var(--signal)}
+.portal-dame .tag{background:var(--hindbaer);color:#fff}
+.portal-herre .tag{background:var(--signal);color:var(--asfalt)}
+.portal-vaerksted .tag{background:var(--cobalt);color:#fff}
+
+/* ---------- Produktkort ---------- */
+.produkt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.produkt{
+  background:#fff;border-radius:var(--radius);overflow:hidden;
+  border:1px solid var(--linje);
+  transition:transform .22s ease, box-shadow .22s ease;
+  display:flex;flex-direction:column;
+}
+.produkt:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(20,20,25,.14)}
+.produkt-foto{position:relative;aspect-ratio:4/3.4;overflow:hidden;background:var(--kridt-2)}
+.produkt-foto img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.produkt:hover .produkt-foto img{transform:scale(1.07)}
+.rabat-tag{
+  position:absolute;top:14px;left:14px;
+  background:var(--signal);color:var(--asfalt);
+  font-family:var(--font-label);font-weight:700;font-size:.92rem;
+  padding:7px 12px;border-radius:8px;transform:rotate(-3deg);
+  box-shadow:0 4px 12px rgba(0,0,0,.18);
+}
+.dame-side .rabat-tag{background:var(--hindbaer);color:#fff}
+.lager-tag{
+  position:absolute;bottom:14px;left:14px;
+  background:rgba(20,20,25,.82);color:#fff;backdrop-filter:blur(4px);
+  font-family:var(--font-label);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;
+  padding:6px 11px;border-radius:999px;display:flex;align-items:center;gap:6px;
+}
+.lager-tag::before{content:"";width:7px;height:7px;border-radius:50%;background:#3ddc84;animation:puls 1.6s infinite}
+.lager-tag.kommer::before{background:var(--signal)}
+.lager-tag.udsolgt::before{background:#e0426b;animation:none}
+@keyframes puls{50%{opacity:.4}}
+.produkt-info{padding:20px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.produkt-info h3{font-size:1.12rem;line-height:1.25}
+.produkt-specs{display:flex;gap:7px;flex-wrap:wrap}
+.spec{
+  font-family:var(--font-label);font-size:.72rem;letter-spacing:.04em;
+  background:var(--kridt);border:1px solid var(--linje);
+  padding:4px 10px;border-radius:999px;color:#494952;
+}
+.pris-raekke{display:flex;align-items:baseline;gap:10px;margin-top:auto}
+.pris{font-family:var(--font-display);font-weight:800;font-size:1.5rem}
+.foer-pris{color:var(--grå);text-decoration:line-through;font-size:.95rem}
+.spar{font-family:var(--font-label);font-size:.78rem;font-weight:700;color:var(--cobalt)}
+.dame-side .spar{color:var(--hindbaer)}
+.produkt .btn{justify-content:center;width:100%;padding:14px}
+
+/* Dame: rundbuede fotorammer (hjul-/portmotiv) */
+.dame-side .produkt-foto{border-radius:0 0 0 0}
+.dame-side .produkt{border-radius:130px 130px var(--radius) var(--radius)}
+.dame-side .produkt-foto{aspect-ratio:4/4}
+/* Herre: skarpt afskåret hjørne */
+.herre-side .produkt{border-radius:4px;clip-path:polygon(0 0,calc(100% - 26px) 0,100% 26px,100% 100%,0 100%)}
+
+/* ---------- Universer (dame/herre landingssektioner) ---------- */
+.univers-hero{
+  position:relative;min-height:62vh;display:flex;align-items:flex-end;overflow:hidden;
+}
+.univers-hero .bg{position:absolute;inset:0;background-size:cover;background-position:center;animation:kenburns 24s ease-in-out infinite alternate}
+.univers-hero .inner{position:relative;z-index:2;padding:90px 0 70px;width:100%}
+.univers-dame{background:var(--creme);color:var(--asfalt)}
+.univers-dame .univers-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,240,230,0) 30%,rgba(20,20,25,.7))}
+.univers-dame .univers-hero{color:#fff}
+.univers-herre{background:var(--asfalt);color:var(--kridt)}
+.univers-herre .univers-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,25,.25) 20%,rgba(20,20,25,.88))}
+
+/* ---------- USP-bånd ---------- */
+.usp-baand{background:var(--asfalt);color:var(--kridt);padding:64px 0}
+.usp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.usp{border-left:3px solid var(--signal);padding-left:18px}
+.usp .tal{font-family:var(--font-display);font-weight:800;font-size:2.2rem;color:var(--signal);line-height:1}
+.usp p{color:rgba(245,243,237,.72);font-size:.94rem;margin-top:6px}
+.usp h3{font-size:1.02rem;margin-top:10px;text-transform:uppercase;letter-spacing:.02em}
+
+/* ---------- Tryghed / garanti ---------- */
+.tryghed{background:#fff}
+.tryghed-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.tryghed-foto{border-radius:var(--radius);overflow:hidden;position:relative}
+.tryghed-foto img{width:100%;height:100%;object-fit:cover}
+.tjek-liste li{
+  display:flex;gap:14px;padding:15px 0;border-bottom:1px dashed var(--linje);
+  align-items:flex-start;font-size:1.02rem;
+}
+.tjek-liste li:last-child{border-bottom:none}
+.tjek{
+  flex-shrink:0;width:26px;height:26px;border-radius:50%;
+  background:var(--cobalt);color:#fff;display:grid;place-items:center;
+  font-weight:700;font-size:.85rem;margin-top:2px;
+}
+.tjek-liste b{display:block}
+
+/* ---------- Prisliste (værksted) ---------- */
+.prisliste{background:#fff;border-radius:var(--radius);border:1px solid var(--linje);overflow:hidden}
+.pris-linje{
+  display:flex;align-items:center;gap:18px;padding:20px 24px;
+  border-bottom:1px solid var(--linje);transition:background .15s;
+}
+.pris-linje:hover{background:var(--kridt)}
+.pris-linje:last-child{border-bottom:none}
+.pris-linje .ikon{
+  width:46px;height:46px;border-radius:12px;background:var(--kridt);
+  display:grid;place-items:center;font-size:1.25rem;flex-shrink:0;border:1px solid var(--linje);
+}
+.pris-linje .tekst{flex:1}
+.pris-linje .tekst b{font-size:1.04rem}
+.pris-linje .tekst span{display:block;color:var(--grå);font-size:.88rem}
+.pris-linje .beloeb{font-family:var(--font-display);font-weight:800;font-size:1.25rem;white-space:nowrap}
+.pris-linje .btn{padding:11px 20px;font-size:.8rem}
+
+/* ---------- Anmeldelser / social proof ---------- */
+.citater{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.citat{
+  background:#fff;border-radius:var(--radius);padding:26px;border:1px solid var(--linje);
+  position:relative;
+}
+.citat .stjerner{color:var(--signal);letter-spacing:2px;font-size:1.05rem;margin-bottom:12px;text-shadow:0 1px 0 rgba(0,0,0,.15)}
+.citat p{font-size:.98rem}
+.citat footer{margin-top:14px;font-family:var(--font-label);font-size:.8rem;color:var(--grå);text-transform:uppercase;letter-spacing:.05em}
+
+/* ---------- Kort/adresse ---------- */
+.besoeg{background:var(--cobalt);color:#fff}
+.besoeg-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.besoeg .info-linje{display:flex;gap:14px;padding:13px 0;border-bottom:1px dashed rgba(255,255,255,.28);align-items:baseline}
+.besoeg .info-linje b{font-family:var(--font-label);text-transform:uppercase;font-size:.78rem;letter-spacing:.1em;width:110px;flex-shrink:0;color:var(--signal)}
+.besoeg-foto{border-radius:var(--radius);overflow:hidden;transform:rotate(1.5deg);box-shadow:0 24px 60px rgba(0,0,0,.3)}
+
+/* ---------- Footer ---------- */
+.site-footer{background:var(--asfalt);color:var(--kridt);padding:70px 0 0}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px}
+.footer-grid h4{font-family:var(--font-label);text-transform:uppercase;font-size:.8rem;letter-spacing:.12em;color:var(--signal);margin-bottom:16px}
+.footer-grid a{display:block;padding:5px 0;color:rgba(245,243,237,.75);font-size:.94rem;transition:color .15s}
+.footer-grid a:hover{color:#fff}
+.footer-bund{border-top:1px solid rgba(245,243,237,.14);padding:22px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.82rem;color:rgba(245,243,237,.55)}
+
+/* ---------- Booking / reservations-modal ---------- */
+.modal-bag{
+  position:fixed;inset:0;background:rgba(20,20,25,.6);backdrop-filter:blur(5px);
+  z-index:100;display:none;align-items:flex-end;justify-content:center;
+}
+.modal-bag.aaben{display:flex}
+@media(min-width:720px){.modal-bag.aaben{align-items:center}}
+.modal{
+  background:var(--kridt);width:100%;max-width:640px;max-height:92vh;overflow-y:auto;
+  border-radius:24px 24px 0 0;padding:0;animation:op .3s cubic-bezier(.2,.9,.3,1);
+}
+@media(min-width:720px){.modal{border-radius:24px}}
+@keyframes op{from{transform:translateY(50px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-hoved{
+  position:sticky;top:0;background:var(--asfalt);color:#fff;padding:20px 26px;
+  display:flex;justify-content:space-between;align-items:center;z-index:2;
+}
+.modal-hoved h3{font-size:1.15rem;text-transform:uppercase}
+.modal-hoved .luk{color:#fff;font-size:1.6rem;width:40px;height:40px;border-radius:50%;transition:background .15s}
+.modal-hoved .luk:hover{background:rgba(255,255,255,.14)}
+.modal-krop{padding:26px}
+.modal .valgt-cykel{
+  display:flex;gap:16px;background:#fff;border:1px solid var(--linje);
+  border-radius:14px;padding:14px;margin-bottom:22px;align-items:center;
+}
+.modal .valgt-cykel img{width:84px;height:84px;object-fit:cover;border-radius:10px}
+.modal .valgt-cykel b{display:block;font-size:1rem}
+.modal .valgt-cykel .p{font-family:var(--font-display);font-weight:800;font-size:1.2rem}
+.modal h4{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;margin:22px 0 12px;color:var(--grå)}
+.felt{margin-bottom:14px}
+.felt label{font-family:var(--font-label);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:7px;color:var(--grå)}
+.felt input,.felt textarea,.felt select{
+  width:100%;padding:14px 16px;border:2px solid var(--linje);border-radius:12px;
+  font-family:var(--font-body);font-size:1rem;background:#fff;transition:border-color .15s;
+}
+.felt input:focus,.felt textarea:focus,.felt select:focus{outline:none;border-color:var(--cobalt)}
+.felt textarea{resize:vertical;min-height:96px}
+.modal .btn{width:100%;justify-content:center}
+.bekraeft{text-align:center;padding:20px 4px}
+.bekraeft .flueben{
+  width:78px;height:78px;border-radius:50%;background:var(--cobalt);color:#fff;
+  display:grid;place-items:center;font-size:2.2rem;margin:0 auto 20px;
+  animation:pop .45s cubic-bezier(.2,1.6,.4,1);
+}
+@keyframes pop{from{transform:scale(.3);opacity:0}}
+.bekraeft h3{font-size:1.5rem;text-transform:uppercase;margin-bottom:10px}
+.bekraeft p{color:#3c3c46;max-width:40ch;margin:0 auto 8px}
+
+/* ---------- Scroll reveal ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease, transform .6s ease}
+.reveal.synlig{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+
+/* ---------- FAQ ---------- */
+.faq details{background:#fff;border:1px solid var(--linje);border-radius:14px;margin-bottom:12px;overflow:hidden}
+.faq summary{
+  cursor:pointer;padding:19px 22px;font-weight:700;font-size:1.02rem;
+  display:flex;justify-content:space-between;align-items:center;list-style:none;
+}
+.faq summary::after{content:"+";font-family:var(--font-display);font-size:1.4rem;color:var(--cobalt)}
+.faq details[open] summary::after{content:"–"}
+.faq .svar{padding:0 22px 20px;color:#3c3c46}
+
+/* ---------- SEO tekstblok ---------- */
+.seo-tekst{background:var(--kridt-2);padding:70px 0}
+.seo-tekst h2{font-size:1.4rem;margin-bottom:14px}
+.seo-tekst p{max-width:78ch;color:#3c3c46;margin-bottom:14px;font-size:.97rem}
+
+/* ============================================================
+   V2-TILFØJELSER — produktkatalog, filtre, galleri, produktside
+   Bygget i samme sprog: skarpe hjørner, cobalt, signal, Space Grotesk.
+   ============================================================ */
+
+/* ---------- Katalog-layout (grid + sidebar-filter) ---------- */
+.katalog{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start}
+@media(max-width:900px){.katalog{grid-template-columns:1fr;gap:24px}}
+
+.filtre{
+  position:sticky;top:98px;background:#fff;border:1px solid var(--linje);
+  border-radius:var(--radius);padding:24px;
+}
+@media(max-width:900px){
+  .filtre{
+    position:fixed;inset:0;top:auto;bottom:0;z-index:90;border-radius:24px 24px 0 0;
+    max-height:86vh;overflow-y:auto;display:none;box-shadow:0 -20px 60px rgba(20,20,25,.3);
+  }
+  .filtre.aaben{display:block}
+}
+.filtre h3{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.08em;font-size:.86rem;margin-bottom:6px}
+.filter-gruppe{padding:18px 0;border-bottom:1px dashed var(--linje)}
+.filter-gruppe:last-of-type{border-bottom:none}
+.filter-gruppe > label{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.06em;font-size:.74rem;color:var(--grå);display:block;margin-bottom:12px}
+.filter-valg{display:flex;flex-direction:column;gap:9px}
+.filter-valg label{display:flex;align-items:center;gap:10px;font-size:.95rem;cursor:pointer}
+.filter-valg input[type=checkbox]{width:18px;height:18px;accent-color:var(--cobalt);flex-shrink:0}
+.pris-felter{display:flex;gap:10px;align-items:center}
+.pris-felter input{
+  width:100%;padding:10px 12px;border:2px solid var(--linje);border-radius:10px;
+  font-family:var(--font-body);font-size:.95rem;background:#fff;
+}
+.pris-felter input:focus{outline:none;border-color:var(--cobalt)}
+.filter-bund{display:flex;gap:10px;margin-top:20px}
+.filter-bund .btn{flex:1;padding:13px;font-size:.82rem}
+.filter-nulstil{
+  font-family:var(--font-label);text-transform:uppercase;letter-spacing:.05em;font-size:.78rem;
+  color:var(--cobalt);text-decoration:underline;background:none;padding:0;
+}
+.filter-baand{
+  display:none;position:sticky;top:82px;z-index:50;margin-bottom:20px;
+}
+@media(max-width:900px){.filter-baand{display:flex;gap:10px;align-items:center}}
+.antal-viste{font-family:var(--font-label);font-size:.82rem;color:var(--grå);text-transform:uppercase;letter-spacing:.05em}
+.ingen-resultater{
+  grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--grå);
+  border:2px dashed var(--linje);border-radius:var(--radius);
+}
+/* Skjult produktkort under filtrering — sitet forbliver indekserbart (kun display:none) */
+.produkt.skjult{display:none}
+
+/* Produktkort som link */
+.produkt-link{display:flex;flex-direction:column;flex:1;color:inherit}
+.produkt-foto-link{display:block}
+
+/* ---------- Produktside (enkelt cykel) ---------- */
+.produkt-side{padding-top:52px}
+.produkt-top{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:start}
+@media(max-width:900px){.produkt-top{grid-template-columns:1fr;gap:32px}}
+.broedkrumme{font-family:var(--font-label);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;color:var(--grå);margin-bottom:22px}
+.broedkrumme a:hover{color:var(--cobalt);text-decoration:underline}
+
+/* Billedgalleri */
+.galleri-stort{
+  position:relative;border-radius:var(--radius);overflow:hidden;background:var(--kridt-2);
+  aspect-ratio:4/3.4;border:1px solid var(--linje);
+}
+.galleri-stort img{width:100%;height:100%;object-fit:cover}
+.galleri-thumbs{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.galleri-thumb{
+  width:78px;height:78px;border-radius:12px;overflow:hidden;border:2px solid var(--linje);
+  background:var(--kridt-2);padding:0;flex-shrink:0;transition:border-color .15s;
+}
+.galleri-thumb img{width:100%;height:100%;object-fit:cover}
+.galleri-thumb.aktiv{border-color:var(--cobalt)}
+
+/* Produkt-info kolonne */
+.produkt-hoved h1{font-size:clamp(1.9rem,3.6vw,2.8rem);text-transform:uppercase;line-height:1.04}
+.produkt-hoved .model{font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:var(--cobalt);text-transform:uppercase;letter-spacing:.01em;margin-top:8px}
+.status-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-label);font-weight:700;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 14px;border-radius:999px;margin-bottom:16px;
+}
+.status-badge::before{content:"";width:8px;height:8px;border-radius:50%}
+.status-paa_lager{background:#e7f7ee;color:#0f7a44}
+.status-paa_lager::before{background:#3ddc84;animation:puls 1.6s infinite}
+.status-kommer_snart{background:#fff7e0;color:#8a6100}
+.status-kommer_snart::before{background:var(--signal)}
+.status-udsolgt{background:#fde7ee;color:#a01843}
+.status-udsolgt::before{background:#e0426b}
+.produkt-pris-blok{display:flex;align-items:baseline;gap:14px;margin:20px 0}
+.produkt-pris-blok .pris{font-size:2.4rem}
+.produkt-pris-blok .foer-pris{font-size:1.1rem}
+.produkt-pris-blok .spar{font-size:.9rem;background:var(--signal);color:var(--asfalt);padding:4px 10px;border-radius:8px}
+.produkt-kort-besk{font-size:1.08rem;color:#3c3c46;margin-bottom:24px;max-width:52ch}
+.produkt-handling{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+
+/* Specifikationstabel */
+.spec-tabel{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--linje);border-radius:var(--radius);overflow:hidden}
+.spec-tabel tr{border-bottom:1px solid var(--linje)}
+.spec-tabel tr:last-child{border-bottom:none}
+.spec-tabel th{
+  text-align:left;font-family:var(--font-label);text-transform:uppercase;letter-spacing:.05em;
+  font-size:.76rem;color:var(--grå);padding:14px 18px;width:42%;font-weight:500;vertical-align:top;
+}
+.spec-tabel td{padding:14px 18px;font-size:.98rem;font-weight:500}
+
+/* Lang beskrivelse (portable text) */
+.rig-tekst{max-width:68ch}
+.rig-tekst h3{font-size:1.4rem;margin:28px 0 12px}
+.rig-tekst h4{font-family:var(--font-display);font-weight:800;font-size:1.12rem;margin:22px 0 10px}
+.rig-tekst p{margin-bottom:16px;color:#2c2c34;font-size:1.02rem}
+.rig-tekst ul{list-style:none;margin:0 0 16px}
+.rig-tekst ul li{position:relative;padding-left:24px;margin-bottom:8px}
+.rig-tekst ul li::before{content:"";position:absolute;left:0;top:10px;width:9px;height:9px;background:var(--cobalt);border-radius:50%}
+.rig-tekst ol{margin:0 0 16px 20px}
+.rig-tekst ol li{margin-bottom:8px}
+.rig-tekst a{color:var(--cobalt);text-decoration:underline}
+.rig-tekst strong{font-weight:700}
+
+/* Sektionsoverskrift på produktside */
+.blok-titel{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.08em;font-size:.86rem;color:var(--grå);margin-bottom:16px}
+
+/* ---------- Værksted: kategorigrupper + kort ---------- */
+.ydelse-gruppe{margin-bottom:52px}
+.ydelse-gruppe .kat-titel{display:flex;align-items:baseline;gap:14px;margin-bottom:20px}
+.ydelse-gruppe .kat-titel h3{font-size:clamp(1.4rem,2.4vw,1.9rem);text-transform:uppercase}
+.ydelse-gruppe .kat-titel span{font-family:var(--font-label);font-size:.8rem;color:var(--grå)}
+.ydelse-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:680px){.ydelse-grid{grid-template-columns:1fr}}
+.ydelse-kort{
+  background:#fff;border:1px solid var(--linje);border-radius:var(--radius);padding:22px 24px;
+  display:flex;flex-direction:column;gap:8px;transition:transform .2s ease,box-shadow .2s ease;
+}
+.ydelse-kort:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(20,20,25,.12)}
+.ydelse-kort .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.ydelse-kort h4{font-family:var(--font-display);font-weight:800;font-size:1.15rem}
+.ydelse-kort .fra-pris{font-family:var(--font-display);font-weight:800;font-size:1.3rem;white-space:nowrap}
+.ydelse-kort .tid{font-family:var(--font-label);font-size:.76rem;color:var(--cobalt);text-transform:uppercase;letter-spacing:.05em}
+.ydelse-kort p{color:#3c3c46;font-size:.96rem}
+.ydelse-kort .btn{margin-top:8px;align-self:flex-start;padding:11px 20px;font-size:.8rem}
+
+/* ---------- Tak-side ---------- */
+.tak-side{min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px}
+.tak-kort{max-width:560px}
+.tak-kort .flueben{
+  width:92px;height:92px;border-radius:50%;background:var(--cobalt);color:#fff;
+  display:grid;place-items:center;font-size:2.6rem;margin:0 auto 28px;
+  animation:pop .5s cubic-bezier(.2,1.6,.4,1);
+}
+.tak-kort h1{font-size:clamp(2rem,5vw,3rem);text-transform:uppercase;margin-bottom:16px}
+.tak-kort p{font-size:1.1rem;color:#3c3c46;margin-bottom:14px}
+.tak-kort .knapper{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+
+/* ---------- Simpel indholdsside (om/kontakt) ---------- */
+.side-hero{background:var(--asfalt);color:var(--kridt);padding:120px 0 90px;position:relative;overflow:hidden}
+.side-hero .eyebrow{color:var(--signal)}
+.side-hero h1{max-width:16ch}
+.side-hero .lead{color:rgba(245,243,237,.82);margin-top:20px}
+.indhold-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+@media(max-width:900px){.indhold-grid{grid-template-columns:1fr;gap:36px}}
+.kontakt-kort{background:#fff;border:1px solid var(--linje);border-radius:var(--radius);padding:30px}
+.kontakt-kort .info-linje{display:flex;gap:14px;padding:13px 0;border-bottom:1px dashed var(--linje);align-items:baseline}
+.kontakt-kort .info-linje:last-child{border-bottom:none}
+.kontakt-kort .info-linje b{font-family:var(--font-label);text-transform:uppercase;font-size:.74rem;letter-spacing:.08em;width:96px;flex-shrink:0;color:var(--cobalt)}
+
+/* ---------- Responsivt ---------- */
+@media(max-width:1000px){
+  .portaler{grid-template-columns:1fr 1fr}
+  .produkt-grid{grid-template-columns:1fr 1fr}
+  .usp-grid{grid-template-columns:1fr 1fr;gap:34px}
+  .citater{grid-template-columns:1fr}
+  .tryghed-grid,.besoeg-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  section{padding:64px 0}
+  .portaler,.produkt-grid{grid-template-columns:1fr}
+  .nav-links{
+    display:none;position:absolute;top:74px;left:0;right:0;background:var(--kridt);
+    flex-direction:column;align-items:stretch;padding:16px 24px 24px;gap:8px;
+    border-bottom:1px solid var(--linje);
+  }
+  .nav-links.aaben{display:flex}
+  .nav-links a{padding:14px 18px;background:#fff;border:1px solid var(--linje)}
+  .burger{display:flex}
+  .hero-badge{width:104px;height:104px;font-size:.72rem;top:auto;bottom:120px}
+  .hero-inner{padding:90px 0 130px}
+  .pris-linje{flex-wrap:wrap}
+  .pris-linje .btn{width:100%;justify-content:center}
+}

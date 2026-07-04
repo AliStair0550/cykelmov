@@ -1,0 +1,29 @@
+# Byggeoutput
+dist/
+.output/
+.vercel/
+.netlify/
+.wrangler/
+
+# Afhaengigheder
+node_modules/
+sanity/node_modules/
+sanity/dist/
+
+# Astro
+.astro/
+
+# Miljovariabler (hemmeligheder)
+.env
+.env.production
+.env.*.local
+
+# System
+.DS_Store
+*.log
+npm-debug.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/

@@ -1,0 +1,25 @@
+{
+  "name": "cykelmov-studio",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Sanity Studio til Cykelmov, gadens cykelbutik.",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "seed": "node seed/seed.mjs"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.1.0",
+    "@sanity/vision": "^3.80.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sanity": "^3.80.0",
+    "styled-components": "^6.1.15"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  }
+}

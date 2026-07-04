@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../lib/site';
+---
+
+<Layout
+  title="Om Cykelmov"
+  description="Cykelmov er gadens cykelbutik på Nørrebro. Vi importerer selv, sælger kvalitetscykler til fair priser og driver et værksted med faste priser. Mød folkene bag."
+>
+  <section class="side-hero">
+    <div class="wrap">
+      <span class="eyebrow">Om os</span>
+      <h1 class="display-xl" style="margin-top:14px">Gadens cykelbutik</h1>
+      <p class="lead">
+        Vi er cykelfolk fra Nørrebro. Vi importerer selv, skruer selv og står bag hver eneste cykel,
+        der triller ud ad døren på Nørrebrogade 74.
+      </p>
+    </div>
+  </section>
+
+  <section class="tryghed">
+    <div class="wrap tryghed-grid">
+      <div class="reveal">
+        <span class="eyebrow">Historien</span>
+        <h2 class="display-l" style="margin:14px 0 20px">Priser der<br>giver mening</h2>
+        <p class="lead" style="margin-bottom:20px">
+          Cykelmov åbnede i 2021 med en simpel idé: kvalitetscykler behøver ikke koste en formue. Vi
+          importerer selv og springer mellemleddene over, så prisen på skiltet er til at forstå,
+          også for en studerende.
+        </p>
+        <p style="color:#3c3c46">
+          Vi sælger nye og brugte cykler til dame, herre og børn, tager din gamle cykel i bytte, og
+          har et værksted, hvor du får prisen at vide, før vi skruer. Ingen overraskelser, ingen
+          "vi ringer med et tilbud".
+        </p>
+      </div>
+      <div class="tryghed-foto reveal">
+        <img src="/assets/butik-facade.jpg" alt="Cykelmovs butiksfacade på Nørrebrogade" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="usp-baand">
+    <div class="wrap">
+      <div class="usp-grid">
+        <div class="usp reveal"><div class="tal">2021</div><h3>Åbnede på Nørrebro</h3><p>Og har skruet på kvarterets cykler lige siden.</p></div>
+        <div class="usp reveal"><div class="tal">Selv</div><h3>Vi importerer selv</h3><p>Ingen dyre mellemled. Det kan du mærke på prisen.</p></div>
+        <div class="usp reveal"><div class="tal">Ærligt</div><h3>Faste priser</h3><p>Prisen på skiltet er prisen, du betaler. Altid.</p></div>
+        <div class="usp reveal"><div class="tal">Lokalt</div><h3>Naboer på hjul</h3><p>Vi cykler selv i byen og kender vejene, du kører på.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="besoeg">
+    <div class="wrap besoeg-grid">
+      <div class="reveal">
+        <h2 class="display-l" style="margin:14px 0 22px">Kom forbi<br>og sig hej</h2>
+        <p class="lead" style="color:rgba(255,255,255,.9);margin-bottom:20px">
+          Du finder os midt på Nørrebrogade. Kig ind, prøv en cykel, eller trill forbi med den, der
+          driller.
+        </p>
+        <div class="info-linje"><b>Adresse</b><span>{site.adresse.gade} · {site.adresse.postnr} {site.adresse.by}</span></div>
+        <div class="info-linje"><b>Telefon</b><span><a href={`tel:${site.telefonE164}`} style="text-decoration:underline">{site.telefon}</a></span></div>
+        <a href="/kontakt" class="btn btn-signal" style="margin-top:26px">Kontakt & åbningstider <span class="pil">→</span></a>
+      </div>
+      <div class="besoeg-foto reveal">
+        <img src="/assets/butik-hjul.jpg" alt="Cykelhjul og detaljer i Cykelmovs butik" loading="lazy" />
+      </div>
+    </div>
+  </section>
+</Layout>

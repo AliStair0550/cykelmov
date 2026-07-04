@@ -1,0 +1,131 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ReserverKnap from '../../components/ReserverKnap.astro';
+import PortableText from '../../components/PortableText.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { hentYdelser } from '../../lib/data';
+import { kr } from '../../lib/format';
+import { absUrl } from '../../lib/schema';
+import { site } from '../../lib/site';
+import type { Ydelse } from '../../lib/types';
+
+export async function getStaticPaths() {
+  const ydelser = await hentYdelser();
+  return ydelser.map((ydelse) => ({ params: { slug: ydelse.slug }, props: { ydelse } }));
+}
+
+interface Props {
+  ydelse: Ydelse;
+}
+const { ydelse } = Astro.props;
+
+const kategoriLabel: Record<string, string> = {
+  service: 'Service',
+  reparation: 'Reparation',
+  daek: 'Dæk og slanger',
+  elcykel: 'Elcykel-service',
+};
+
+const alle = await hentYdelser();
+const andre = alle.filter((y) => y._id !== ydelse._id).slice(0, 3);
+
+const sideUrl = new URL(`/vaerksted/${ydelse.slug}`, Astro.site ?? undefined).href;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: ydelse.navn,
+  serviceType: kategoriLabel[ydelse.kategori] ?? ydelse.kategori,
+  provider: { '@type': 'BicycleStore', name: site.navn, telephone: site.telefonE164 },
+  areaServed: 'København',
+  url: sideUrl,
+  offers: {
+    '@type': 'Offer',
+    price: ydelse.fraPris,
+    priceCurrency: 'DKK',
+    url: sideUrl,
+  },
+};
+
+const ogBillede = ydelse.billede ? absUrl(ydelse.billede.url) : '/assets/vaerksted-vaerktoej.jpg';
+---
+
+<Layout title={ydelse.navn} description={`${ydelse.navn} hos Cykelmov på Nørrebro. Fra ${kr(ydelse.fraPris)}. Book tid online, ofte samme dag.`} ogBillede={ogBillede}>
+  <StructuredData slot="head" data={schema} />
+
+  <section class="produkt-side">
+    <div class="wrap">
+      <nav class="broedkrumme" aria-label="Sti">
+        <a href="/">Forsiden</a> ·
+        <a href="/vaerksted">Værksted</a> ·
+        <span>{ydelse.navn}</span>
+      </nav>
+
+      <div class="produkt-top">
+        <div>
+          {ydelse.billede ? (
+            <div class="galleri-stort">
+              <img src={ydelse.billede.url} alt={ydelse.billede.alt} width="1100" height="950" />
+            </div>
+          ) : (
+            <div class="galleri-stort" style="display:grid;place-items:center;background:var(--asfalt);color:var(--signal)">
+              <span style="font-size:5rem">🔧</span>
+            </div>
+          )}
+        </div>
+
+        <div class="produkt-hoved">
+          <span class="status-badge status-paa_lager">{kategoriLabel[ydelse.kategori] ?? ydelse.kategori}</span>
+          <h1>{ydelse.navn}</h1>
+          {ydelse.estimeretTid && <p class="model">⏱ {ydelse.estimeretTid}</p>}
+
+          <div class="produkt-pris-blok">
+            <span class="pris">fra {kr(ydelse.fraPris)}</span>
+          </div>
+
+          <div class="rig-tekst" style="margin-bottom:24px">
+            <PortableText value={ydelse.beskrivelse} />
+          </div>
+
+          <div class="produkt-handling">
+            <ReserverKnap
+              type="ydelse"
+              navn={ydelse.navn}
+              reference={ydelse._id}
+              pris={`fra ${kr(ydelse.fraPris)}`}
+              klasse="btn btn-cobalt"
+              label="Book værkstedstid"
+            />
+            <a href={`tel:${site.telefonE164}`} class="btn btn-ghost">Ring til værkstedet</a>
+          </div>
+
+          <p style="color:var(--grå);font-size:.9rem">
+            Prisen dækker arbejdet. Skal der nye dele på, får du prisen at vide, før vi skruer.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {andre.length > 0 && (
+    <section style="background:var(--kridt-2)">
+      <div class="wrap">
+        <div class="sektion-hoved reveal">
+          <div><h2 class="display-l">Andre ydelser</h2></div>
+          <a href="/vaerksted" class="btn btn-ghost">Hele prislisten <span class="pil">→</span></a>
+        </div>
+        <div class="ydelse-grid">
+          {andre.map((y) => (
+            <article class="ydelse-kort reveal">
+              <div class="top">
+                <h4><a href={`/vaerksted/${y.slug}`}>{y.navn}</a></h4>
+                <span class="fra-pris">fra {kr(y.fraPris)}</span>
+              </div>
+              {y.estimeretTid && <span class="tid">⏱ {y.estimeretTid}</span>}
+              <a href={`/vaerksted/${y.slug}`} class="btn btn-ghost" style="padding:11px 20px;font-size:.8rem;align-self:flex-start;margin-top:6px">Læs mere</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>
