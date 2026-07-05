@@ -212,6 +212,8 @@ section{padding:96px 0}
   border:1px solid var(--linje);
   transition:transform .22s ease, box-shadow .22s ease;
   display:flex;flex-direction:column;
+  /* Fast mørk tekst, så titel/pris er læsbare også på mørke sider (herre) */
+  color:var(--moerk-tekst);
 }
 .produkt:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(20,20,25,.14)}
 .produkt-foto{position:relative;aspect-ratio:4/3.4;overflow:hidden;background:var(--kridt-2)}
@@ -243,10 +245,10 @@ section{padding:96px 0}
   background:var(--kridt);border:1px solid var(--linje);
   padding:4px 10px;border-radius:999px;color:#494952;
 }
-.pris-raekke{display:flex;align-items:baseline;gap:10px;margin-top:auto}
-.pris{font-family:var(--font-display);font-weight:800;font-size:1.5rem}
-.foer-pris{color:var(--grå);text-decoration:line-through;font-size:.95rem}
-.spar{font-family:var(--font-label);font-size:.78rem;font-weight:700;color:var(--cobalt)}
+.pris-raekke{display:flex;align-items:baseline;gap:8px;margin-top:auto;flex-wrap:nowrap}
+.pris{font-family:var(--font-display);font-weight:800;font-size:1.3rem;white-space:nowrap}
+.foer-pris{color:var(--grå);text-decoration:line-through;font-size:.88rem;white-space:nowrap}
+.spar{font-family:var(--font-label);font-size:.74rem;font-weight:700;color:var(--cobalt);white-space:nowrap}
 .dame-side .spar{color:var(--hindbaer)}
 .produkt .btn{justify-content:center;width:100%;padding:14px}
 
