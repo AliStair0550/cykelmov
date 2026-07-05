@@ -13,6 +13,10 @@ sanity/dist/
 # Astro
 .astro/
 
+# Sanity build-/runtime-cache
+.sanity/
+sanity/dist/
+
 # Miljovariabler (hemmeligheder)
 .env
 .env.production
