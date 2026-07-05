@@ -12,7 +12,7 @@ import { tidValg } from '../lib/site';
     </div>
     <div class="modal-krop">
       <div class="valgt-cykel" id="reserver-objekt" hidden>
-        <img id="reserver-objekt-foto" src="" alt="" hidden />
+        <img id="reserver-objekt-foto" src="" alt="" width="84" height="84" hidden />
         <span class="objekt-ikon" id="reserver-objekt-ikon" hidden aria-hidden="true"></span>
         <div>
           <b id="reserver-objekt-navn"></b>
@@ -74,16 +74,30 @@ import { tidValg } from '../lib/site';
     const fObjekt = document.getElementById('rf-objekt') as HTMLInputElement | null;
     const fRef = document.getElementById('rf-reference') as HTMLInputElement | null;
     const submitKnap = document.getElementById('rf-submit');
+    const modalEl = bag.querySelector('.modal') as HTMLElement | null;
+    let sidsteFokus: HTMLElement | null = null;
+
+    function fokusbare(): HTMLElement[] {
+      if (!modalEl) return [];
+      return Array.from(
+        modalEl.querySelectorAll<HTMLElement>(
+          'a[href],button:not([disabled]),input:not([disabled]),select,textarea',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+    }
 
     function aaben() {
       bag!.classList.add('aaben');
       bag!.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      const foerste = document.getElementById('rf-navn');
+      window.setTimeout(() => foerste && foerste.focus(), 40);
     }
     function luk() {
       bag!.classList.remove('aaben');
       bag!.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      if (sidsteFokus && typeof sidsteFokus.focus === 'function') sidsteFokus.focus();
     }
 
     // Åbn fra en hvilken som helst [data-reserver]-knap.
@@ -91,6 +105,7 @@ import { tidValg } from '../lib/site';
       const knap = (ev.target as HTMLElement)?.closest('[data-reserver]') as HTMLElement | null;
       if (knap) {
         ev.preventDefault();
+        sidsteFokus = knap;
         const type = knap.dataset.reserver || 'cykel';
         const navn = knap.dataset.navn || '';
         const ref = knap.dataset.ref || '';
@@ -142,7 +157,25 @@ import { tidValg } from '../lib/site';
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') luk();
+      if (!bag!.classList.contains('aaben')) return;
+      if (e.key === 'Escape') {
+        luk();
+        return;
+      }
+      // Fokusfælde: hold Tab inde i modalen
+      if (e.key === 'Tab') {
+        const f = fokusbare();
+        if (!f.length) return;
+        const foerste = f[0];
+        const sidste = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === foerste) {
+          e.preventDefault();
+          sidste.focus();
+        } else if (!e.shiftKey && document.activeElement === sidste) {
+          e.preventDefault();
+          foerste.focus();
+        }
+      }
     });
   }
 </script>

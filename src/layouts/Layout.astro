@@ -83,7 +83,66 @@ const ogAbsolut = new URL(ogBillede, Astro.site ?? site.url).href;
       // Burger-menu
       const burger = document.querySelector('.burger');
       const navLinks = document.querySelector('.nav-links');
-      burger?.addEventListener('click', () => navLinks?.classList.toggle('aaben'));
+      burger?.addEventListener('click', () => {
+        const aaben = navLinks?.classList.toggle('aaben');
+        burger.setAttribute('aria-expanded', aaben ? 'true' : 'false');
+      });
+      // Luk mobilmenu når der klikkes på et link
+      navLinks?.querySelectorAll('a').forEach((a) =>
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('aaben');
+          burger?.setAttribute('aria-expanded', 'false');
+        }),
+      );
+
+      // Formular: loading-state, ingen dobbeltindsendelse, offline-fallback med telefon
+      document.querySelectorAll('form[action="/api/reserver"]').forEach((form) => {
+        const f = form as HTMLFormElement;
+        f.addEventListener('submit', async (e) => {
+          if (f.dataset.sender === '1') {
+            e.preventDefault();
+            return;
+          }
+          e.preventDefault();
+          if (!f.checkValidity()) {
+            f.reportValidity();
+            return;
+          }
+          const btn = f.querySelector('[type="submit"]') as HTMLButtonElement | null;
+          const btnHtml = btn ? btn.innerHTML : '';
+          f.dataset.sender = '1';
+          if (btn) {
+            btn.disabled = true;
+            btn.textContent = 'Sender …';
+          }
+          try {
+            const res = await fetch(f.action, {
+              method: 'POST',
+              body: new FormData(f),
+              headers: { Accept: 'text/html' },
+            });
+            if (res.ok || res.redirected) {
+              window.location.href = '/reserver/?tak=1';
+              return;
+            }
+            throw new Error('status ' + res.status);
+          } catch (err) {
+            f.dataset.sender = '';
+            if (btn) {
+              btn.disabled = false;
+              btn.innerHTML = btnHtml;
+            }
+            let fejl = f.querySelector('.form-fejl') as HTMLElement | null;
+            if (!fejl) {
+              fejl = document.createElement('p');
+              fejl.className = 'form-fejl';
+              f.appendChild(fejl);
+            }
+            fejl.innerHTML =
+              'Noget gik galt med at sende. Ring til os på <a href="tel:+4531727888">31 72 78 88</a>, så hjælper vi dig.';
+          }
+        });
+      });
 
       // Scroll-reveal
       const io = new IntersectionObserver(
