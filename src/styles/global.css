@@ -363,6 +363,9 @@ section{padding:96px 0}
   border-radius:14px;padding:14px;margin-bottom:22px;align-items:center;
 }
 .modal .valgt-cykel img{width:84px;height:84px;object-fit:cover;border-radius:10px}
+/* img{display:block} i reset'et slår [hidden] ihjel — genopret det her */
+.modal .valgt-cykel img[hidden]{display:none}
+.modal .valgt-cykel .objekt-ikon{width:84px;height:84px;flex-shrink:0;display:grid;place-items:center;font-size:2.6rem;background:var(--kridt-2);border-radius:10px;border:1px solid var(--linje)}
 .modal .valgt-cykel b{display:block;font-size:1rem}
 .modal .valgt-cykel .p{font-family:var(--font-display);font-weight:800;font-size:1.2rem}
 .modal h4{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;margin:22px 0 12px;color:var(--grå)}

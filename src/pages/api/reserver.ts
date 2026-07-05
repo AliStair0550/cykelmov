@@ -12,9 +12,13 @@ import type { APIRoute } from 'astro';
 export const prerender = false;
 
 const TID_LABEL: Record<string, string> = {
+  saa_hurtigt: 'Så hurtigt som muligt',
+  i_dag: 'I dag',
+  i_morgen: 'I morgen',
   denne_uge: 'Denne uge',
+  i_weekenden: 'I weekenden',
   naeste_uge: 'Næste uge',
-  fleksibel: 'Fleksibel',
+  fleksibel: 'Fleksibel, book en tid med mig',
 };
 
 function laesEnv(locals: App.Locals, key: string): string | undefined {

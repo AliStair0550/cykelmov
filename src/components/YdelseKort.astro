@@ -1,6 +1,7 @@
 ---
 import type { Ydelse } from '../lib/types';
 import { uddrag, ydelsePris } from '../lib/format';
+import { kategoriIkon } from '../lib/site';
 import ReserverKnap from './ReserverKnap.astro';
 
 export interface Props {
@@ -30,6 +31,7 @@ const pris = ydelsePris(ydelse.fraPris, ydelse.fastPris);
       navn={ydelse.navn}
       reference={ydelse._id}
       pris={pris}
+      ikon={kategoriIkon[ydelse.kategori] ?? '🔧'}
       klasse="btn btn-cobalt"
       label="Book tid"
     />

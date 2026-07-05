@@ -7,6 +7,8 @@ export interface Props {
   /** Formateret pris til modalens opsummering, fx "4.999 kr." */
   pris?: string;
   billede?: string;
+  /** Emoji-symbol vist i booking-boksen når der ikke er et foto (ydelser). */
+  ikon?: string;
   klasse?: string;
   label?: string;
   /** Deaktivér (fx udsolgt cykel). */
@@ -18,6 +20,7 @@ const {
   reference = '',
   pris = '',
   billede = '',
+  ikon = '',
   klasse = 'btn btn-cobalt',
   label,
   deaktiveret = false,
@@ -38,6 +41,7 @@ const tekst = label ?? (type === 'ydelse' ? 'Book tid' : 'Reservér & afhent');
       data-ref={reference}
       data-pris={pris}
       data-img={billede}
+      data-ikon={ikon}
     >
       {tekst} <span class="pil">→</span>
     </button>

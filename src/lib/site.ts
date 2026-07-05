@@ -63,7 +63,22 @@ export const statusLabel: Record<string, string> = {
 };
 
 export const tidValg = [
+  { value: 'saa_hurtigt', label: 'Så hurtigt som muligt' },
+  { value: 'i_dag', label: 'I dag' },
+  { value: 'i_morgen', label: 'I morgen' },
   { value: 'denne_uge', label: 'Denne uge' },
+  { value: 'i_weekenden', label: 'I weekenden' },
   { value: 'naeste_uge', label: 'Næste uge' },
-  { value: 'fleksibel', label: 'Fleksibel' },
+  { value: 'fleksibel', label: 'Fleksibel, book en tid med mig' },
 ] as const;
+
+// Symbol pr. værkstedskategori. Vises i booking-boksen for ydelser (uden foto).
+export const kategoriIkon: Record<string, string> = {
+  service: '🔧',
+  reparation: '⚙️',
+  daek: '🛞',
+  elcykel: '⚡',
+  tilbehoer: '🧰',
+  saeson: '🗓️',
+  akut: '🚨',
+};

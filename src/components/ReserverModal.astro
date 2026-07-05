@@ -13,6 +13,7 @@ import { tidValg } from '../lib/site';
     <div class="modal-krop">
       <div class="valgt-cykel" id="reserver-objekt" hidden>
         <img id="reserver-objekt-foto" src="" alt="" hidden />
+        <span class="objekt-ikon" id="reserver-objekt-ikon" hidden aria-hidden="true"></span>
         <div>
           <b id="reserver-objekt-navn"></b>
           <div class="p" id="reserver-objekt-pris" hidden></div>
@@ -66,6 +67,7 @@ import { tidValg } from '../lib/site';
     const titel = document.getElementById('reserver-titel');
     const objektBoks = document.getElementById('reserver-objekt');
     const objektFoto = document.getElementById('reserver-objekt-foto') as HTMLImageElement | null;
+    const objektIkon = document.getElementById('reserver-objekt-ikon');
     const objektNavn = document.getElementById('reserver-objekt-navn');
     const objektPris = document.getElementById('reserver-objekt-pris');
     const fType = document.getElementById('rf-type') as HTMLInputElement | null;
@@ -94,6 +96,7 @@ import { tidValg } from '../lib/site';
         const ref = knap.dataset.ref || '';
         const pris = knap.dataset.pris || '';
         const img = knap.dataset.img || '';
+        const ikon = knap.dataset.ikon || '';
 
         if (fType) fType.value = type;
         if (fObjekt) fObjekt.value = navn;
@@ -104,13 +107,19 @@ import { tidValg } from '../lib/site';
         if (navn && objektNavn && objektBoks) {
           objektNavn.textContent = navn;
           objektBoks.hidden = false;
-          if (objektFoto) {
+          if (objektFoto && objektIkon) {
             if (img) {
               objektFoto.src = img;
               objektFoto.alt = navn;
               objektFoto.hidden = false;
+              objektIkon.hidden = true;
+            } else if (ikon) {
+              objektIkon.textContent = ikon;
+              objektIkon.hidden = false;
+              objektFoto.hidden = true;
             } else {
               objektFoto.hidden = true;
+              objektIkon.hidden = true;
             }
           }
           if (objektPris) {

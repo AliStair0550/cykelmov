@@ -6,7 +6,7 @@ import StructuredData from '../../components/StructuredData.astro';
 import { hentYdelser } from '../../lib/data';
 import { ydelsePris } from '../../lib/format';
 import { absUrl } from '../../lib/schema';
-import { site } from '../../lib/site';
+import { site, kategoriIkon } from '../../lib/site';
 import type { Ydelse } from '../../lib/types';
 
 export async function getStaticPaths() {
@@ -50,7 +50,12 @@ const schema = {
   },
 };
 
-const ogBillede = ydelse.billede ? absUrl(ydelse.billede.url) : '/assets/vaerksted-vaerktoej.jpg';
+// Har ydelsen ikke sit eget foto, vises et af værkstedsbillederne (skiftevis).
+const heroBillede =
+  ydelse.billede?.url ??
+  (ydelse.raekkefolge % 2 === 0 ? '/assets/vaerksted-2.jpg' : '/assets/vaerksted-1.jpg');
+const heroAlt = ydelse.billede?.alt ?? 'Cykelmovs værksted på Nørrebro';
+const ogBillede = absUrl(heroBillede);
 ---
 
 <Layout title={ydelse.navn} description={`${ydelse.navn} hos Cykelmov på Nørrebro, ${prisTekst}. Book tid online, ofte samme dag.`} ogBillede={ogBillede}>
@@ -66,15 +71,9 @@ const ogBillede = ydelse.billede ? absUrl(ydelse.billede.url) : '/assets/vaerkst
 
       <div class="produkt-top">
         <div>
-          {ydelse.billede ? (
-            <div class="galleri-stort">
-              <img src={ydelse.billede.url} alt={ydelse.billede.alt} width="1100" height="950" />
-            </div>
-          ) : (
-            <div class="galleri-stort" style="display:grid;place-items:center;background:var(--asfalt);color:var(--signal)">
-              <span style="font-size:5rem">🔧</span>
-            </div>
-          )}
+          <div class="galleri-stort">
+            <img src={heroBillede} alt={heroAlt} width="1100" height="950" />
+          </div>
         </div>
 
         <div class="produkt-hoved">
@@ -96,6 +95,7 @@ const ogBillede = ydelse.billede ? absUrl(ydelse.billede.url) : '/assets/vaerkst
               navn={ydelse.navn}
               reference={ydelse._id}
               pris={prisTekst}
+              ikon={kategoriIkon[ydelse.kategori] ?? '🔧'}
               klasse="btn btn-cobalt"
               label="Book værkstedstid"
             />
