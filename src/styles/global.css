@@ -317,11 +317,13 @@ section{padding:96px 0}
 .citat{
   background:#fff;border-radius:var(--radius);padding:26px;border:1px solid var(--linje);
   position:relative;transition:transform .22s ease, box-shadow .22s ease;
+  display:flex;flex-direction:column;
 }
 .citat:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(20,20,25,.14)}
 .citat .stjerner{color:var(--signal);letter-spacing:2px;font-size:1.05rem;margin-bottom:12px;text-shadow:0 1px 0 rgba(0,0,0,.15)}
 .citat p{font-size:.98rem}
-.citat footer{margin-top:14px;font-family:var(--font-label);font-size:.8rem;color:var(--grå);text-transform:uppercase;letter-spacing:.05em}
+/* Navn + Google altid nederst, på linje på tværs af kortene */
+.citat footer{margin-top:auto;padding-top:18px;font-family:var(--font-label);font-size:.8rem;color:var(--grå);text-transform:uppercase;letter-spacing:.05em}
 
 /* ---------- Kort/adresse ---------- */
 .besoeg{background:var(--cobalt);color:#fff}

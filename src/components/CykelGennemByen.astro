@@ -1,69 +1,102 @@
 ---
-// Dekorativ animation: cyklist der "kører gennem København".
-// Parallaks: skyer (langsomt), husrække + spir (medium), vej-striber (hurtigt).
+// Dekorativ animation: cyklist der "kører gennem København" (Nørrebro-vibe).
+// Parallaks: Toy Story-skyer (langsomt), husrække (medium), vejstriber (hurtigt).
 // Cyklisten holder sig på plads, hjulene drejer, og den bobber let.
+
+const groundY = 200;
+
+// Nørrebro-karréer: forholdsvis lave, ret ensartede, murstensfarver.
+const huse = [
+  { x: 0, w: 104, h: 126, farve: '#a8453b', cols: 3, markise: '#2e449c' },
+  { x: 108, w: 92, h: 108, farve: '#cba24d', cols: 3 },
+  { x: 204, w: 112, h: 134, farve: '#7d8a94', cols: 4, markise: '#b5563f' },
+  { x: 320, w: 96, h: 116, farve: '#e3d7bf', cols: 3 },
+  { x: 420, w: 100, h: 128, farve: '#4f7d6e', cols: 3, markise: '#d98a3f' },
+  { x: 524, w: 108, h: 112, farve: '#b5563f', cols: 4 },
+  { x: 636, w: 92, h: 122, farve: '#cdb98f', cols: 3, markise: '#4f7d6e' },
+  { x: 732, w: 58, h: 104, farve: '#8390a0', cols: 2 },
+];
+
+type R = { x: number; y: number; w: number; h: number; fill: string; rx?: number; stroke?: string };
+const gesims: R[] = [];
+const vinduer: R[] = [];
+const doere: R[] = [];
+const markiser: R[] = [];
+
+for (const b of huse) {
+  const top = groundY - b.h;
+  gesims.push({ x: b.x - 2, y: top, w: b.w + 4, h: 7, fill: 'rgba(0,0,0,.2)' });
+
+  const stueEtage = 34; // plads til dør/butik forneden
+  const winTop = top + 14;
+  const winW = 12;
+  const winH = 16;
+  const rowStep = 24;
+  const rows = Math.max(1, Math.floor((groundY - stueEtage - winTop) / rowStep));
+  const sideM = 12;
+  const colStep = (b.w - 2 * sideM) / b.cols;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < b.cols; c++) {
+      vinduer.push({
+        x: b.x + sideM + colStep * c + (colStep - winW) / 2,
+        y: winTop + rowStep * r,
+        w: winW,
+        h: winH,
+        fill: '#cfe0ec',
+        stroke: 'rgba(255,255,255,.65)',
+        rx: 1,
+      });
+    }
+  }
+
+  // Dør
+  const dW = 16;
+  const dH = 30;
+  doere.push({ x: b.x + b.w * 0.26 - dW / 2, y: groundY - dH, w: dW, h: dH, fill: 'rgba(0,0,0,.42)', rx: 2 });
+
+  // Butiksvindue + markise
+  if (b.markise) {
+    const shopX = b.x + b.w * 0.46;
+    const shopW = b.w * 0.44;
+    doere.push({ x: shopX, y: groundY - 24, w: shopW, h: 24, fill: 'rgba(0,0,0,.28)', rx: 1 });
+    markiser.push({ x: shopX - 3, y: groundY - 33, w: shopW + 6, h: 9, fill: b.markise });
+  }
+}
 ---
 
 <div class="by-scene" aria-hidden="true">
-  <div class="sol"></div>
-  <div class="skyer">
-    <span class="sky sky-1"></span>
-    <span class="sky sky-2"></span>
-    <span class="sky sky-3"></span>
-  </div>
+  <!-- Toy Story-skyer -->
+  <svg class="sky sky-1" viewBox="0 0 150 74"><g fill="#fff"><ellipse cx="75" cy="52" rx="62" ry="18" /><circle cx="42" cy="44" r="21" /><circle cx="70" cy="34" r="28" /><circle cx="101" cy="41" r="22" /><circle cx="122" cy="48" r="15" /></g></svg>
+  <svg class="sky sky-2" viewBox="0 0 150 74"><g fill="#fff"><ellipse cx="75" cy="52" rx="58" ry="17" /><circle cx="46" cy="43" r="19" /><circle cx="74" cy="36" r="24" /><circle cx="102" cy="43" r="18" /></g></svg>
+  <svg class="sky sky-3" viewBox="0 0 150 74"><g fill="#fff"><ellipse cx="75" cy="52" rx="52" ry="15" /><circle cx="50" cy="44" r="17" /><circle cx="76" cy="37" r="22" /><circle cx="100" cy="44" r="16" /></g></svg>
 
   <!-- Husrækken (defineres én gang, bruges to gange for sømløs loop) -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
       <g id="cph-huse">
-        <!-- rød -->
-        <rect x="0" y="95" width="72" height="125" fill="#c05a4d" />
-        <polygon points="-2,96 36,71 74,96" fill="#a5483d" />
-        <!-- gul -->
-        <rect x="80" y="62" width="66" height="158" fill="#d9a53a" />
-        <polygon points="78,63 113,38 148,63" fill="#bd8a2c" />
-        <!-- creme -->
-        <rect x="154" y="108" width="78" height="112" fill="#e7dcc4" />
-        <polygon points="152,109 193,84 234,109" fill="#d1c3a4" />
-        <!-- teal (fladt tag + skorsten) -->
-        <rect x="240" y="70" width="58" height="150" fill="#3f8582" />
-        <rect x="240" y="64" width="58" height="8" fill="#316a68" />
-        <rect x="278" y="50" width="9" height="16" fill="#316a68" />
-        <!-- spir -->
-        <rect x="304" y="42" width="22" height="178" fill="#7c8592" />
-        <polygon points="304,44 315,8 326,44" fill="#4a7c6f" />
-        <circle cx="315" cy="9" r="3.4" fill="#e7dcc4" />
-        <!-- cobalt -->
-        <rect x="338" y="98" width="70" height="122" fill="#3a56bf" />
-        <polygon points="336,99 373,74 410,99" fill="#2e449c" />
-        <!-- pink -->
-        <rect x="416" y="84" width="64" height="136" fill="#c26a92" />
-        <polygon points="414,85 448,60 482,85" fill="#a9557c" />
-        <!-- hvid -->
-        <rect x="488" y="100" width="82" height="120" fill="#efe7d8" />
-        <polygon points="486,101 529,76 572,101" fill="#dbd1be" />
-        <!-- orange -->
-        <rect x="578" y="90" width="62" height="130" fill="#d98a3f" />
-        <polygon points="576,91 609,66 642,91" fill="#c1762f" />
-        <!-- slate -->
-        <rect x="648" y="76" width="74" height="144" fill="#586474" />
-        <polygon points="646,77 685,52 724,77" fill="#465060" />
+        {huse.map((b) => <rect x={b.x} y={groundY - b.h} width={b.w} height={b.h} fill={b.farve} />)}
+        {gesims.map((r) => <rect x={r.x} y={r.y} width={r.w} height={r.h} fill={r.fill} />)}
+        {vinduer.map((r) => (
+          <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={r.rx} fill={r.fill} stroke={r.stroke} stroke-width="1.4" />
+        ))}
+        {doere.map((r) => <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={r.rx} fill={r.fill} />)}
+        {markiser.map((r) => <rect x={r.x} y={r.y} width={r.w} height={r.h} rx="2" fill={r.fill} />)}
       </g>
     </defs>
   </svg>
 
   <div class="skyline">
-    <svg class="skyline-svg" viewBox="0 0 760 220" preserveAspectRatio="xMidYMax meet"><use href="#cph-huse" /></svg>
-    <svg class="skyline-svg" viewBox="0 0 760 220" preserveAspectRatio="xMidYMax meet"><use href="#cph-huse" /></svg>
+    <svg class="skyline-svg" viewBox="0 0 800 200" preserveAspectRatio="xMidYMax meet"><use href="#cph-huse" /></svg>
+    <svg class="skyline-svg" viewBox="0 0 800 200" preserveAspectRatio="xMidYMax meet"><use href="#cph-huse" /></svg>
   </div>
 
   <!-- Vej -->
   <div class="vej"><div class="stribe"></div></div>
 
-  <!-- Cyklist -->
+  <!-- Cyklist (hvid, som i toppen) -->
   <div class="cyklist">
     <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g stroke="#141419" stroke-width="3.4" stroke-linecap="round">
+      <g stroke="#fff" stroke-width="3.4" stroke-linecap="round">
         <g class="hjul" style="transform-box:fill-box;transform-origin:center">
           <circle cx="24" cy="52" r="14" />
           <path d="M24 38v28M10 52h28M14 42l20 20M34 42l-20 20" stroke-width="1.6" opacity=".85" />
@@ -74,8 +107,8 @@
         </g>
         <path d="M24 52 46 30h22M46 30 58 52h34M58 52H24M68 30 92 52" />
         <path d="M64 30l-4-8h10M44 26l-6-4" />
-        <path d="M44 31 Q46 17 49 15 Q53 17 51 31 Z" fill="#141419" stroke="none" />
-        <circle cx="50" cy="8" r="6" fill="#141419" stroke="none" />
+        <path d="M44 31 Q46 17 49 15 Q53 17 51 31 Z" fill="#fff" stroke="none" />
+        <circle cx="50" cy="8" r="6" fill="#fff" stroke="none" />
         <path d="M49 19 65 29" stroke-width="4" />
         <path d="M47 31 58 50M46 31 40 50" stroke-width="4" />
       </g>
@@ -91,40 +124,20 @@
     max-height: 420px;
     border-radius: var(--radius);
     overflow: hidden;
-    background: linear-gradient(180deg, #bcd7ef 0%, #d3e4f1 44%, #f2ead9 74%);
+    background: linear-gradient(180deg, #4d9bd4 0%, #79b8e6 46%, #bfe0f2 72%);
     border: 1px solid var(--linje);
     box-shadow: 0 18px 44px rgba(20, 20, 25, 0.12);
   }
 
-  .sol {
+  .sky {
     position: absolute;
-    top: 30px;
-    right: 40px;
-    width: 74px;
-    height: 74px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #ffe9a8 0%, #ffd02f 55%, rgba(255, 208, 47, 0) 72%);
+    height: auto;
+    filter: drop-shadow(0 6px 6px rgba(30, 60, 90, 0.12));
   }
-
-  .skyer .sky {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 999px;
-    filter: blur(0.3px);
-  }
-  .sky::before,
-  .sky::after {
-    content: "";
-    position: absolute;
-    background: inherit;
-    border-radius: 999px;
-  }
-  .sky-1 { top: 40px; left: -80px; width: 70px; height: 20px; animation: sky-rul 34s linear infinite; }
-  .sky-2 { top: 74px; left: -140px; width: 54px; height: 16px; animation: sky-rul 46s linear infinite; animation-delay: -10s; }
-  .sky-3 { top: 22px; left: -120px; width: 46px; height: 14px; animation: sky-rul 40s linear infinite; animation-delay: -24s; }
-  .sky::before { width: 60%; height: 150%; left: 12%; top: -55%; }
-  .sky::after { width: 45%; height: 130%; right: 14%; top: -35%; }
-  @keyframes sky-rul { to { transform: translateX(calc(100vw + 260px)); } }
+  .sky-1 { top: 10%; width: 132px; animation: drift 42s linear infinite; }
+  .sky-2 { top: 30%; width: 96px; animation: drift 58s linear infinite; animation-delay: -22s; }
+  .sky-3 { top: 3%; width: 74px; animation: drift 50s linear infinite; animation-delay: -36s; }
+  @keyframes drift { from { left: -28%; } to { left: 122%; } }
 
   .skyline {
     position: absolute;
@@ -132,8 +145,8 @@
     bottom: 46px;
     display: flex;
     width: max-content;
-    height: 62%;
-    animation: by-rul 20s linear infinite;
+    height: 58%;
+    animation: by-rul 22s linear infinite;
   }
   .skyline-svg { height: 100%; width: auto; display: block; }
   @keyframes by-rul { to { transform: translateX(-50%); } }
@@ -163,12 +176,12 @@
     position: absolute;
     left: 50%;
     bottom: 28px;
-    width: 128px;
-    margin-left: -64px;
+    width: 132px;
+    margin-left: -66px;
     z-index: 3;
     animation: bob 1.1s ease-in-out infinite;
   }
-  .cyklist svg { width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgba(20, 20, 25, 0.28)); }
+  .cyklist svg { width: 100%; height: auto; filter: drop-shadow(0 5px 7px rgba(20, 20, 25, 0.45)); }
   .cyklist .hjul { animation: spin 1.05s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
