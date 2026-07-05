@@ -634,8 +634,12 @@ section{padding:96px 0}
   .burger{display:flex}
 }
 @media(max-width:680px){
-  section{padding:64px 0}
+  section{padding:54px 0}
+  .usp-baand{padding:48px 0}
+  .seo-tekst{padding:52px 0}
+  .sektion-hoved{margin-bottom:32px;gap:16px}
   .portaler,.produkt-grid{grid-template-columns:1fr}
+  .portal{min-height:400px}
   .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
   .hero-badge-gruppe{top:86px;bottom:auto;right:16px;gap:7px;width:104px;align-items:center}
   .hero-badge{width:104px;height:104px;font-size:.68rem}
