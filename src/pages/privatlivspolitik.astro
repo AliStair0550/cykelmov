@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../lib/site';
+---
+
+<Layout
+  title="Privatlivspolitik"
+  description="Sådan behandler Cykelmov dine personoplysninger, når du reserverer en cykel eller booker værkstedstid online."
+>
+  <section class="side-hero">
+    <div class="wrap">
+      <span class="eyebrow">Juridisk</span>
+      <h1 class="display-l" style="margin-top:14px">Privatlivspolitik</h1>
+      <p class="lead">Sidst opdateret juli 2026.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap" style="max-width:820px">
+      <div class="rig-tekst">
+        <h3>1. Dataansvarlig</h3>
+        <p>
+          Cykelmov er dataansvarlig for de personoplysninger, du giver os. Vores kontaktoplysninger
+          er: {site.adresse.gade}, {site.adresse.postnr} {site.adresse.by}, telefon {site.telefon},
+          {site.email}. CVR-nummer: [indsæt CVR].
+        </p>
+
+        <h3>2. Hvilke oplysninger vi indsamler</h3>
+        <p>
+          Når du sender en reservation, booking eller besked via sitet, indsamler vi de oplysninger,
+          du selv udfylder: navn, telefonnummer, e-mailadresse, ønsket tid samt en eventuel besked og
+          hvilken cykel eller ydelse, henvendelsen vedrører. Vi indsamler ikke oplysninger om dig ud
+          over det, du selv oplyser.
+        </p>
+
+        <h3>3. Formål og retsgrundlag</h3>
+        <p>
+          Vi bruger oplysningerne til at behandle din reservation eller booking, holde varen klar,
+          bekræfte tidspunkt og kontakte dig om din henvendelse. Retsgrundlaget er dit samtykke samt
+          vores berettigede interesse i at kunne besvare og gennemføre din henvendelse
+          (databeskyttelsesforordningens artikel 6, stk. 1, litra a og f).
+        </p>
+
+        <h3>4. Modtagere og databehandlere</h3>
+        <p>
+          Vi videregiver ikke dine oplysninger til tredjeparter med henblik på markedsføring. For at
+          drive sitet og modtage henvendelser benytter vi følgende databehandlere:
+        </p>
+        <ul>
+          <li>Web3Forms, som leverer og sender formularindsendelser til vores mail.</li>
+          <li>Sanity, hvor henvendelsen gemmes, så vi har overblik over reservationer.</li>
+          <li>Cloudflare, som hoster sitet.</li>
+        </ul>
+
+        <h3>5. Opbevaring</h3>
+        <p>
+          Vi opbevarer kun dine oplysninger, så længe det er nødvendigt for at behandle din
+          henvendelse og overholde vores forpligtelser. Herefter slettes de.
+        </p>
+
+        <h3>6. Cookies</h3>
+        <p>
+          Sitet sætter ikke cookies til statistik eller markedsføring. Vi indlæser skrifttyper fra
+          Google Fonts, hvorved din IP-adresse teknisk sendes til Google, alene for at vise siden
+          korrekt.
+        </p>
+
+        <h3>7. Dine rettigheder</h3>
+        <p>
+          Du har ret til at få indsigt i, berigtige eller få slettet dine oplysninger, til at gøre
+          indsigelse mod behandlingen og til dataportabilitet. Du kan til enhver tid trække et
+          samtykke tilbage. Kontakt os på {site.email} for at gøre brug af dine rettigheder.
+        </p>
+
+        <h3>8. Klage</h3>
+        <p>
+          Er du utilfreds med, hvordan vi behandler dine oplysninger, kan du klage til Datatilsynet,
+          Carl Jacobsens Vej 35, 2500 Valby, datatilsynet.dk.
+        </p>
+
+        <p style="color:var(--grå);font-size:.9rem;margin-top:28px">
+          Bemærk: Denne tekst er et udkast, der bør gennemses og tilpasses din virksomhed (bl.a.
+          CVR-nummer og de databehandlere, du faktisk bruger), inden den tages i brug.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -348,6 +348,10 @@ section{padding:96px 0}
 .footer-grid a{display:block;padding:5px 0;color:rgba(245,243,237,.75);font-size:.94rem;transition:color .15s;overflow-wrap:anywhere}
 .footer-grid a:hover{color:#fff}
 .footer-bund{border-top:1px solid rgba(245,243,237,.14);padding:22px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.82rem;color:rgba(245,243,237,.55)}
+.footer-bund .alius-link{color:var(--signal);font-weight:700;text-decoration:none}
+.footer-bund .alius-link:hover{text-decoration:underline}
+.footer-bund .footer-jura{color:inherit;text-decoration:none}
+.footer-bund .footer-jura:hover{color:#fff;text-decoration:underline}
 
 /* ---------- Booking / reservations-modal ---------- */
 .modal-bag{

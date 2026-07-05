@@ -1,0 +1,100 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../lib/site';
+---
+
+<Layout
+  title="Handelsbetingelser"
+  description="Cykelmovs handelsbetingelser: reservation og afhentning, priser, garanti og reklamation, værkstedsarbejde og brugte cykler."
+>
+  <section class="side-hero">
+    <div class="wrap">
+      <span class="eyebrow">Juridisk</span>
+      <h1 class="display-l" style="margin-top:14px">Handelsbetingelser</h1>
+      <p class="lead">Sidst opdateret juli 2026.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap" style="max-width:820px">
+      <div class="rig-tekst">
+        <h3>1. Om Cykelmov</h3>
+        <p>
+          Cykelmov er en fysisk cykelbutik og cykelværksted på {site.adresse.gade},
+          {site.adresse.postnr} {site.adresse.by}. Du kan kontakte os på telefon
+          {site.telefon} eller på {site.email}. CVR-nummer: [indsæt CVR].
+        </p>
+
+        <h3>2. Reservation og afhentning</h3>
+        <p>
+          Du kan reservere en cykel online. En reservation er uforpligtende og gratis. Vi holder
+          cyklen klar til afhentning i butikken og bekræfter tidspunktet på SMS. Reservationen
+          holdes i op til 48 timer, medmindre andet aftales.
+        </p>
+        <p>
+          Vi sælger og udleverer alle varer i butikken. Der er ingen levering eller onlinebetaling.
+          Du betaler først, når du henter varen i butikken, og handlen indgås først på dette
+          tidspunkt.
+        </p>
+
+        <h3>3. Priser og betaling</h3>
+        <p>
+          Alle priser er i danske kroner og inklusive moms. Prisen på skiltet i butikken og på
+          sitet er den pris, du betaler. Betaling sker i butikken med de betalingsmidler, vi
+          modtager (kontant og kort). Reservedele til værkstedet afregnes til dagspris og godkendes
+          af dig, før arbejdet udføres.
+        </p>
+
+        <h3>4. Værksted</h3>
+        <p>
+          Prisen for værkstedsarbejde dækker selve arbejdet. Skal der bruges nye dele, får du prisen
+          at vide og godkender den, før vi går i gang. De fleste reparationer klares samme dag, hvis
+          du kommer inden kl. 14.
+        </p>
+
+        <h3>5. Garanti og reklamation</h3>
+        <p>
+          Ved køb af ny cykel gælder købelovens reklamationsret på 24 måneder. Reklamationsretten
+          dækker fejl og mangler, der var til stede ved leveringen, men ikke normal slitage eller
+          skader opstået ved forkert brug. Med hver ny cykel følger desuden 2 års gratis service.
+        </p>
+        <p>
+          Opstår der en fejl, som er omfattet af reklamationsretten, reparerer eller ombytter vi
+          varen uden beregning. Kontakt os hurtigst muligt, når du opdager fejlen.
+        </p>
+
+        <h3>6. Brugte cykler</h3>
+        <p>
+          Brugte cykler sælges i den stand, de fremstår, og gennemgås af vores mekanikere inden salg.
+          Købelovens reklamationsret gælder også for brugte cykler, tilpasset varens alder og stand.
+          Du er altid velkommen til at prøve cyklen og få den gennemgået, inden du køber.
+        </p>
+
+        <h3>7. Fortrydelsesret</h3>
+        <p>
+          Da køb indgås ved fysisk fremmøde i butikken og ikke som fjernsalg, gælder den 14-dages
+          fortrydelsesret ikke. En onlinereservation er derimod uforpligtende, indtil du henter og
+          betaler i butikken.
+        </p>
+
+        <h3>8. Indbytning</h3>
+        <p>
+          Vi tager i mange tilfælde din gamle cykel i bytte. Vi vurderer den i butikken og trækker
+          beløbet fra prisen på din nye cykel.
+        </p>
+
+        <h3>9. Kontakt og klage</h3>
+        <p>
+          Har du spørgsmål til en handel, kan du kontakte os på {site.telefon} eller {site.email}.
+          Kan vi ikke finde en løsning, kan du klage til Konkurrence- og Forbrugerstyrelsens Center
+          for Klageløsning, Carl Jacobsens Vej 35, 2500 Valby, forbrug.dk.
+        </p>
+
+        <p style="color:var(--grå);font-size:.9rem;margin-top:28px">
+          Bemærk: Denne tekst er et udkast, der bør gennemses og tilpasses din virksomhed (bl.a.
+          CVR-nummer og eventuelle særlige vilkår), inden den tages i brug.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
