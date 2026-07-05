@@ -133,7 +133,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:800;line-height:1.02;letter
 .hero .lead{color:rgba(255,255,255,.92);margin:22px 0 34px;text-shadow:0 2px 18px rgba(0,0,0,.4)}
 .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
 .hero-badge-gruppe{
-  position:absolute;top:88px;right:56px;z-index:3;
+  position:absolute;top:88px;right:130px;z-index:3;
   display:flex;flex-direction:column;align-items:center;gap:12px;
 }
 .hero-badge{
@@ -157,7 +157,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:800;line-height:1.02;letter
   position:absolute;left:0;right:0;bottom:0;height:74px;z-index:4;
   background:var(--asfalt-2);
   border-top:4px solid #fff;
-  overflow:hidden;
+  overflow:visible; /* rytterens hoved må stikke op over banen ind i hero'en */
 }
 .cykelbane .midterstribe{
   position:absolute;top:50%;left:0;right:0;height:0;
@@ -165,7 +165,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:800;line-height:1.02;letter
   transform:translateY(-50%);
 }
 .rytter{
-  position:absolute;bottom:9px;left:-140px;width:110px;height:auto;
+  position:absolute;bottom:33px;left:-140px;width:110px;height:auto;
   animation:koer 13s linear infinite;
 }
 @keyframes koer{
