@@ -23,7 +23,7 @@ const erAktiv = (match: string) => sti === match || sti.startsWith(match + '/');
       {nav.map((n) => (
         <a href={n.href} class={erAktiv(n.match) ? 'aktiv' : undefined}>{n.label}</a>
       ))}
-      <a href="/vaerksted#book" class="nav-cta">Book tid</a>
+      <a href="/vaerksted/#book" class="nav-cta">Book tid</a>
     </nav>
     <button class="burger" aria-label="Menu" aria-expanded="false">
       <span style={moerk ? 'background:var(--kridt)' : undefined}></span>

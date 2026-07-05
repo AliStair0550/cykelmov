@@ -11,7 +11,7 @@ const { cykel } = Astro.props;
 const foto = cykel.billeder[0];
 const rabat = rabatProcent(cykel.pris, cykel.foerpris);
 const spar = cykel.foerpris ? cykel.foerpris - cykel.pris : 0;
-const href = `/cykler/${cykel.slug}`;
+const href = `/cykler/${cykel.slug}/`;
 
 // Op til tre specs-chips: geartype, cykeltype, første størrelse.
 const specs: string[] = [];

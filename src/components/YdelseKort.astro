@@ -9,7 +9,7 @@ export interface Props {
   medLink?: boolean;
 }
 const { ydelse, medLink = true } = Astro.props;
-const href = `/vaerksted/${ydelse.slug}`;
+const href = `/vaerksted/${ydelse.slug}/`;
 const tekst = uddrag(ydelse.beskrivelse, 150);
 ---
 

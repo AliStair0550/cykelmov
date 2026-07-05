@@ -44,7 +44,7 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
 
   // Honeypot: udfyldt = bot. Lad som om alt gik godt.
   if (felt(form, 'botcheck')) {
-    return redirect('/reserver?tak=1', 303);
+    return redirect('/reserver/?tak=1', 303);
   }
 
   const type = felt(form, 'type') || 'cykel'; // cykel | ydelse | kontakt
@@ -137,8 +137,8 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
     console.warn('[reserver] Sanity-token/projekt mangler, springer foresporgsel over.');
   }
 
-  return redirect('/reserver?tak=1', 303);
+  return redirect('/reserver/?tak=1', 303);
 };
 
 // Direkte GET-besøg sendes til tak-siden.
-export const GET: APIRoute = ({ redirect }) => redirect('/reserver', 302);
+export const GET: APIRoute = ({ redirect }) => redirect('/reserver/', 302);

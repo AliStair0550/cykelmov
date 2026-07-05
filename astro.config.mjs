@@ -9,6 +9,9 @@ const SITE = process.env.PUBLIC_SITE_URL || 'https://cykelmov.dk';
 
 export default defineConfig({
   site: SITE,
+  // Standard mappe-format. Canonical og sitemap får efterstillet skråstreg
+  // (fx /cykler/), og de interne links bruger samme form, så der ikke sker
+  // 308-redirects. API-endpointet /api/reserver forbliver uden skråstreg.
   // output: 'static' (standard i Astro 5). Alle sider prerendes ved build.
   // Kun /api/reserver kører on-demand (den har prerender = false) via Cloudflare-adapteren.
   adapter: cloudflare({

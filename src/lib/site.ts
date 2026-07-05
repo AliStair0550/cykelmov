@@ -34,10 +34,10 @@ export const site = {
 
 // Hovednavigation. `match` bruges til at markere det aktive punkt.
 export const nav = [
-  { href: '/cykler/dame', label: 'Damecykler', match: '/cykler/dame' },
-  { href: '/cykler/herre', label: 'Herrecykler', match: '/cykler/herre' },
-  { href: '/cykler/boern', label: 'Børnecykler', match: '/cykler/boern' },
-  { href: '/vaerksted', label: 'Værksted', match: '/vaerksted' },
+  { href: '/cykler/dame/', label: 'Damecykler', match: '/cykler/dame' },
+  { href: '/cykler/herre/', label: 'Herrecykler', match: '/cykler/herre' },
+  { href: '/cykler/boern/', label: 'Børnecykler', match: '/cykler/boern' },
+  { href: '/vaerksted/', label: 'Værksted', match: '/vaerksted' },
 ] as const;
 
 // Danske etiketter til enum-vaerdier fra Sanity.

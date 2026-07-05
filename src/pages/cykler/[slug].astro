@@ -61,8 +61,8 @@ const ogBillede = cykel.billeder[0] ? absUrl(cykel.billeder[0].url) : '/assets/h
     <div class="wrap">
       <nav class="broedkrumme" aria-label="Sti">
         <a href="/">Forsiden</a> ·
-        <a href="/cykler">Cykler</a> ·
-        <a href={`/cykler/${cykel.koen}`}>{koenLabel[cykel.koen]}</a> ·
+        <a href="/cykler/">Cykler</a> ·
+        <a href={`/cykler/${cykel.koen}/`}>{koenLabel[cykel.koen]}</a> ·
         <span>{cykel.titel}</span>
       </nav>
 
@@ -125,7 +125,7 @@ const ogBillede = cykel.billeder[0] ? absUrl(cykel.billeder[0].url) : '/assets/h
       <div class="wrap">
         <div class="sektion-hoved reveal">
           <div><h2 class="display-l">Måske også</h2></div>
-          <a href={`/cykler/${cykel.koen}`} class="btn btn-ghost">
+          <a href={`/cykler/${cykel.koen}/`} class="btn btn-ghost">
             Se alle {koenLabel[cykel.koen].toLowerCase()}cykler <span class="pil">→</span>
           </a>
         </div>

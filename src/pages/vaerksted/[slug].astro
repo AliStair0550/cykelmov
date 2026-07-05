@@ -56,7 +56,7 @@ const ogBillede = ydelse.billede ? absUrl(ydelse.billede.url) : '/assets/vaerkst
     <div class="wrap">
       <nav class="broedkrumme" aria-label="Sti">
         <a href="/">Forsiden</a> ·
-        <a href="/vaerksted">Værksted</a> ·
+        <a href="/vaerksted/">Værksted</a> ·
         <span>{ydelse.navn}</span>
       </nav>
 
@@ -111,17 +111,17 @@ const ogBillede = ydelse.billede ? absUrl(ydelse.billede.url) : '/assets/vaerkst
       <div class="wrap">
         <div class="sektion-hoved reveal">
           <div><h2 class="display-l">Andre ydelser</h2></div>
-          <a href="/vaerksted" class="btn btn-ghost">Hele prislisten <span class="pil">→</span></a>
+          <a href="/vaerksted/" class="btn btn-ghost">Hele prislisten <span class="pil">→</span></a>
         </div>
         <div class="ydelse-grid">
           {andre.map((y) => (
             <article class="ydelse-kort reveal">
               <div class="top">
-                <h4><a href={`/vaerksted/${y.slug}`}>{y.navn}</a></h4>
+                <h4><a href={`/vaerksted/${y.slug}/`}>{y.navn}</a></h4>
                 <span class="fra-pris">fra {kr(y.fraPris)}</span>
               </div>
               {y.estimeretTid && <span class="tid">⏱ {y.estimeretTid}</span>}
-              <a href={`/vaerksted/${y.slug}`} class="btn btn-ghost" style="padding:11px 20px;font-size:.8rem;align-self:flex-start;margin-top:6px">Læs mere</a>
+              <a href={`/vaerksted/${y.slug}/`} class="btn btn-ghost" style="padding:11px 20px;font-size:.8rem;align-self:flex-start;margin-top:6px">Læs mere</a>
             </article>
           ))}
         </div>
