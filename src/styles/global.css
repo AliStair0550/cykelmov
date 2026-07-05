@@ -201,9 +201,9 @@ section{padding:96px 0}
 .portal h3{font-size:clamp(1.6rem,2.4vw,2.2rem);text-transform:uppercase;margin-bottom:8px}
 .portal p{color:rgba(255,255,255,.85);margin-bottom:18px;font-size:.98rem}
 .portal .pris-fra{font-family:var(--font-label);font-weight:700;color:var(--signal)}
-.portal-dame .tag{background:var(--hindbaer);color:#fff}
+.portal-dame .tag{background:var(--cobalt);color:#fff}
 .portal-herre .tag{background:var(--signal);color:var(--asfalt)}
-.portal-vaerksted .tag{background:var(--cobalt);color:#fff}
+.portal-vaerksted .tag{background:#fff;color:var(--asfalt)}
 
 /* ---------- Produktkort ---------- */
 .produkt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
