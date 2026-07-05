@@ -313,11 +313,12 @@ section{padding:96px 0}
 .pris-linje .btn{padding:11px 20px;font-size:.8rem}
 
 /* ---------- Anmeldelser / social proof ---------- */
-.citater{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.citater{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
 .citat{
   background:#fff;border-radius:var(--radius);padding:26px;border:1px solid var(--linje);
-  position:relative;
+  position:relative;transition:transform .22s ease, box-shadow .22s ease;
 }
+.citat:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(20,20,25,.14)}
 .citat .stjerner{color:var(--signal);letter-spacing:2px;font-size:1.05rem;margin-bottom:12px;text-shadow:0 1px 0 rgba(0,0,0,.15)}
 .citat p{font-size:.98rem}
 .citat footer{margin-top:14px;font-family:var(--font-label);font-size:.8rem;color:var(--grå);text-transform:uppercase;letter-spacing:.05em}
@@ -412,6 +413,11 @@ section{padding:96px 0}
 .seo-tekst p{max-width:78ch;color:#3c3c46;margin-bottom:14px;font-size:.97rem}
 /* Herre-universet har mørk baggrund: gør SEO-teksten lys, så den kan læses */
 .univers-herre .seo-tekst p{color:rgba(245,243,237,.85)}
+
+/* Forsidens SEO-sektion: tekst til venstre, by-animation til højre, luftig linjeafstand */
+.seo-forside-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+.seo-forside .seo-forside-tekst p{line-height:1.95;font-size:1rem;max-width:52ch}
+@media(max-width:900px){.seo-forside-grid{grid-template-columns:1fr;gap:34px}}
 
 /* ============================================================
    V2-TILFØJELSER — produktkatalog, filtre, galleri, produktside
@@ -587,7 +593,6 @@ section{padding:96px 0}
   .portaler{grid-template-columns:1fr 1fr}
   .produkt-grid{grid-template-columns:1fr 1fr}
   .usp-grid{grid-template-columns:1fr 1fr;gap:34px}
-  .citater{grid-template-columns:1fr}
   .tryghed-grid,.besoeg-grid{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr 1fr}
 }

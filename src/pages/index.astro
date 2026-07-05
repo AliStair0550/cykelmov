@@ -4,6 +4,7 @@ import CykelbaneHero from '../components/CykelbaneHero.astro';
 import Ticker from '../components/Ticker.astro';
 import CykelKort from '../components/CykelKort.astro';
 import YdelseKort from '../components/YdelseKort.astro';
+import CykelGennemByen from '../components/CykelGennemByen.astro';
 import StructuredData from '../components/StructuredData.astro';
 import { hentFremhaevede, hentYdelser } from '../lib/data';
 import { site } from '../lib/site';
@@ -186,9 +187,26 @@ const localBusiness = {
     <div class="wrap">
       <div class="sektion-hoved reveal"><div><h2 class="display-l">Naboer på hjul</h2></div></div>
       <div class="citater">
-        <blockquote class="citat reveal"><div class="stjerner">★★★★★</div><p>Punkterede på vej til arbejde, trillede ind kl. 10, kørte videre 20 minutter senere. Det er service.</p><footer>Jonas · Stefansgade</footer></blockquote>
-        <blockquote class="citat reveal"><div class="stjerner">★★★★★</div><p>Fik min damecykel med kurv til under 2.700 og gratis eftersyn ovenpå. Bedste handel i lang tid.</p><footer>Amina · Mimersgade</footer></blockquote>
-        <blockquote class="citat reveal"><div class="stjerner">★★★★★</div><p>Ærlige folk. De sagde direkte, at min gamle cykel ikke var værd at reparere, og fandt en brugt til mig i stedet.</p><footer>Frederik · Jægersborggade</footer></blockquote>
+        <blockquote class="citat reveal">
+          <div class="stjerner">★★★★★</div>
+          <p>Købte en brugt cykel, som fungerer perfekt 👌 Lås, lys og ringeklokke smed de på med det samme uden merpris.</p>
+          <footer>Mette Louise Andersen · Google</footer>
+        </blockquote>
+        <blockquote class="citat reveal">
+          <div class="stjerner">★★★★★</div>
+          <p>Ejeren er super flink og virkelig dygtig til sit arbejde. Han fiksede min cykel på 5 minutter. Super service.</p>
+          <footer>Oguzhan Saglam · Google</footer>
+        </blockquote>
+        <blockquote class="citat reveal">
+          <div class="stjerner">★★★★★</div>
+          <p>Altid så god, hurtig og rar service. Kæmpe anbefaling.</p>
+          <footer>Zazcha Graversgaard · Google</footer>
+        </blockquote>
+        <blockquote class="citat reveal">
+          <div class="stjerner">★★★★★</div>
+          <p>Jeg kan varmt anbefale Cykel Mov. Teamet tog sig hurtigt og professionelt af min cykel, og nu kører den som ny. Alt blev ordnet til en super god pris, og servicen var både venlig og effektiv.</p>
+          <footer>Lucas Uttrup · Google</footer>
+        </blockquote>
       </div>
     </div>
   </section>
@@ -211,20 +229,24 @@ const localBusiness = {
     </div>
   </section>
 
-  <!-- SEO TEKST -->
-  <section class="seo-tekst">
-    <div class="wrap">
-      <h2>Cykelbutik og cykelværksted på Nørrebro</h2>
-      <p>
-        Cykelmov er din lokale cykelhandler på Nørrebrogade 74 i 2200 København N. Vi sælger nye og
-        brugte cykler til dame, herre og børn, herunder bycykler, mountainbikes og elcykler, og
-        driver et professionelt cykelværksted med reparation af alle cykelmærker.
-      </p>
-      <p>
-        Leder du efter en billig kvalitetscykel i København, kan du reservere den online og afhente
-        samme dag i butikken. Har din cykel brug for lapning, slangeskift, gearjustering eller et
-        serviceeftersyn, booker du en tid på få sekunder og betaler en fast, gennemsigtig pris.
-      </p>
+  <!-- SEO TEKST + BY-ANIMATION -->
+  <section class="seo-tekst seo-forside">
+    <div class="wrap seo-forside-grid reveal">
+      <div class="seo-forside-tekst">
+        <h2>Cykelbutik og cykelværksted på Nørrebro</h2>
+        <p>
+          Cykelmov er din lokale cykelhandler på Nørrebrogade 74 i 2200 København N. Vi sælger nye
+          og brugte cykler til dame, herre og børn, herunder bycykler, mountainbikes og elcykler, og
+          driver et professionelt cykelværksted med reparation af alle cykelmærker.
+        </p>
+        <p>
+          Leder du efter en billig kvalitetscykel i København, kan du reservere den online og
+          afhente samme dag i butikken. Har din cykel brug for lapning, slangeskift, gearjustering
+          eller et serviceeftersyn, booker du en tid på få sekunder og betaler en fast, gennemsigtig
+          pris.
+        </p>
+      </div>
+      <CykelGennemByen />
     </div>
   </section>
 </Layout>

@@ -1,0 +1,179 @@
+---
+// Dekorativ animation: cyklist der "kører gennem København".
+// Parallaks: skyer (langsomt), husrække + spir (medium), vej-striber (hurtigt).
+// Cyklisten holder sig på plads, hjulene drejer, og den bobber let.
+---
+
+<div class="by-scene" aria-hidden="true">
+  <div class="sol"></div>
+  <div class="skyer">
+    <span class="sky sky-1"></span>
+    <span class="sky sky-2"></span>
+    <span class="sky sky-3"></span>
+  </div>
+
+  <!-- Husrækken (defineres én gang, bruges to gange for sømløs loop) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <g id="cph-huse">
+        <!-- rød -->
+        <rect x="0" y="95" width="72" height="125" fill="#c05a4d" />
+        <polygon points="-2,96 36,71 74,96" fill="#a5483d" />
+        <!-- gul -->
+        <rect x="80" y="62" width="66" height="158" fill="#d9a53a" />
+        <polygon points="78,63 113,38 148,63" fill="#bd8a2c" />
+        <!-- creme -->
+        <rect x="154" y="108" width="78" height="112" fill="#e7dcc4" />
+        <polygon points="152,109 193,84 234,109" fill="#d1c3a4" />
+        <!-- teal (fladt tag + skorsten) -->
+        <rect x="240" y="70" width="58" height="150" fill="#3f8582" />
+        <rect x="240" y="64" width="58" height="8" fill="#316a68" />
+        <rect x="278" y="50" width="9" height="16" fill="#316a68" />
+        <!-- spir -->
+        <rect x="304" y="42" width="22" height="178" fill="#7c8592" />
+        <polygon points="304,44 315,8 326,44" fill="#4a7c6f" />
+        <circle cx="315" cy="9" r="3.4" fill="#e7dcc4" />
+        <!-- cobalt -->
+        <rect x="338" y="98" width="70" height="122" fill="#3a56bf" />
+        <polygon points="336,99 373,74 410,99" fill="#2e449c" />
+        <!-- pink -->
+        <rect x="416" y="84" width="64" height="136" fill="#c26a92" />
+        <polygon points="414,85 448,60 482,85" fill="#a9557c" />
+        <!-- hvid -->
+        <rect x="488" y="100" width="82" height="120" fill="#efe7d8" />
+        <polygon points="486,101 529,76 572,101" fill="#dbd1be" />
+        <!-- orange -->
+        <rect x="578" y="90" width="62" height="130" fill="#d98a3f" />
+        <polygon points="576,91 609,66 642,91" fill="#c1762f" />
+        <!-- slate -->
+        <rect x="648" y="76" width="74" height="144" fill="#586474" />
+        <polygon points="646,77 685,52 724,77" fill="#465060" />
+      </g>
+    </defs>
+  </svg>
+
+  <div class="skyline">
+    <svg class="skyline-svg" viewBox="0 0 760 220" preserveAspectRatio="xMidYMax meet"><use href="#cph-huse" /></svg>
+    <svg class="skyline-svg" viewBox="0 0 760 220" preserveAspectRatio="xMidYMax meet"><use href="#cph-huse" /></svg>
+  </div>
+
+  <!-- Vej -->
+  <div class="vej"><div class="stribe"></div></div>
+
+  <!-- Cyklist -->
+  <div class="cyklist">
+    <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#141419" stroke-width="3.4" stroke-linecap="round">
+        <g class="hjul" style="transform-box:fill-box;transform-origin:center">
+          <circle cx="24" cy="52" r="14" />
+          <path d="M24 38v28M10 52h28M14 42l20 20M34 42l-20 20" stroke-width="1.6" opacity=".85" />
+        </g>
+        <g class="hjul" style="transform-box:fill-box;transform-origin:center">
+          <circle cx="92" cy="52" r="14" />
+          <path d="M92 38v28M78 52h28M82 42l20 20M102 42l-20 20" stroke-width="1.6" opacity=".85" />
+        </g>
+        <path d="M24 52 46 30h22M46 30 58 52h34M58 52H24M68 30 92 52" />
+        <path d="M64 30l-4-8h10M44 26l-6-4" />
+        <path d="M44 31 Q46 17 49 15 Q53 17 51 31 Z" fill="#141419" stroke="none" />
+        <circle cx="50" cy="8" r="6" fill="#141419" stroke="none" />
+        <path d="M49 19 65 29" stroke-width="4" />
+        <path d="M47 31 58 50M46 31 40 50" stroke-width="4" />
+      </g>
+    </svg>
+  </div>
+</div>
+
+<style>
+  .by-scene {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3.1;
+    max-height: 420px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: linear-gradient(180deg, #bcd7ef 0%, #d3e4f1 44%, #f2ead9 74%);
+    border: 1px solid var(--linje);
+    box-shadow: 0 18px 44px rgba(20, 20, 25, 0.12);
+  }
+
+  .sol {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffe9a8 0%, #ffd02f 55%, rgba(255, 208, 47, 0) 72%);
+  }
+
+  .skyer .sky {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 999px;
+    filter: blur(0.3px);
+  }
+  .sky::before,
+  .sky::after {
+    content: "";
+    position: absolute;
+    background: inherit;
+    border-radius: 999px;
+  }
+  .sky-1 { top: 40px; left: -80px; width: 70px; height: 20px; animation: sky-rul 34s linear infinite; }
+  .sky-2 { top: 74px; left: -140px; width: 54px; height: 16px; animation: sky-rul 46s linear infinite; animation-delay: -10s; }
+  .sky-3 { top: 22px; left: -120px; width: 46px; height: 14px; animation: sky-rul 40s linear infinite; animation-delay: -24s; }
+  .sky::before { width: 60%; height: 150%; left: 12%; top: -55%; }
+  .sky::after { width: 45%; height: 130%; right: 14%; top: -35%; }
+  @keyframes sky-rul { to { transform: translateX(calc(100vw + 260px)); } }
+
+  .skyline {
+    position: absolute;
+    left: 0;
+    bottom: 46px;
+    display: flex;
+    width: max-content;
+    height: 62%;
+    animation: by-rul 20s linear infinite;
+  }
+  .skyline-svg { height: 100%; width: auto; display: block; }
+  @keyframes by-rul { to { transform: translateX(-50%); } }
+
+  .vej {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50px;
+    background: var(--asfalt-2);
+    border-top: 4px solid #fff;
+  }
+  .stribe {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: -60px;
+    height: 4px;
+    transform: translateY(-50%);
+    background: repeating-linear-gradient(90deg, #fff 0 30px, transparent 30px 60px);
+    animation: stribe-rul 0.5s linear infinite;
+  }
+  @keyframes stribe-rul { to { transform: translate(-60px, -50%); } }
+
+  .cyklist {
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    width: 128px;
+    margin-left: -64px;
+    z-index: 3;
+    animation: bob 1.1s ease-in-out infinite;
+  }
+  .cyklist svg { width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgba(20, 20, 25, 0.28)); }
+  .cyklist .hjul { animation: spin 1.05s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+  @media (max-width: 900px) {
+    .by-scene { aspect-ratio: 16 / 9; max-height: 320px; }
+  }
+</style>
