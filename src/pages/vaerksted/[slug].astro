@@ -4,7 +4,7 @@ import ReserverKnap from '../../components/ReserverKnap.astro';
 import PortableText from '../../components/PortableText.astro';
 import StructuredData from '../../components/StructuredData.astro';
 import { hentYdelser } from '../../lib/data';
-import { kr } from '../../lib/format';
+import { ydelsePris } from '../../lib/format';
 import { absUrl } from '../../lib/schema';
 import { site } from '../../lib/site';
 import type { Ydelse } from '../../lib/types';
@@ -22,9 +22,13 @@ const { ydelse } = Astro.props;
 const kategoriLabel: Record<string, string> = {
   service: 'Service',
   reparation: 'Reparation',
-  daek: 'Dæk og slanger',
-  elcykel: 'Elcykel-service',
+  daek: 'Dæk og hjul',
+  elcykel: 'Elcykel',
+  tilbehoer: 'Tilbehør',
+  saeson: 'Sæson',
+  akut: 'Akut hjælp',
 };
+const prisTekst = ydelsePris(ydelse.fraPris, ydelse.fastPris);
 
 const alle = await hentYdelser();
 const andre = alle.filter((y) => y._id !== ydelse._id).slice(0, 3);
@@ -49,7 +53,7 @@ const schema = {
 const ogBillede = ydelse.billede ? absUrl(ydelse.billede.url) : '/assets/vaerksted-vaerktoej.jpg';
 ---
 
-<Layout title={ydelse.navn} description={`${ydelse.navn} hos Cykelmov på Nørrebro. Fra ${kr(ydelse.fraPris)}. Book tid online, ofte samme dag.`} ogBillede={ogBillede}>
+<Layout title={ydelse.navn} description={`${ydelse.navn} hos Cykelmov på Nørrebro, ${prisTekst}. Book tid online, ofte samme dag.`} ogBillede={ogBillede}>
   <StructuredData slot="head" data={schema} />
 
   <section class="produkt-side">
@@ -79,7 +83,7 @@ const ogBillede = ydelse.billede ? absUrl(ydelse.billede.url) : '/assets/vaerkst
           {ydelse.estimeretTid && <p class="model">⏱ {ydelse.estimeretTid}</p>}
 
           <div class="produkt-pris-blok">
-            <span class="pris">fra {kr(ydelse.fraPris)}</span>
+            <span class="pris">{prisTekst}</span>
           </div>
 
           <div class="rig-tekst" style="margin-bottom:24px">
@@ -91,7 +95,7 @@ const ogBillede = ydelse.billede ? absUrl(ydelse.billede.url) : '/assets/vaerkst
               type="ydelse"
               navn={ydelse.navn}
               reference={ydelse._id}
-              pris={`fra ${kr(ydelse.fraPris)}`}
+              pris={prisTekst}
               klasse="btn btn-cobalt"
               label="Book værkstedstid"
             />
@@ -118,7 +122,7 @@ const ogBillede = ydelse.billede ? absUrl(ydelse.billede.url) : '/assets/vaerkst
             <article class="ydelse-kort reveal">
               <div class="top">
                 <h4><a href={`/vaerksted/${y.slug}/`}>{y.navn}</a></h4>
-                <span class="fra-pris">fra {kr(y.fraPris)}</span>
+                <span class="fra-pris">{ydelsePris(y.fraPris, y.fastPris)}</span>
               </div>
               {y.estimeretTid && <span class="tid">⏱ {y.estimeretTid}</span>}
               <a href={`/vaerksted/${y.slug}/`} class="btn btn-ghost" style="padding:11px 20px;font-size:.8rem;align-self:flex-start;margin-top:6px">Læs mere</a>

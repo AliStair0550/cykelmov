@@ -6,6 +6,11 @@ export function kr(n: number): string {
   return `${Math.round(n).toLocaleString('da-DK')} kr.`;
 }
 
+/** Prisvisning for en ydelse: fast pris uden "fra", ellers "fra X". */
+export function ydelsePris(fraPris: number, fastPris: boolean): string {
+  return fastPris ? kr(fraPris) : `fra ${kr(fraPris)}`;
+}
+
 /** Rabatprocent ud fra pris og førpris (afrundet). Null hvis ingen rabat. */
 export function rabatProcent(pris: number, foerpris: number | null): number | null {
   if (!foerpris || foerpris <= pris) return null;

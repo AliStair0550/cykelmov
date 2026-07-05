@@ -19,7 +19,7 @@ const brands = unikkeBrands(cykler);
     <Filtre typer={typer} brands={brands} />
     <div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
-        <span class="antal-viste" id="antal-viste" style={lysTekst ? 'color:rgba(245,243,237,.72)' : undefined}></span>
+        <span class="antal-viste" id="antal-viste" style={lysTekst ? 'color:rgba(245,243,237,.95)' : undefined}></span>
       </div>
       <div class="produkt-grid" id="produkt-grid">
         {cykler.map((c) => <CykelKort cykel={c} />)}

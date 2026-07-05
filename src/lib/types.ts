@@ -51,7 +51,14 @@ export interface Cykel {
   seoBeskrivelse: string | null;
 }
 
-export type YdelseKategori = 'service' | 'reparation' | 'daek' | 'elcykel';
+export type YdelseKategori =
+  | 'service'
+  | 'reparation'
+  | 'daek'
+  | 'elcykel'
+  | 'tilbehoer'
+  | 'saeson'
+  | 'akut';
 
 export interface Ydelse {
   _id: string;
@@ -59,6 +66,8 @@ export interface Ydelse {
   slug: string;
   kategori: YdelseKategori;
   fraPris: number;
+  /** True = fast pris (vises uden "fra"). */
+  fastPris: boolean;
   estimeretTid: string | null;
   beskrivelse: PortableBlock[] | null;
   billede: Billede | null;

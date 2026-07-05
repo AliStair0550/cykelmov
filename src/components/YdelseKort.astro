@@ -1,6 +1,6 @@
 ---
 import type { Ydelse } from '../lib/types';
-import { kr, uddrag } from '../lib/format';
+import { uddrag, ydelsePris } from '../lib/format';
 import ReserverKnap from './ReserverKnap.astro';
 
 export interface Props {
@@ -11,12 +11,13 @@ export interface Props {
 const { ydelse, medLink = true } = Astro.props;
 const href = `/vaerksted/${ydelse.slug}/`;
 const tekst = uddrag(ydelse.beskrivelse, 150);
+const pris = ydelsePris(ydelse.fraPris, ydelse.fastPris);
 ---
 
 <article class="ydelse-kort reveal">
   <div class="top">
     <h4>{medLink ? <a href={href}>{ydelse.navn}</a> : ydelse.navn}</h4>
-    <span class="fra-pris">fra {kr(ydelse.fraPris)}</span>
+    <span class="fra-pris">{pris}</span>
   </div>
   {ydelse.estimeretTid && <span class="tid">⏱ {ydelse.estimeretTid}</span>}
   {tekst && <p>{tekst}</p>}
@@ -28,7 +29,7 @@ const tekst = uddrag(ydelse.beskrivelse, 150);
       type="ydelse"
       navn={ydelse.navn}
       reference={ydelse._id}
-      pris={`fra ${kr(ydelse.fraPris)}`}
+      pris={pris}
       klasse="btn btn-cobalt"
       label="Book tid"
     />

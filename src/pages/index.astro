@@ -9,7 +9,12 @@ import { hentFremhaevede, hentYdelser } from '../lib/data';
 import { site } from '../lib/site';
 
 const fremhaevede = await hentFremhaevede(3);
-const ydelser = (await hentYdelser()).slice(0, 3);
+// Fire faste ydelser på forsiden, i denne rækkefølge.
+const forsideYdelseSlugs = ['serviceeftersyn', 'punkteringslapning', 'slangeskift', 'gearjustering'];
+const alleYdelser = await hentYdelser();
+const ydelser = forsideYdelseSlugs
+  .map((s) => alleYdelser.find((y) => y.slug === s))
+  .filter((y): y is NonNullable<typeof y> => Boolean(y));
 
 // LocalBusiness / BicycleStore schema
 const localBusiness = {
@@ -75,7 +80,7 @@ const localBusiness = {
   <section>
     <div class="wrap">
       <div class="sektion-hoved reveal">
-        <div><h2 class="display-l">Tre veje ind</h2></div>
+        <div><h2 class="display-l">Vi holder dig kørende</h2></div>
         <p class="lead" style="max-width:38ch">
           Cykel til hende, cykel til ham, cykel til de mindste, eller nyt liv til den cykel, du
           allerede elsker.
@@ -129,7 +134,11 @@ const localBusiness = {
       <div class="sektion-hoved reveal">
         <div>
           <span class="eyebrow">Værksted</span>
-          <h2 class="display-l">Fast pris, færdig i dag</h2>
+          <h2 class="display-l">Vi passer på din cykel</h2>
+          <p class="lead" style="margin-top:14px;max-width:46ch">
+            Små reparationer, store eftersyn og alt derimellem til en fast lav pris, så du altid kan
+            stole på din cykel.
+          </p>
         </div>
         <a href="/vaerksted/" class="btn btn-ghost">Hele prislisten <span class="pil">→</span></a>
       </div>

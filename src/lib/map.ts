@@ -48,6 +48,7 @@ export function mapYdelse(doc: any): Ydelse {
     slug: doc?.slug?.current ?? doc?.slug ?? '',
     kategori: doc?.kategori ?? 'service',
     fraPris: Number(doc?.fraPris ?? 0),
+    fastPris: Boolean(doc?.fastPris),
     estimeretTid: doc?.estimeretTid ?? null,
     beskrivelse: Array.isArray(doc?.beskrivelse) ? doc.beskrivelse : null,
     billede: doc?.billede ? resolveBillede(doc.billede, navn) : null,

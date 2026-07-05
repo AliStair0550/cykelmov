@@ -249,71 +249,61 @@ export const demoCykler: Cykel[] = [
   },
 ];
 
+function mkY(
+  slug: string,
+  navn: string,
+  kategori: Ydelse['kategori'],
+  fraPris: number,
+  fastPris: boolean,
+  estimeretTid: string | null,
+  beskrivelse: string | null,
+  raekkefolge: number,
+  billede: Billede | null = null,
+): Ydelse {
+  return {
+    _id: `ydelse-${slug}`,
+    navn,
+    slug,
+    kategori,
+    fraPris,
+    fastPris,
+    estimeretTid,
+    beskrivelse: beskrivelse ? [afsnit(beskrivelse)] : null,
+    billede,
+    raekkefolge,
+  };
+}
+
 export const demoYdelser: Ydelse[] = [
-  {
-    _id: 'demo-serviceeftersyn',
-    navn: 'Serviceeftersyn',
-    slug: 'serviceeftersyn',
-    kategori: 'service',
-    fraPris: 499,
-    estimeretTid: 'Samme dag',
-    beskrivelse: [
-      afsnit(
-        'Fuld gennemgang af gear, bremser, kæde, hjul og lys. Vi strammer, justerer og smører, og fortæller ærligt, hvad der eventuelt trænger til udskiftning, før vi gør noget.',
-      ),
-      punkt('Justering af gear og bremser'),
-      punkt('Kontrol af kæde, eger og dæk'),
-      punkt('Test af lys og reflekser'),
-    ],
-    billede: lokalBillede('/assets/vaerksted-vaerktoej.jpg', 'Værktøj i Cykelmovs værksted'),
-    raekkefolge: 1,
-  },
-  {
-    _id: 'demo-slangeskift',
-    navn: 'Slangeskift',
-    slug: 'slangeskift',
-    kategori: 'daek',
-    fraPris: 249,
-    estimeretTid: 'Mens du venter',
-    beskrivelse: [
-      afsnit(
-        'Ny slange monteret, mens du venter. Kan slangen lappes, klarer vi det for 99 kr. Dæk afregnes til dagspris, og du får altid prisen at vide først.',
-      ),
-    ],
-    billede: lokalBillede('/assets/vaerksted-daek.jpg', 'Cykeldæk på lager i værkstedet'),
-    raekkefolge: 2,
-  },
-  {
-    _id: 'demo-gearjustering',
-    navn: 'Gearjustering',
-    slug: 'gearjustering',
-    kategori: 'reparation',
-    fraPris: 149,
-    estimeretTid: '30-45 min',
-    beskrivelse: [
-      afsnit(
-        'Indvendige og udvendige gear stilles præcist ind, inklusive stramning af kabler. Skifter dine gear dårligt eller hopper de, er det som regel her, løsningen ligger.',
-      ),
-    ],
-    billede: null,
-    raekkefolge: 3,
-  },
-  {
-    _id: 'demo-elcykel-service',
-    navn: 'Elcykel-service',
-    slug: 'elcykel-service',
-    kategori: 'elcykel',
-    fraPris: 699,
-    estimeretTid: '1-2 dage',
-    beskrivelse: [
-      afsnit(
-        'Fuldt eftersyn af elcyklen med tjek af motor, batteri, display og elektronik oveni det mekaniske serviceeftersyn. Vi servicerer alle el-mærker.',
-      ),
-      punkt('Diagnose af motor og batteri'),
-      punkt('Opdatering og test af display'),
-      punkt('Mekanisk eftersyn af gear og bremser'),
-    ],
-    billede: null,
-    raekkefolge: 4,
-  },
+  // Service
+  mkY('serviceeftersyn', 'Serviceeftersyn', 'service', 499, false, 'Samme dag', 'Fuld gennemgang af gear, bremser, kæde, hjul og lys. Justering, smøring og ærlig rådgivning om eventuelle sliddele.', 1, lokalBillede('/assets/vaerksted-vaerktoej.jpg', 'Værktøj i Cykelmovs værksted')),
+  mkY('stort-service', 'Stort service', 'service', 899, false, '1 dag', 'Komplet service med justering af alle bevægelige dele, opstramning, smøring og grundigt sikkerhedstjek. Ideelt én gang om året.', 2),
+  mkY('sikkerhedstjek', 'Sikkerhedstjek', 'service', 199, true, '20 min', 'Et hurtigt eftersyn af bremser, gear, hjul og dæk. Perfekt inden ferie eller hvis cyklen har stået stille.', 3),
+  // Reparation
+  mkY('gearjustering', 'Gearjustering', 'reparation', 149, false, '30 til 45 min', 'Præcis justering af gear og kabler, så cyklen skifter let og præcist.', 4),
+  mkY('bremseservice', 'Bremseservice', 'reparation', 199, false, '30 min', 'Justering af bremser samt kontrol af klodser, kabler og bremsekraft.', 5),
+  mkY('kaedeskift', 'Kædeskift', 'reparation', 299, false, '30 min', 'Udskiftning af slidt kæde for bedre gearskift og længere levetid på tandhjul.', 6),
+  mkY('kaede-og-drivlinjerens', 'Kæde og drivlinjerens', 'reparation', 199, false, '30 min', 'Grundig rens og smøring af kæde, kassette og krank.', 7),
+  mkY('bremseklodser', 'Bremseklodser', 'reparation', 249, false, '30 min', 'Udskiftning af bremseklodser inklusive justering.', 8),
+  // Dæk og hjul
+  mkY('slangeskift', 'Slangeskift', 'daek', 249, false, 'Mens du venter', 'Ny slange monteres hurtigt. Lapning fra 99 hvis muligt.', 9, lokalBillede('/assets/vaerksted-daek.jpg', 'Cykeldæk på lager i værkstedet')),
+  mkY('punkteringslapning', 'Punkteringslapning', 'daek', 99, true, '15 min', 'Vi lapper slangen, hvis skaden kan repareres.', 10),
+  mkY('daekskift', 'Dækskift', 'daek', 299, false, null, 'Montering af nyt dæk inklusive kontrol af fælg og slange.', 11),
+  mkY('hjulopretning', 'Hjulopretning', 'daek', 249, false, null, 'Retning af skæve hjul og justering af eger.', 12),
+  // Elcykel
+  mkY('elcykel-service', 'Elcykel service', 'elcykel', 699, false, '1 til 2 dage', 'Komplet service af både mekanik og elektronik.', 13),
+  mkY('batteritest', 'Batteritest', 'elcykel', 199, true, null, 'Test af batteriets kapacitet og generelle sundhed.', 14),
+  mkY('softwareopdatering', 'Softwareopdatering', 'elcykel', 249, false, null, 'Opdatering af motor og system, hvis producenten understøtter det.', 15),
+  // Tilbehør
+  mkY('montering-cykelkurv', 'Montering af cykelkurv', 'tilbehoer', 149, false, null, null, 16),
+  mkY('montering-barnestol', 'Montering af barnestol', 'tilbehoer', 249, false, null, null, 17),
+  mkY('montering-bagagebaerer', 'Montering af bagagebærer', 'tilbehoer', 199, false, null, null, 18),
+  mkY('montering-skaerme', 'Montering af skærme', 'tilbehoer', 199, false, null, null, 19),
+  mkY('montering-lygter', 'Montering af lygter', 'tilbehoer', 99, false, null, null, 20),
+  mkY('montering-laas', 'Montering af lås', 'tilbehoer', 99, false, null, null, 21),
+  // Sæson
+  mkY('foraarsklargoering', 'Forårsklargøring', 'saeson', 599, false, null, 'Perfekt efter vinteren med fuldt eftersyn, smøring og justering.', 22),
+  mkY('vinterklargoering', 'Vinterklargøring', 'saeson', 399, false, null, 'Rens, smøring og beskyttelse mod salt og fugt.', 23),
+  // Akut hjælp
+  mkY('akut-reparation', 'Akut reparation', 'akut', 299, false, null, 'Spring køen over. Vi prioriterer din cykel samme dag, når det er muligt.', 24),
 ];
