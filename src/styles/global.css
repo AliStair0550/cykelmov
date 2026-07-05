@@ -337,7 +337,6 @@ section{padding:96px 0}
 .anmeldelser-spor{display:flex;width:max-content;animation:anmeld-rul 95s linear infinite;will-change:transform}
 .anmeldelser-spor .citat{width:320px;flex-shrink:0;margin-right:20px}
 .anmeldelser-spor .citat:hover{transform:none}
-.anmeldelser-baand:hover .anmeldelser-spor{animation-play-state:paused}
 @keyframes anmeld-rul{to{transform:translateX(-50%)}}
 @media(max-width:680px){.anmeldelser-spor .citat{width:280px}.anmeldelser-spor{animation-duration:70s}}
 
