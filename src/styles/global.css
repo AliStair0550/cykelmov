@@ -418,6 +418,8 @@ section{padding:96px 0}
 .filtre{
   position:sticky;top:98px;background:#fff;border:1px solid var(--linje);
   border-radius:var(--radius);padding:24px;
+  /* Fast mørk tekst, så det hvide filterkort er læsbart også på mørke sider (herre) */
+  color:var(--moerk-tekst);
 }
 @media(max-width:900px){
   .filtre{
@@ -429,7 +431,7 @@ section{padding:96px 0}
 .filtre h3{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.08em;font-size:.86rem;margin-bottom:6px}
 .filter-gruppe{padding:18px 0;border-bottom:1px dashed var(--linje)}
 .filter-gruppe:last-of-type{border-bottom:none}
-.filter-gruppe > label{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.06em;font-size:.74rem;color:var(--grå);display:block;margin-bottom:12px}
+.filter-gruppe > label{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.06em;font-size:.76rem;color:#3c3c46;font-weight:500;display:block;margin-bottom:12px}
 .filter-valg{display:flex;flex-direction:column;gap:9px}
 .filter-valg label{display:flex;align-items:center;gap:10px;font-size:.95rem;cursor:pointer}
 .filter-valg input[type=checkbox]{width:18px;height:18px;accent-color:var(--cobalt);flex-shrink:0}
