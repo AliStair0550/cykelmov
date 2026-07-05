@@ -50,8 +50,8 @@ const ogBillede = cykel.billeder[0] ? absUrl(cykel.billeder[0].url) : '/assets/h
 ---
 
 <Layout
-  title={cykel.seoTitel ?? `${cykel.titel}`}
-  description={cykel.seoBeskrivelse ?? cykel.kortBeskrivelse}
+  title={cykel.seoTitel ?? `Bestil ${cykel.titel} online`}
+  description={cykel.seoBeskrivelse ?? `${cykel.kortBeskrivelse} Bestil online hos Cykelmov og afhent i butikken på Nørrebrogade 74.`}
   ogBillede={ogBillede}
   bodyKlasse={bodyKlasse}
 >
