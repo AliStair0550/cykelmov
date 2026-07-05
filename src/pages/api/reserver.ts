@@ -61,9 +61,21 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
   const tid = TID_LABEL[tidVaerdi] ?? tidVaerdi;
   const besked = felt(form, 'besked');
 
-  // Server-side validering (backstop for browserens required-felter)
+  // Server-side validering (backstop for browserens required-felter + spam)
   if (!navn || !telefon || !email) {
     return fejlSvar('Udfyld venligst navn, telefon og e-mail.');
+  }
+  const emailGyldig = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!emailGyldig) {
+    return fejlSvar('Indtast venligst en gyldig e-mailadresse.');
+  }
+  const telefonGyldig = /[0-9]{6,}/.test(telefon.replace(/\s/g, ''));
+  if (!telefonGyldig) {
+    return fejlSvar('Indtast venligst et gyldigt telefonnummer.');
+  }
+  // Længde-lofter, så payload ikke kan misbruges
+  if (navn.length > 100 || telefon.length > 30 || email.length > 120 || besked.length > 2000 || objekt.length > 160) {
+    return fejlSvar('En eller flere felter er for lange.');
   }
 
   const web3Key = laesEnv(locals, 'PUBLIC_WEB3FORMS_KEY');

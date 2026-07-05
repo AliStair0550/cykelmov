@@ -20,6 +20,8 @@ import { tidValg } from '../lib/site';
         </div>
       </div>
 
+      <p class="reserver-note" id="reserver-note"></p>
+
       <form id="reserver-form" action="/api/reserver" method="POST">
         <input type="hidden" name="type" id="rf-type" value="cykel" />
         <input type="hidden" name="objekt" id="rf-objekt" value="" />
@@ -32,15 +34,15 @@ import { tidValg } from '../lib/site';
           <input id="rf-navn" name="navn" type="text" required autocomplete="name" placeholder="Dit fulde navn" />
         </div>
         <div class="felt">
-          <label for="rf-tlf">Telefon</label>
-          <input id="rf-tlf" name="telefon" type="tel" required autocomplete="tel" placeholder="Så vi kan bekræfte" />
+          <label for="rf-tlf">Mobilnummer</label>
+          <input id="rf-tlf" name="telefon" type="tel" required autocomplete="tel" placeholder="Vi bekræfter afhentning på SMS" />
         </div>
         <div class="felt">
           <label for="rf-email">E-mail</label>
           <input id="rf-email" name="email" type="email" required autocomplete="email" placeholder="dig@eksempel.dk" />
         </div>
         <div class="felt">
-          <label for="rf-tid">Ønsket tid</label>
+          <label for="rf-tid" id="rf-tid-label">Hvornår vil du hente?</label>
           <select id="rf-tid" name="tid">
             {tidValg.map((t) => <option value={t.value}>{t.label}</option>)}
           </select>
@@ -54,7 +56,7 @@ import { tidValg } from '../lib/site';
           Send reservation <span class="pil">→</span>
         </button>
         <p style="font-size:.8rem;color:var(--grå);text-align:center;margin-top:12px">
-          Ingen betaling nu. Vi vender tilbage inden for én arbejdsdag.
+          Ingen betaling nu. Du henter selv i butikken og betaler først, når du står med varen.
         </p>
       </form>
     </div>
@@ -74,6 +76,8 @@ import { tidValg } from '../lib/site';
     const fObjekt = document.getElementById('rf-objekt') as HTMLInputElement | null;
     const fRef = document.getElementById('rf-reference') as HTMLInputElement | null;
     const submitKnap = document.getElementById('rf-submit');
+    const note = document.getElementById('reserver-note');
+    const tidLabel = document.getElementById('rf-tid-label');
     const modalEl = bag.querySelector('.modal') as HTMLElement | null;
     let sidsteFokus: HTMLElement | null = null;
 
@@ -116,8 +120,19 @@ import { tidValg } from '../lib/site';
         if (fType) fType.value = type;
         if (fObjekt) fObjekt.value = navn;
         if (fRef) fRef.value = ref;
-        if (titel) titel.textContent = type === 'ydelse' ? 'Book værkstedstid' : 'Reservér & afhent';
+        if (titel) titel.textContent = type === 'ydelse' ? 'Book værkstedstid' : 'Reservér til afhentning';
         if (submitKnap) submitKnap.firstChild!.textContent = type === 'ydelse' ? 'Send booking ' : 'Send reservation ';
+        if (type === 'ydelse') {
+          if (note)
+            note.textContent =
+              'Kom forbi med cyklen på Nørrebrogade 74. Du betaler først, når arbejdet er lavet.';
+          if (tidLabel) tidLabel.textContent = 'Hvornår kommer du forbi?';
+        } else {
+          if (note)
+            note.textContent =
+              'Du reserverer til afhentning i butikken på Nørrebrogade 74. Ingen levering — du henter selv og betaler først, når du står med cyklen.';
+          if (tidLabel) tidLabel.textContent = 'Hvornår vil du hente den?';
+        }
 
         if (navn && objektNavn && objektBoks) {
           objektNavn.textContent = navn;
