@@ -17,6 +17,23 @@ const ydelser = forsideYdelseSlugs
   .map((s) => alleYdelser.find((y) => y.slug === s))
   .filter((y): y is NonNullable<typeof y> => Boolean(y));
 
+// Ægte Google-anmeldelser — ruller rundt i båndet nederst ("på hjul").
+const anmeldelser = [
+  { navn: 'Mette Louise Andersen', tekst: 'Købte en brugt cykel, som fungerer perfekt 👌 Lås, lys og ringeklokke smed de på med det samme uden merpris.' },
+  { navn: 'Daniel Clafton', tekst: 'Kom ind med en cykel med flere forskellige problemer. Blev mødt med et smil, og de identificerede hurtigt alle problemerne, også et som en anden cykelhandler havde overset. Derefter gav de mig en super god pris, og cyklen var klar efter få dage. Kan varmt anbefales 🤩' },
+  { navn: 'Oguzhan Saglam', tekst: 'Ejeren er super flink og virkelig dygtig til sit arbejde. Han fiksede min cykel på 5 minutter. Super service.' },
+  { navn: 'Adam Ujhelyi', tekst: 'Extremely fast service for an amazing price, can fully recommend.' },
+  { navn: 'Nora Benjnouh', tekst: 'Rigtig god service og gode priser. Stor anbefaling :)' },
+  { navn: 'Lucas Uttrup', tekst: 'Jeg kan varmt anbefale Cykel Mov. Teamet tog sig hurtigt og professionelt af min cykel, og nu kører den som ny. Alt blev ordnet til en super god pris, og servicen var både venlig og effektiv.' },
+  { navn: 'Omar Fagir', tekst: 'Bedste service i København og gode cykler.' },
+  { navn: 'Felix Eisenhardt', tekst: 'God og imødekommende service. Fair priser og hurtige reparationer.' },
+  { navn: 'P. C.', tekst: 'Ordered online and picked up. The price is very competitive. No issues. Would recommend.' },
+  { navn: 'Zazcha Graversgaard', tekst: 'Altid så god, hurtig og rar service. Kæmpe anbefaling.' },
+  { navn: 'Ihsan Farah Law', tekst: 'Mega fedt arbejde. Er glad for det.' },
+  { navn: 'Verificeret kunde', tekst: 'Fik upåklagelig service, kompetent behandling og superbillig løsning.' },
+  { navn: 'Den G', tekst: 'De satte min kæde på, meget glad for det.' },
+];
+
 // LocalBusiness / BicycleStore schema
 const localBusiness = {
   '@context': 'https://schema.org',
@@ -182,31 +199,23 @@ const localBusiness = {
     </div>
   </section>
 
-  <!-- ANMELDELSER -->
+  <!-- ANMELDELSER — ruller rundt "på hjul" -->
   <section style="background:var(--kridt-2)">
     <div class="wrap">
-      <div class="sektion-hoved reveal"><div><h2 class="display-l">Nørrebro på hjul</h2></div></div>
-      <div class="citater">
-        <blockquote class="citat reveal">
-          <div class="stjerner">★★★★★</div>
-          <p>Købte en brugt cykel, som fungerer perfekt 👌 Lås, lys og ringeklokke smed de på med det samme uden merpris.</p>
-          <footer>Mette Louise Andersen · Google</footer>
-        </blockquote>
-        <blockquote class="citat reveal">
-          <div class="stjerner">★★★★★</div>
-          <p>Ejeren er super flink og virkelig dygtig til sit arbejde. Han fiksede min cykel på 5 minutter. Super service.</p>
-          <footer>Oguzhan Saglam · Google</footer>
-        </blockquote>
-        <blockquote class="citat reveal">
-          <div class="stjerner">★★★★★</div>
-          <p>Altid så god, hurtig og rar service. Kæmpe anbefaling.</p>
-          <footer>Zazcha Graversgaard · Google</footer>
-        </blockquote>
-        <blockquote class="citat reveal">
-          <div class="stjerner">★★★★★</div>
-          <p>Jeg kan varmt anbefale Cykel Mov. Teamet tog sig hurtigt og professionelt af min cykel, og nu kører den som ny. Alt blev ordnet til en super god pris, og servicen var både venlig og effektiv.</p>
-          <footer>Lucas Uttrup · Google</footer>
-        </blockquote>
+      <div class="sektion-hoved reveal">
+        <div><h2 class="display-l">Nørrebro på hjul</h2></div>
+        <p class="lead" style="max-width:34ch">Femstjernede anmeldelser fra vores kunder på Google.</p>
+      </div>
+    </div>
+    <div class="anmeldelser-baand" role="list" aria-label="Anmeldelser fra Google">
+      <div class="anmeldelser-spor">
+        {[...anmeldelser, ...anmeldelser].map((a) => (
+          <blockquote class="citat" role="listitem">
+            <div class="stjerner" aria-label="5 ud af 5 stjerner">★★★★★</div>
+            <p>{a.tekst}</p>
+            <footer>{a.navn} · Google</footer>
+          </blockquote>
+        ))}
       </div>
     </div>
   </section>

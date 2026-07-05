@@ -332,6 +332,14 @@ section{padding:96px 0}
 .citat p{font-size:.98rem}
 /* Navn + Google altid nederst, på linje på tværs af kortene */
 .citat footer{margin-top:auto;padding-top:18px;font-family:var(--font-label);font-size:.8rem;color:var(--grå);text-transform:uppercase;letter-spacing:.05em}
+/* Anmeldelses-bånd der ruller rundt "på hjul" */
+.anmeldelser-baand{overflow:hidden;padding:10px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.anmeldelser-spor{display:flex;width:max-content;animation:anmeld-rul 95s linear infinite;will-change:transform}
+.anmeldelser-spor .citat{width:320px;flex-shrink:0;margin-right:20px}
+.anmeldelser-spor .citat:hover{transform:none}
+.anmeldelser-baand:hover .anmeldelser-spor{animation-play-state:paused}
+@keyframes anmeld-rul{to{transform:translateX(-50%)}}
+@media(max-width:680px){.anmeldelser-spor .citat{width:280px}.anmeldelser-spor{animation-duration:70s}}
 
 /* ---------- Kort/adresse ---------- */
 .besoeg{background:var(--cobalt);color:#fff}
