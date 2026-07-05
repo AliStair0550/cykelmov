@@ -11,13 +11,20 @@ export interface Props {
   lead: string;
   /** Rundt badge øverst til højre, fx "Op til -25% lige nu". Sæt til null for at skjule. */
   badge?: string | null;
+  /** Lille tekst under badge-cirklen, fx "2 års gratis service". */
+  badgeNote?: string | null;
 }
-const { bgBillede, foer, midt, fremhaev, lead, badge } = Astro.props;
+const { bgBillede, foer, midt, fremhaev, lead, badge, badgeNote } = Astro.props;
 ---
 
 <section class="hero" style="padding:0">
   <div class="hero-bg" style={`background-image:url('${bgBillede}')`}></div>
-  {badge && <div class="hero-badge" set:html={badge}></div>}
+  {badge && (
+    <div class="hero-badge-gruppe">
+      <div class="hero-badge" set:html={badge}></div>
+      {badgeNote && <span class="hero-badge-note">{badgeNote}</span>}
+    </div>
+  )}
   <div class="wrap hero-inner">
     <h1 class="display-xl">
       {foer}<br />{midt ? midt + ' ' : ''}<span class="streg">{fremhaev}</span>

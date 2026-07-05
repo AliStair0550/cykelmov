@@ -122,22 +122,33 @@ h1,h2,h3{font-family:var(--font-display);font-weight:800;line-height:1.02;letter
   color:#fff;overflow:hidden;background:var(--asfalt);
 }
 .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 62%;animation:kenburns 14s ease-in-out infinite alternate;filter:saturate(1.2) contrast(1.28) brightness(1.16)}
-.hero-bg::after{content:"";position:absolute;inset:0;pointer-events:none;background:inherit;filter:saturate(1.2) contrast(1.28) brightness(1.16) blur(9px);-webkit-mask-image:linear-gradient(90deg,transparent 62%,#000 96%),linear-gradient(180deg,#000 42%,transparent 66%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 62%,#000 96%),linear-gradient(180deg,#000 42%,transparent 66%);mask-composite:intersect}
+/* Blødt slør på begge sidekanter, skarpt billede i midten */
+.hero-bg::after{content:"";position:absolute;inset:0;pointer-events:none;background:inherit;filter:saturate(1.2) contrast(1.28) brightness(1.16) blur(10px);-webkit-mask-image:linear-gradient(90deg,#000 0%,transparent 20%,transparent 80%,#000 100%);mask-image:linear-gradient(90deg,#000 0%,transparent 20%,transparent 80%,#000 100%)}
 @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.11) translateY(-1.8%)}}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,25,.16) 0%,rgba(20,20,25,.05) 42%,rgba(20,20,25,.74) 100%)}
+/* Mørk vignette: lyst i midten, naturligt mørkere ud mod venstre og højre, plus bunden til tekst */
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,20,25,.74) 0%,rgba(20,20,25,0) 28%,rgba(20,20,25,0) 72%,rgba(20,20,25,.74) 100%),linear-gradient(180deg,rgba(20,20,25,.14) 0%,rgba(20,20,25,.04) 42%,rgba(20,20,25,.74) 100%)}
 .hero-inner{position:relative;z-index:2;width:100%;padding:120px 0 150px}
 .hero h1{max-width:13ch;text-shadow:0 4px 40px rgba(0,0,0,.35)}
 .hero h1 .streg{color:var(--signal)}
 .hero .lead{color:rgba(255,255,255,.92);margin:22px 0 34px;text-shadow:0 2px 18px rgba(0,0,0,.4)}
 .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-badge-gruppe{
+  position:absolute;top:88px;right:56px;z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+}
 .hero-badge{
-  position:absolute;top:96px;right:24px;z-index:3;
   background:var(--signal);color:var(--asfalt);
   font-family:var(--font-label);font-weight:700;text-transform:uppercase;letter-spacing:.04em;
-  padding:18px 20px;border-radius:50%;width:132px;height:132px;
-  display:flex;align-items:center;justify-content:center;text-align:center;font-size:.86rem;line-height:1.25;
+  padding:18px 20px;border-radius:50%;width:154px;height:154px;
+  display:flex;align-items:center;justify-content:center;text-align:center;font-size:.94rem;line-height:1.25;
   transform:rotate(8deg);box-shadow:0 12px 32px rgba(0,0,0,.3);
   animation:svaj 5s ease-in-out infinite;
+}
+.hero-badge-note{
+  font-family:var(--font-label);font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+  color:#fff;background:rgba(20,20,25,.55);backdrop-filter:blur(4px);
+  padding:7px 14px;border-radius:999px;white-space:nowrap;
+  box-shadow:0 6px 18px rgba(0,0,0,.28);
 }
 @keyframes svaj{0%,100%{transform:rotate(8deg)}50%{transform:rotate(2deg)}}
 
@@ -584,7 +595,9 @@ section{padding:96px 0}
   .nav-links.aaben{display:flex}
   .nav-links a{padding:14px 18px;background:#fff;border:1px solid var(--linje)}
   .burger{display:flex}
-  .hero-badge{width:104px;height:104px;font-size:.72rem;top:auto;bottom:120px}
+  .hero-badge-gruppe{top:86px;bottom:auto;right:16px;gap:7px;width:104px;align-items:center}
+  .hero-badge{width:104px;height:104px;font-size:.68rem}
+  .hero-badge-note{font-size:.56rem;padding:4px 10px;letter-spacing:.03em;white-space:normal;text-align:center;line-height:1.25;max-width:104px}
   .hero-inner{padding:90px 0 130px}
   .pris-linje{flex-wrap:wrap}
   .pris-linje .btn{width:100%;justify-content:center}
