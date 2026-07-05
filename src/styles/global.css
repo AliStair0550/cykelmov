@@ -53,6 +53,8 @@ h1,h2,h3{font-family:var(--font-display);font-weight:800;line-height:1.02;letter
   display:inline-flex;align-items:center;gap:10px;font-weight:500;
 }
 .eyebrow::before{content:"";width:26px;height:3px;background:var(--cobalt);display:inline-block}
+.eyebrow.ingen-streg::before{display:none}
+.eyebrow.ingen-streg{gap:0}
 .eyebrow.gul::before{background:var(--signal)}
 .eyebrow.pink::before{background:var(--hindbaer)}
 .lead{font-size:clamp(1.05rem,1.6vw,1.25rem);color:#3c3c46;max-width:56ch}
@@ -201,7 +203,7 @@ section{padding:96px 0}
 .portal h3{font-size:clamp(1.6rem,2.4vw,2.2rem);text-transform:uppercase;margin-bottom:8px}
 .portal p{color:rgba(255,255,255,.85);margin-bottom:18px;font-size:.98rem}
 .portal .pris-fra{font-family:var(--font-label);font-weight:700;color:var(--signal)}
-.portal-dame .tag{background:var(--cobalt);color:#fff}
+.portal-dame .tag{background:var(--asfalt);color:#fff}
 .portal-herre .tag{background:var(--signal);color:var(--asfalt)}
 .portal-vaerksted .tag{background:#fff;color:var(--asfalt)}
 
