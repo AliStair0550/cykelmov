@@ -237,6 +237,8 @@ section{padding:96px 0}
   box-shadow:0 4px 12px rgba(0,0,0,.18);
 }
 .dame-side .rabat-tag{background:var(--hindbaer);color:#fff}
+/* Damecykler får pink rabatmærke overalt (fx forsiden); herre forbliver gul */
+.produkt[data-koen="dame"] .rabat-tag{background:var(--hindbaer);color:#fff}
 .lager-tag{
   position:absolute;bottom:14px;left:14px;
   background:rgba(20,20,25,.82);color:#fff;backdrop-filter:blur(4px);
