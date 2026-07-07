@@ -21,7 +21,10 @@ export const sanityClient: SanityClient | null = sanityKonfigureret
       projectId,
       dataset,
       apiVersion,
-      useCdn: true,
+      // Build-time fetch: hent altid friskeste publicerede data (ikke CDN,
+      // som kan være op til 60 sek. bagud). Sikrer at et webhook-udløst
+      // build lige efter en publicering får den nye version med.
+      useCdn: false,
       perspective: 'published',
     })
   : null;
