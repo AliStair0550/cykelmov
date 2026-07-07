@@ -8,7 +8,7 @@ import type { Billede, Cykel, Ydelse } from './types';
 function resolveBillede(img: SanityImage, fallbackAlt: string): Billede {
   const b = urlFor(img);
   return {
-    url: b ? b.width(1100).height(950).fit('crop').auto('format').url() : '',
+    url: b ? b.width(1200).height(900).fit('crop').auto('format').url() : '',
     thumbUrl: b ? b.width(180).height(180).fit('crop').auto('format').url() : '',
     alt: (img?.alt as string) || fallbackAlt,
   };

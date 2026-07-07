@@ -226,7 +226,7 @@ section{padding:96px 0}
   color:var(--moerk-tekst);
 }
 .produkt:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(20,20,25,.14)}
-.produkt-foto{position:relative;aspect-ratio:4/3.4;overflow:hidden;background:var(--kridt-2)}
+.produkt-foto{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--kridt-2)}
 .produkt-foto img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
 .produkt:hover .produkt-foto img{transform:scale(1.07)}
 .rabat-tag{
@@ -512,7 +512,7 @@ section{padding:96px 0}
 /* Billedgalleri */
 .galleri-stort{
   position:relative;border-radius:var(--radius);overflow:hidden;background:var(--kridt-2);
-  aspect-ratio:4/3.4;border:1px solid var(--linje);
+  aspect-ratio:4/3;border:1px solid var(--linje);
 }
 .galleri-stort img{width:100%;height:100%;object-fit:cover}
 .galleri-thumbs{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
