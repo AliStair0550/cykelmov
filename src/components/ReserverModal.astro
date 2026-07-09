@@ -162,8 +162,13 @@ function tilkoebIkon(navn: string): string {
       bag!.classList.add('aaben');
       bag!.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      // Start altid øverst, så cyklen + tilkøb ses først (fokus uden at scrolle).
+      if (modalEl) modalEl.scrollTop = 0;
       const foerste = document.getElementById('rf-navn');
-      window.setTimeout(() => foerste && foerste.focus(), 40);
+      window.setTimeout(() => {
+        if (modalEl) modalEl.scrollTop = 0;
+        foerste && foerste.focus({ preventScroll: true });
+      }, 40);
     }
     function luk() {
       bag!.classList.remove('aaben');
@@ -196,9 +201,7 @@ function tilkoebIkon(navn: string): string {
               'Kom forbi med cyklen på Nørrebrogade 74. Du betaler først, når arbejdet er lavet.';
           if (tidLabel) tidLabel.textContent = 'Hvornår kommer du forbi?';
         } else {
-          if (note)
-            note.textContent =
-              'Du reserverer til afhentning i butikken på Nørrebrogade 74. Ingen levering — du henter selv og betaler først, når du står med cyklen.';
+          if (note) note.textContent = '';
           if (tidLabel) tidLabel.textContent = 'Hvornår vil du hente den?';
         }
 
