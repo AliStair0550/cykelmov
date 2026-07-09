@@ -688,10 +688,15 @@ section{padding:96px 0}
   .portaler,.produkt-grid{grid-template-columns:1fr}
   .portal{min-height:400px}
   .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .hero{min-height:72vh}
+  .hero .lead{display:none}
+  /* Landskabsbillede på portræt: zoom lidt og forankr lavere, så vi ser mindre
+     af markisen i toppen og mere af butik + cykler. */
+  .hero-bg{background-size:auto 132%;background-position:center 82%}
   .hero-badge-gruppe{top:86px;bottom:auto;right:16px;gap:7px;width:104px;align-items:center}
   .hero-badge{width:104px;height:104px;font-size:.68rem}
   .hero-badge-note{font-size:.56rem;padding:4px 10px;letter-spacing:.03em;white-space:normal;text-align:center;line-height:1.25;max-width:104px}
-  .hero-inner{padding:90px 0 130px}
+  .hero-inner{padding:64px 0 120px}
   .pris-linje{flex-wrap:wrap}
   .pris-linje .btn{width:100%;justify-content:center}
 }
