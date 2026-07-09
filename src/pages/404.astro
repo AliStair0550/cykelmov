@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Siden findes ikke"
+  description="Siden her findes ikke. Find tilbage til forsiden, cyklerne eller værkstedet hos Cykelmov på Nørrebro."
+  medModal={false}
+>
+  <section class="tak-side">
+    <div class="tak-kort">
+      <span class="fejl-kode" aria-hidden="true">404</span>
+      <h1>Du er kørt af sporet</h1>
+      <p>
+        Den her side findes ikke — måske er den flyttet, eller linket er gammelt. Men vejen tilbage
+        er kort.
+      </p>
+      <div class="knapper">
+        <a href="/" class="btn btn-cobalt">Til forsiden <span class="pil">→</span></a>
+        <a href="/cykler/" class="btn btn-ghost">Se cyklerne</a>
+        <a href="/vaerksted/" class="btn btn-ghost">Værkstedet</a>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .fejl-kode {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(4.5rem, 18vw, 9rem);
+      line-height: 0.9;
+      color: var(--cobalt);
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+  </style>
+</Layout>
