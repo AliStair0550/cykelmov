@@ -30,7 +30,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:clip}
 /* Grid-/flex-børn må krympe under deres indhold, så intet løber vandret over */
-.produkt-grid>*,.ydelse-grid>*,.citater>*,.footer-grid>*,.katalog>*{min-width:0}
+.produkt-grid>*,.ydelse-grid>*,.citater>*,.footer-grid>*,.katalog>*,.produkt-top>*{min-width:0}
 body{
   font-family:var(--font-body);
   background:var(--kridt);
@@ -563,7 +563,7 @@ section{padding:96px 0}
 .status-kommer_snart::before{background:var(--signal)}
 .status-udsolgt{background:#fde7ee;color:#a01843}
 .status-udsolgt::before{background:#e0426b}
-.produkt-pris-blok{display:flex;align-items:baseline;gap:14px;margin:20px 0}
+.produkt-pris-blok{display:flex;align-items:baseline;gap:10px 14px;margin:20px 0;flex-wrap:wrap}
 .produkt-pris-blok .pris{font-size:2.4rem}
 .produkt-pris-blok .foer-pris{font-size:1.1rem}
 .produkt-pris-blok .spar{font-size:.9rem;background:var(--signal);color:var(--asfalt);padding:4px 10px;border-radius:8px}

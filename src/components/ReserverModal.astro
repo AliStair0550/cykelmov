@@ -21,7 +21,7 @@ function tilkoebIkon(navn: string): string {
 ---
 
 <div class="modal-bag" id="reserver-bag" role="dialog" aria-modal="true" aria-labelledby="reserver-titel" aria-hidden="true">
-  <div class="modal">
+  <div class="modal" tabindex="-1">
     <div class="modal-hoved">
       <h3 id="reserver-titel">Reservér & afhent</h3>
       <button class="luk" type="button" aria-label="Luk">×</button>
@@ -162,12 +162,15 @@ function tilkoebIkon(navn: string): string {
       bag!.classList.add('aaben');
       bag!.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
-      // Start altid øverst, så cyklen + tilkøb ses først (fokus uden at scrolle).
+      // Start altid HELT øverst, så man ser cyklen + "Tilføj tilbehør" først.
+      // Vi fokuserer selve dialogen (ikke et tekstfelt) — så popper mobil-
+      // tastaturet ikke op og scroller ned til navn-feltet.
       if (modalEl) modalEl.scrollTop = 0;
-      const foerste = document.getElementById('rf-navn');
       window.setTimeout(() => {
-        if (modalEl) modalEl.scrollTop = 0;
-        foerste && foerste.focus({ preventScroll: true });
+        if (modalEl) {
+          modalEl.scrollTop = 0;
+          modalEl.focus({ preventScroll: true });
+        }
       }, 40);
     }
     function luk() {
