@@ -18,6 +18,11 @@ function esc(s: string): string {
     .replace(/"/g, '&quot;');
 }
 
+// Tillad kun sikre URL-skemaer i links (blokér javascript:, data: m.fl.).
+function sikkerHref(href: string): string {
+  return /^(https?:|mailto:|tel:|\/|#)/i.test(href.trim()) ? href : '#';
+}
+
 function inline(blok: PortableBlock): string {
   const markDefs = blok.markDefs ?? [];
   return (blok.children ?? [])
@@ -26,7 +31,7 @@ function inline(blok: PortableBlock): string {
       for (const mark of child.marks ?? []) {
         const def = markDefs.find((d) => d._key === mark);
         if (def && def._type === 'link' && def.href) {
-          html = `<a href="${esc(def.href)}" rel="noopener">${html}</a>`;
+          html = `<a href="${esc(sikkerHref(def.href))}" rel="noopener noreferrer">${html}</a>`;
         } else if (mark === 'strong') {
           html = `<strong>${html}</strong>`;
         } else if (mark === 'em') {

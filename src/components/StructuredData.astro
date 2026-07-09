@@ -4,6 +4,11 @@ export interface Props {
   data: Record<string, unknown> | Record<string, unknown>[];
 }
 const { data } = Astro.props;
-const json = JSON.stringify(data);
+// Escapér < > & så indhold (fx en produkttitel med "</script>") ikke kan
+// bryde ud af JSON-LD-blokken.
+const json = JSON.stringify(data)
+  .replace(/</g, '\\u003c')
+  .replace(/>/g, '\\u003e')
+  .replace(/&/g, '\\u0026');
 ---
 <script type="application/ld+json" set:html={json} is:inline />
