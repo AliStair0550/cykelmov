@@ -16,3 +16,6 @@ export const fremhaevede = `*[_type == "cykel" && fremhaev == true][0..5]`;
 export const relaterede = `*[_type == "cykel" && koen == $koen && type == $type && _id != $id][0..3]`;
 
 export const alleVaerksted = `*[_type == "vaerkstedsydelse"] | order(raekkefolge asc)`;
+
+// Kun aktive tilkøb (aktiv != false, så gamle dokumenter uden feltet også vises).
+export const alleTilkoeb = `*[_type == "tilkoeb" && aktiv != false] | order(raekkefolge asc)`;

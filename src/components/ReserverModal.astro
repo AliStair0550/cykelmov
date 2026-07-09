@@ -1,7 +1,23 @@
 ---
 import { tidValg } from '../lib/site';
+import { hentTilkoeb } from '../lib/data';
+import { kr } from '../lib/format';
 // Fælles reservations-/booking-modal. Ét eksemplar pr. side (via Layout).
 // Åbnes af knapper med [data-reserver] (se ReserverKnap.astro).
+const tilkoeb = await hentTilkoeb();
+
+// Emoji-fallback til tilkøb uden uploadet billede (fx demo-data).
+function tilkoebIkon(navn: string): string {
+  const n = navn.toLowerCase();
+  if (/lås|laas|lock/.test(n)) return '🔒';
+  if (/lygte|lys|light/.test(n)) return '💡';
+  if (/bagage|kurv|rack/.test(n)) return '🧺';
+  if (/kæde|kaede|chain/.test(n)) return '⛓️';
+  if (/klokke|ringe|bell/.test(n)) return '🔔';
+  if (/hjelm|helmet/.test(n)) return '⛑️';
+  if (/pumpe|pump|lap/.test(n)) return '🩹';
+  return '🚲';
+}
 ---
 
 <div class="modal-bag" id="reserver-bag" role="dialog" aria-modal="true" aria-labelledby="reserver-titel" aria-hidden="true">
@@ -28,6 +44,33 @@ import { tidValg } from '../lib/site';
         <input type="hidden" name="reference" id="rf-reference" value="" />
         <!-- Honeypot mod spam (Web3Forms botcheck) -->
         <input type="checkbox" name="botcheck" class="hidden" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        {tilkoeb.length > 0 && (
+          <div class="tilkoeb-sektion" id="tilkoeb-sektion" hidden>
+            <h4 class="tilkoeb-titel">Tilføj tilbehør <span>valgfrit</span></h4>
+            <div class="tilkoeb-liste">
+              {tilkoeb.map((t) => (
+                <label class="tilkoeb-val">
+                  <input type="checkbox" name="tilkoeb" value={`${t.navn} (+${t.pris} kr.)`} data-pris={t.pris} />
+                  <span class="tilkoeb-medie">
+                    {t.billede ? (
+                      <img src={t.billede.thumbUrl} alt={t.billede.alt} width="52" height="52" loading="lazy" />
+                    ) : (
+                      <span class="tilkoeb-emoji" aria-hidden="true">{tilkoebIkon(t.navn)}</span>
+                    )}
+                  </span>
+                  <span class="tilkoeb-info">
+                    <b>{t.navn}</b>
+                    {t.beskrivelse && <small>{t.beskrivelse}</small>}
+                  </span>
+                  <span class="tilkoeb-pris">+{kr(t.pris)}</span>
+                  <span class="tilkoeb-tjek" aria-hidden="true">✓</span>
+                </label>
+              ))}
+            </div>
+            <p class="tilkoeb-total" id="tilkoeb-total"></p>
+          </div>
+        )}
 
         <div class="felt">
           <label for="rf-navn">Navn</label>
@@ -79,7 +122,32 @@ import { tidValg } from '../lib/site';
     const note = document.getElementById('reserver-note');
     const tidLabel = document.getElementById('rf-tid-label');
     const modalEl = bag.querySelector('.modal') as HTMLElement | null;
+    const tilkoebSektion = document.getElementById('tilkoeb-sektion');
+    const tilkoebTotal = document.getElementById('tilkoeb-total');
+    const tilkoebInputs = Array.from(
+      bag.querySelectorAll<HTMLInputElement>('input[name="tilkoeb"]'),
+    );
+    let cykelPris = 0;
     let sidsteFokus: HTMLElement | null = null;
+
+    const krFmt = (n: number) => n.toLocaleString('da-DK') + ' kr.';
+    function opdaterTotal() {
+      if (!tilkoebTotal) return;
+      const valgt = tilkoebInputs.filter((i) => i.checked);
+      const sum = valgt.reduce((s, i) => s + Number(i.dataset.pris || 0), 0);
+      if (valgt.length === 0) {
+        tilkoebTotal.innerHTML =
+          '<span class="muted">Tilkøb lægges oven i cyklens pris — du betaler i butikken.</span>';
+      } else {
+        tilkoebTotal.innerHTML = `<b>I alt ca. ${krFmt(cykelPris + sum)}</b> · cykel + ${valgt.length} tilkøb (${krFmt(sum)})`;
+      }
+    }
+    tilkoebInputs.forEach((i) =>
+      i.addEventListener('change', () => {
+        i.closest('.tilkoeb-val')?.classList.toggle('valgt', i.checked);
+        opdaterTotal();
+      }),
+    );
 
     function fokusbare(): HTMLElement[] {
       if (!modalEl) return [];
@@ -132,6 +200,21 @@ import { tidValg } from '../lib/site';
             note.textContent =
               'Du reserverer til afhentning i butikken på Nørrebrogade 74. Ingen levering — du henter selv og betaler først, når du står med cyklen.';
           if (tidLabel) tidLabel.textContent = 'Hvornår vil du hente den?';
+        }
+
+        // Tilkøb: kun ved cykel-reservation. Nulstil valg ved hver åbning.
+        cykelPris = parseInt((pris || '').replace(/\D/g, ''), 10) || 0;
+        tilkoebInputs.forEach((i) => {
+          i.checked = false;
+          i.closest('.tilkoeb-val')?.classList.remove('valgt');
+        });
+        if (tilkoebSektion) {
+          if (type === 'cykel' && tilkoebInputs.length) {
+            tilkoebSektion.hidden = false;
+            opdaterTotal();
+          } else {
+            tilkoebSektion.hidden = true;
+          }
         }
 
         if (navn && objektNavn && objektBoks) {

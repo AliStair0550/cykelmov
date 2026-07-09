@@ -60,6 +60,14 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
   const tidVaerdi = felt(form, 'tid');
   const tid = TID_LABEL[tidVaerdi] ?? tidVaerdi;
   const besked = felt(form, 'besked');
+  // Valgte tilkøb (checkbokse — kan være flere). Begrænses mod misbrug.
+  const tilkoeb = form
+    .getAll('tilkoeb')
+    .filter((v): v is string => typeof v === 'string')
+    .map((v) => v.trim())
+    .filter(Boolean)
+    .slice(0, 20)
+    .map((v) => v.slice(0, 120));
 
   // Server-side validering (backstop for browserens required-felter + spam)
   if (!navn || !telefon || !email) {
@@ -105,6 +113,7 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
           Telefon: telefon,
           Email: email,
           Vedrører: objekt || '—',
+          Tilkøb: tilkoeb.length ? tilkoeb.join(', ') : '—',
           'Ønsket tid': tid || '—',
           Besked: besked || '—',
           Type: type,
@@ -130,6 +139,7 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
       modtaget: new Date().toISOString(),
       status: 'ny',
     };
+    if (tilkoeb.length) doc.tilkoeb = tilkoeb;
     // Kun rigtige Sanity-cykler kan refereres (demo-id'er springes over).
     if (type === 'cykel' && reference && !reference.startsWith('demo-')) {
       doc.cykelRef = { _type: 'reference', _ref: reference, _weak: true };

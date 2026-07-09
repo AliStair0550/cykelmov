@@ -73,3 +73,13 @@ export interface Ydelse {
   billede: Billede | null;
   raekkefolge: number;
 }
+
+// Tilkøb/tilbehør der kan vælges ved reservation af en cykel.
+export interface Tilkoeb {
+  _id: string;
+  navn: string;
+  pris: number;
+  beskrivelse: string | null;
+  billede: Billede | null;
+  raekkefolge: number;
+}

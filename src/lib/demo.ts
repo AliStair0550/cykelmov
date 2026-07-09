@@ -4,7 +4,7 @@
 // Samme 6 cykler + 4 ydelser findes som NDJSON i sanity/seed/ til
 // import i det rigtige Sanity-datasæt.
 // ============================================================
-import type { Billede, Cykel, PortableBlock, Ydelse } from './types';
+import type { Billede, Cykel, PortableBlock, Tilkoeb, Ydelse } from './types';
 
 function lokalBillede(path: string, alt: string): Billede {
   return { url: path, thumbUrl: path, alt };
@@ -306,4 +306,13 @@ export const demoYdelser: Ydelse[] = [
   mkY('vinterklargoering', 'Vinterklargøring', 'saeson', 399, false, null, 'Rens, smøring og beskyttelse mod salt og fugt.', 23),
   // Akut hjælp
   mkY('akut-reparation', 'Akut reparation', 'akut', 299, false, null, 'Spring køen over. Vi prioriterer din cykel samme dag, når det er muligt.', 24),
+];
+
+// Fallback-tilkøb. Erstattes af rigtige tilkøb (med billeder) fra Sanity,
+// så snart de oprettes i Studio. Billede = null → booking-boksen viser et ikon.
+export const demoTilkoeb: Tilkoeb[] = [
+  { _id: 'demo-tilkoeb-laas', navn: 'Godkendt lås', pris: 299, beskrivelse: 'Solid lås, forsikringsgodkendt.', billede: null, raekkefolge: 1 },
+  { _id: 'demo-tilkoeb-lygtesaet', navn: 'Lygtesæt', pris: 199, beskrivelse: 'For- og baglygte, se og bliv set.', billede: null, raekkefolge: 2 },
+  { _id: 'demo-tilkoeb-bagagebaerer', navn: 'Bagagebærer', pris: 249, beskrivelse: 'Til taske, kurv eller barnestol.', billede: null, raekkefolge: 3 },
+  { _id: 'demo-tilkoeb-kaedelaas', navn: 'Kædelås', pris: 149, beskrivelse: 'Fleksibel ekstra sikring.', billede: null, raekkefolge: 4 },
 ];

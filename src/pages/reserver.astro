@@ -7,10 +7,12 @@ import Layout from '../layouts/Layout.astro';
   description="Tak for din henvendelse til Cykelmov. Vi vender tilbage inden for én arbejdsdag."
   medModal={false}
 >
+  <div class="konfetti-lag" id="konfetti" aria-hidden="true"></div>
   <section class="tak-side">
-    <div class="tak-kort reveal synlig">
+    <div class="tak-kort reveal synlig" id="tak-kort">
+      <span class="tak-cykel" aria-hidden="true">🚲</span>
       <div class="flueben">✓</div>
-      <h1 id="tak-titel">Vi holder den klar til dig</h1>
+      <h1 id="tak-titel">Sådan! Vi holder den klar til dig</h1>
       <p id="tak-tekst">
         Tak. Vi holder den klar til afhentning i butikken på Nørrebrogade 74 og bekræfter din
         bestilling inden for én arbejdsdag. Du betaler først, når du henter.
@@ -27,14 +29,44 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <script>
-    // Uden ?tak=1 (direkte besøg) vises en mere generel invitation.
-    if (!new URLSearchParams(location.search).has('tak')) {
+    const harTak = new URLSearchParams(location.search).has('tak');
+
+    if (!harTak) {
+      // Direkte besøg (uden ?tak=1): vis en mere generel invitation.
       const t = document.getElementById('tak-titel');
       const p = document.getElementById('tak-tekst');
       if (t) t.textContent = 'Reservér din cykel online';
       if (p)
         p.textContent =
           'Find din cykel, tryk Reservér, og udfyld dine oplysninger. Så står den klar med dit navn på, og du betaler først i butikken.';
+    } else {
+      // Dopamin: fejr den gennemførte bestilling.
+      const kort = document.getElementById('tak-kort');
+      kort?.classList.add('fejr');
+
+      const reduceret = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const lag = document.getElementById('konfetti');
+      if (lag && !reduceret) {
+        const farver = ['#1D3EE3', '#FFD02F', '#E84F8A', '#22c55e', '#ffffff'];
+        const antal = 90;
+        for (let i = 0; i < antal; i++) {
+          const s = document.createElement('span');
+          s.className = 'konfetti-stykke';
+          const stoerrelse = 7 + Math.random() * 8;
+          s.style.left = Math.random() * 100 + 'vw';
+          s.style.width = stoerrelse + 'px';
+          s.style.height = stoerrelse * (0.5 + Math.random()) + 'px';
+          s.style.background = farver[(Math.random() * farver.length) | 0];
+          s.style.animationDelay = Math.random() * 0.5 + 's';
+          s.style.animationDuration = 2.2 + Math.random() * 1.8 + 's';
+          if (Math.random() > 0.5) s.style.borderRadius = '50%';
+          s.style.setProperty('--drift', (Math.random() * 2 - 1) * 18 + 'vw');
+          s.style.setProperty('--spin', (Math.random() * 900 + 360) * (Math.random() > 0.5 ? 1 : -1) + 'deg');
+          lag.appendChild(s);
+        }
+        // Ryd op efter animationen.
+        window.setTimeout(() => (lag.innerHTML = ''), 4600);
+      }
     }
   </script>
 </Layout>

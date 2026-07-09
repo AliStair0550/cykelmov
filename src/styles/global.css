@@ -391,6 +391,7 @@ section{padding:96px 0}
 /* img{display:block} i reset'et slår [hidden] ihjel — genopret det her */
 .modal .valgt-cykel img[hidden]{display:none}
 .modal .valgt-cykel .objekt-ikon{width:84px;height:84px;flex-shrink:0;display:grid;place-items:center;font-size:2.6rem;background:var(--kridt-2);border-radius:10px;border:1px solid var(--linje)}
+.modal .valgt-cykel .objekt-ikon[hidden]{display:none}
 .modal .valgt-cykel b{display:block;font-size:1rem}
 .modal .valgt-cykel .p{font-family:var(--font-display);font-weight:800;font-size:1.2rem}
 .modal h4{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;margin:22px 0 12px;color:var(--grå)}
@@ -405,6 +406,28 @@ section{padding:96px 0}
 .modal .btn{width:100%;justify-content:center}
 .reserver-note{background:#eef2ff;border:1px solid #d5deff;border-radius:12px;padding:12px 14px;font-size:.9rem;line-height:1.5;color:#2c3a7a;margin-bottom:20px}
 .reserver-note:empty{display:none}
+/* ---------- Tilkøb i booking-modalen ---------- */
+.tilkoeb-sektion{margin:4px 0 22px}
+.tilkoeb-titel{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;color:var(--grå);margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.tilkoeb-titel span{font-size:.62rem;background:var(--kridt-2);color:var(--grå);padding:3px 8px;border-radius:20px;letter-spacing:.06em}
+.tilkoeb-liste{display:flex;flex-direction:column;gap:8px}
+.tilkoeb-val{position:relative;display:flex;align-items:center;gap:12px;padding:10px;border:1.5px solid var(--linje);border-radius:12px;cursor:pointer;transition:border-color .16s ease, background .16s ease;background:#fff}
+.tilkoeb-val:hover{border-color:#c3ceff}
+.tilkoeb-val input{position:absolute;opacity:0;width:1px;height:1px}
+.tilkoeb-val.valgt{border-color:var(--cobalt);background:#eef2ff}
+.tilkoeb-medie{width:52px;height:52px;flex-shrink:0;border-radius:9px;overflow:hidden;background:var(--kridt-2);display:grid;place-items:center}
+.tilkoeb-medie img{width:100%;height:100%;object-fit:cover}
+.tilkoeb-emoji{font-size:1.7rem;line-height:1}
+.tilkoeb-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.tilkoeb-info b{font-size:.98rem;line-height:1.2}
+.tilkoeb-info small{color:var(--grå);font-size:.8rem;line-height:1.3}
+.tilkoeb-pris{font-family:var(--font-label);font-weight:700;font-size:.9rem;color:var(--cobalt);flex-shrink:0;white-space:nowrap}
+.tilkoeb-tjek{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;background:var(--cobalt);color:#fff;display:grid;place-items:center;font-size:.72rem;font-weight:700;transform:scale(0);transition:transform .18s cubic-bezier(.34,1.56,.64,1)}
+.tilkoeb-val.valgt .tilkoeb-tjek{transform:scale(1)}
+.tilkoeb-val.valgt .tilkoeb-pris{color:var(--cobalt-dyb)}
+.tilkoeb-total{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--linje);font-size:.94rem;color:var(--asfalt);text-align:right}
+.tilkoeb-total .muted{color:var(--grå);font-size:.85rem}
+.tilkoeb-total b{font-family:var(--font-display);font-weight:800}
 .form-fejl{margin-top:14px;padding:12px 14px;background:#fde7ee;border:1px solid #f3b9cd;border-radius:10px;color:#a01843;font-size:.92rem}
 .form-fejl a{color:#a01843;text-decoration:underline;font-weight:700}
 .bekraeft{text-align:center;padding:20px 4px}
@@ -594,15 +617,37 @@ section{padding:96px 0}
 
 /* ---------- Tak-side ---------- */
 .tak-side{min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px}
-.tak-kort{max-width:560px}
+.tak-kort{max-width:560px;position:relative;overflow:hidden;padding-top:14px}
 .tak-kort .flueben{
   width:92px;height:92px;border-radius:50%;background:var(--cobalt);color:#fff;
-  display:grid;place-items:center;font-size:2.6rem;margin:0 auto 28px;
+  display:grid;place-items:center;font-size:2.6rem;margin:0 auto 28px;position:relative;
   animation:pop .5s cubic-bezier(.2,1.6,.4,1);
 }
 .tak-kort h1{font-size:clamp(2rem,5vw,3rem);text-transform:uppercase;margin-bottom:16px}
 .tak-kort p{font-size:1.1rem;color:#3c3c46;margin-bottom:14px}
 .tak-kort .knapper{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+
+/* Fejring (dopamin) — kun når bestillingen er gennemført (?tak=1) */
+.tak-cykel{position:absolute;top:20px;left:-70px;font-size:2.4rem;opacity:0;pointer-events:none}
+.tak-kort.fejr .flueben{animation:flueben-fejr .7s cubic-bezier(.2,1.7,.4,1) both}
+.tak-kort.fejr .flueben::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--cobalt);animation:ring-puls .8s ease-out .15s both}
+.tak-kort.fejr .tak-cykel{animation:cykel-koer 1.5s cubic-bezier(.3,.1,.5,1) .25s both}
+@keyframes flueben-fejr{0%{transform:scale(0) rotate(-25deg)}60%{transform:scale(1.18) rotate(6deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes ring-puls{0%{transform:scale(.7);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+@keyframes cykel-koer{0%{left:-70px;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:calc(100% + 30px);opacity:0}}
+
+/* Konfetti-lag */
+.konfetti-lag{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.konfetti-stykke{position:absolute;top:-12vh;opacity:0;will-change:transform;animation-name:konfetti-fald;animation-timing-function:cubic-bezier(.3,.2,.6,1);animation-fill-mode:forwards}
+@keyframes konfetti-fald{
+  0%{transform:translate3d(0,-12vh,0) rotate(0);opacity:1}
+  100%{transform:translate3d(var(--drift,0),110vh,0) rotate(var(--spin,720deg));opacity:.9}
+}
+@media(prefers-reduced-motion:reduce){
+  .konfetti-lag{display:none}
+  .tak-kort.fejr .flueben,.tak-kort.fejr .flueben::after,.tak-kort.fejr .tak-cykel{animation:none}
+  .tak-cykel{display:none}
+}
 
 /* ---------- Simpel indholdsside (om/kontakt) ---------- */
 .side-hero{background:var(--asfalt);color:var(--kridt);padding:120px 0 90px;position:relative;overflow:hidden}

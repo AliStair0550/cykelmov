@@ -3,7 +3,7 @@
 // Billed-referencer bliver til færdige CDN-URL'er via urlFor.
 // ============================================================
 import { urlFor, type SanityImage } from './sanity';
-import type { Billede, Cykel, Ydelse } from './types';
+import type { Billede, Cykel, Tilkoeb, Ydelse } from './types';
 
 function resolveBillede(img: SanityImage, fallbackAlt: string): Billede {
   const b = urlFor(img);
@@ -51,6 +51,18 @@ export function mapYdelse(doc: any): Ydelse {
     fastPris: Boolean(doc?.fastPris),
     estimeretTid: doc?.estimeretTid ?? null,
     beskrivelse: Array.isArray(doc?.beskrivelse) ? doc.beskrivelse : null,
+    billede: doc?.billede ? resolveBillede(doc.billede, navn) : null,
+    raekkefolge: Number(doc?.raekkefolge ?? 999),
+  };
+}
+
+export function mapTilkoeb(doc: any): Tilkoeb {
+  const navn = doc?.navn ?? 'Tilkøb';
+  return {
+    _id: doc?._id ?? '',
+    navn,
+    pris: Number(doc?.pris ?? 0),
+    beskrivelse: doc?.beskrivelse ?? null,
     billede: doc?.billede ? resolveBillede(doc.billede, navn) : null,
     raekkefolge: Number(doc?.raekkefolge ?? 999),
   };

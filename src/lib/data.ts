@@ -4,13 +4,14 @@
 // Komponenter og sider importerer kun herfra.
 // ============================================================
 import { sanityClient } from './sanity';
-import { alleCykler, alleVaerksted } from './queries';
-import { mapCykel, mapYdelse } from './map';
-import { demoCykler, demoYdelser } from './demo';
-import type { Cykel, Koen, Ydelse } from './types';
+import { alleCykler, alleVaerksted, alleTilkoeb } from './queries';
+import { mapCykel, mapYdelse, mapTilkoeb } from './map';
+import { demoCykler, demoYdelser, demoTilkoeb } from './demo';
+import type { Cykel, Koen, Tilkoeb, Ydelse } from './types';
 
 let _cykler: Promise<Cykel[]> | null = null;
 let _ydelser: Promise<Ydelse[]> | null = null;
+let _tilkoeb: Promise<Tilkoeb[]> | null = null;
 
 /** Alle cykler, sorteret som GROQ: fremhævet først, derefter nyeste. */
 export function hentCykler(): Promise<Cykel[]> {
@@ -50,6 +51,23 @@ export function hentYdelser(): Promise<Ydelse[]> {
     }
   })();
   return _ydelser;
+}
+
+/** Alle aktive tilkøb, sorteret efter rækkefølge. */
+export function hentTilkoeb(): Promise<Tilkoeb[]> {
+  if (_tilkoeb) return _tilkoeb;
+  _tilkoeb = (async () => {
+    if (!sanityClient) return demoTilkoeb;
+    try {
+      const docs = await sanityClient.fetch(alleTilkoeb);
+      if (!Array.isArray(docs) || docs.length === 0) return demoTilkoeb;
+      return docs.map(mapTilkoeb);
+    } catch (err) {
+      console.warn('[data] Kunne ikke hente tilkøb fra Sanity, bruger demo-data:', (err as Error).message);
+      return demoTilkoeb;
+    }
+  })();
+  return _tilkoeb;
 }
 
 export async function hentCyklerEfterKoen(koen: Koen): Promise<Cykel[]> {
