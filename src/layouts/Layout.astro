@@ -63,6 +63,9 @@ const ogAbsolut = new URL(ogBillede, Astro.site ?? site.url).href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogAbsolut} />
 
+    <!-- Billeder fra Sanitys CDN — varm forbindelsen tidligt -->
+    <link rel="preconnect" href="https://cdn.sanity.io" />
+
     <!-- Skrifttyper -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

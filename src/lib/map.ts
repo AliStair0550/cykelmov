@@ -61,7 +61,8 @@ export function mapYdelse(doc: any): Ydelse {
 function resolveTilbehoerBillede(img: SanityImage, fallbackAlt: string): Billede {
   const b = urlFor(img);
   return {
-    url: b ? b.width(640).fit('max').auto('format').url() : '',
+    // 500px dækker kortets visningsstørrelse selv på retina — holder vægten nede.
+    url: b ? b.width(500).fit('max').auto('format').quality(75).url() : '',
     thumbUrl: b ? b.width(200).height(200).fit('crop').auto('format').url() : '',
     alt: (img?.alt as string) || fallbackAlt,
   };

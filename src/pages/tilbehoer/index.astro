@@ -25,11 +25,17 @@ const produkter = await hentTilbehoer();
     <div class="wrap">
       <p class="antal-viste">{produkter.length} produkter</p>
       <div class="tilbehoer-grid">
-        {produkter.map((p) => (
+        {produkter.map((p, i) => (
           <article class="tilbehoer-kort">
             <div class="tilbehoer-foto">
               {p.billeder[0] ? (
-                <img src={p.billeder[0].url} alt={p.billeder[0].alt} loading="lazy" decoding="async" />
+                <img
+                  src={p.billeder[0].url}
+                  alt={p.billeder[0].alt}
+                  loading={i < 10 ? 'eager' : 'lazy'}
+                  fetchpriority={i < 5 ? 'high' : 'auto'}
+                  decoding="async"
+                />
               ) : (
                 <span class="tilbehoer-foto-tom" aria-hidden="true">🚲</span>
               )}
@@ -39,7 +45,6 @@ const produkter = await hentTilbehoer();
               <h3>{p.navn}</h3>
               <div class="tilbehoer-pris">
                 <b>{kr(p.pris)}</b>
-                <span>inkl. montering</span>
               </div>
             </div>
           </article>
