@@ -22,6 +22,7 @@ export default defineConfig({
             S.documentTypeListItem('cykel').title('Cykler'),
             S.documentTypeListItem('vaerkstedsydelse').title('Værkstedsydelser'),
             S.documentTypeListItem('tilkoeb').title('Tilkøb'),
+            S.documentTypeListItem('tilbehoer').title('Tilbehør & Reservedele'),
             S.divider(),
             S.documentTypeListItem('foresporgsel').title('Forespørgsler'),
           ]),
