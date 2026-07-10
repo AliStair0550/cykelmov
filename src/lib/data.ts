@@ -4,14 +4,15 @@
 // Komponenter og sider importerer kun herfra.
 // ============================================================
 import { sanityClient } from './sanity';
-import { alleCykler, alleVaerksted, alleTilkoeb } from './queries';
-import { mapCykel, mapYdelse, mapTilkoeb } from './map';
-import { demoCykler, demoYdelser, demoTilkoeb } from './demo';
-import type { Cykel, Koen, Tilkoeb, Ydelse } from './types';
+import { alleCykler, alleVaerksted, alleTilkoeb, alleTilbehoer } from './queries';
+import { mapCykel, mapYdelse, mapTilkoeb, mapTilbehoer } from './map';
+import { demoCykler, demoYdelser, demoTilkoeb, demoTilbehoer } from './demo';
+import type { Cykel, Koen, Tilbehoer, Tilkoeb, Ydelse } from './types';
 
 let _cykler: Promise<Cykel[]> | null = null;
 let _ydelser: Promise<Ydelse[]> | null = null;
 let _tilkoeb: Promise<Tilkoeb[]> | null = null;
+let _tilbehoer: Promise<Tilbehoer[]> | null = null;
 
 /** Alle cykler, sorteret som GROQ: fremhævet først, derefter nyeste. */
 export function hentCykler(): Promise<Cykel[]> {
@@ -68,6 +69,23 @@ export function hentTilkoeb(): Promise<Tilkoeb[]> {
     }
   })();
   return _tilkoeb;
+}
+
+/** Alle aktive tilbehør/reservedele, sorteret efter kategori og navn. */
+export function hentTilbehoer(): Promise<Tilbehoer[]> {
+  if (_tilbehoer) return _tilbehoer;
+  _tilbehoer = (async () => {
+    if (!sanityClient) return demoTilbehoer;
+    try {
+      const docs = await sanityClient.fetch(alleTilbehoer);
+      if (!Array.isArray(docs) || docs.length === 0) return demoTilbehoer;
+      return docs.map(mapTilbehoer);
+    } catch (err) {
+      console.warn('[data] Kunne ikke hente tilbehør fra Sanity, bruger demo-data:', (err as Error).message);
+      return demoTilbehoer;
+    }
+  })();
+  return _tilbehoer;
 }
 
 export async function hentCyklerEfterKoen(koen: Koen): Promise<Cykel[]> {

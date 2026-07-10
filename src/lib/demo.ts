@@ -4,7 +4,10 @@
 // Samme 6 cykler + 4 ydelser findes som NDJSON i sanity/seed/ til
 // import i det rigtige Sanity-datasæt.
 // ============================================================
-import type { Billede, Cykel, PortableBlock, Tilkoeb, Ydelse } from './types';
+import type { Billede, Cykel, PortableBlock, Tilbehoer, Tilkoeb, Ydelse } from './types';
+
+// Tilbehør hentes altid fra Sanity; tom fallback hvis Sanity er utilgængelig.
+export const demoTilbehoer: Tilbehoer[] = [];
 
 function lokalBillede(path: string, alt: string): Billede {
   return { url: path, thumbUrl: path, alt };

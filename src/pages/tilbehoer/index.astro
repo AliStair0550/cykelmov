@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { hentTilbehoer } from '../../lib/data';
+import { kr } from '../../lib/format';
+
+const produkter = await hentTilbehoer();
+---
+
+<Layout
+  title="Tilbehør & reservedele til cykler i København"
+  description="Tilbehør og reservedele til din cykel hos Cykelmov på Nørrebro: lygter, låse, kurve, bagagebærere, hjelme og meget mere. Alle priser er inkl. montering."
+>
+  <section class="side-hero" style="padding:120px 0 70px">
+    <div class="wrap">
+      <span class="eyebrow ingen-streg">Butikken</span>
+      <h1 class="display-l h1-jura" style="margin-top:14px">Tilbehør &amp; reservedele</h1>
+      <p class="lead">
+        Lygter, låse, kurve, bagagebærere, hjelme, kæder og meget mere — alt til din cykel.
+        <strong>Alle priser er inkl. montering.</strong>
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="antal-viste">{produkter.length} produkter</p>
+      <div class="tilbehoer-grid">
+        {produkter.map((p) => (
+          <article class="tilbehoer-kort">
+            <div class="tilbehoer-foto">
+              {p.billeder[0] ? (
+                <img src={p.billeder[0].url} alt={p.billeder[0].alt} loading="lazy" decoding="async" />
+              ) : (
+                <span class="tilbehoer-foto-tom" aria-hidden="true">🚲</span>
+              )}
+            </div>
+            <div class="tilbehoer-info">
+              {p.kategori && <span class="tilbehoer-kat">{p.kategori}</span>}
+              <h3>{p.navn}</h3>
+              <div class="tilbehoer-pris">
+                <b>{kr(p.pris)}</b>
+                <span>inkl. montering</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

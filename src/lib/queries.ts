@@ -19,3 +19,6 @@ export const alleVaerksted = `*[_type == "vaerkstedsydelse"] | order(raekkefolge
 
 // Kun aktive tilkøb (aktiv != false, så gamle dokumenter uden feltet også vises).
 export const alleTilkoeb = `*[_type == "tilkoeb" && aktiv != false] | order(raekkefolge asc)`;
+
+// Tilbehør & Reservedele (kun aktive), sorteret efter kategori og navn.
+export const alleTilbehoer = `*[_type == "tilbehoer" && aktiv != false] | order(kategori asc, navn asc)`;

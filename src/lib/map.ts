@@ -3,7 +3,7 @@
 // Billed-referencer bliver til færdige CDN-URL'er via urlFor.
 // ============================================================
 import { urlFor, type SanityImage } from './sanity';
-import type { Billede, Cykel, Tilkoeb, Ydelse } from './types';
+import type { Billede, Cykel, Tilbehoer, Tilkoeb, Ydelse } from './types';
 
 function resolveBillede(img: SanityImage, fallbackAlt: string): Billede {
   const b = urlFor(img);
@@ -53,6 +53,35 @@ export function mapYdelse(doc: any): Ydelse {
     beskrivelse: Array.isArray(doc?.beskrivelse) ? doc.beskrivelse : null,
     billede: doc?.billede ? resolveBillede(doc.billede, navn) : null,
     raekkefolge: Number(doc?.raekkefolge ?? 999),
+  };
+}
+
+// Tilbehørs-billeder holdes små (webp, maks 640px) — 122 produkter i ét grid,
+// så performance vægter højere end store billeder.
+function resolveTilbehoerBillede(img: SanityImage, fallbackAlt: string): Billede {
+  const b = urlFor(img);
+  return {
+    url: b ? b.width(640).fit('max').auto('format').url() : '',
+    thumbUrl: b ? b.width(200).height(200).fit('crop').auto('format').url() : '',
+    alt: (img?.alt as string) || fallbackAlt,
+  };
+}
+
+export function mapTilbehoer(doc: any): Tilbehoer {
+  const navn = doc?.navn ?? 'Produkt';
+  const billeder: Billede[] = Array.isArray(doc?.billeder)
+    ? doc.billeder.filter(Boolean).map((b: SanityImage) => resolveTilbehoerBillede(b, navn))
+    : [];
+  return {
+    _id: doc?._id ?? '',
+    navn,
+    slug: doc?.slug?.current ?? doc?.slug ?? '',
+    pris: Number(doc?.pris ?? 0),
+    prisInklMontering: doc?.prisInklMontering !== false,
+    kategori: doc?.kategori ?? '',
+    billeder,
+    kortBeskrivelse: doc?.kortBeskrivelse ?? '',
+    beskrivelse: Array.isArray(doc?.beskrivelse) ? doc.beskrivelse : null,
   };
 }
 

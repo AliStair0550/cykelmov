@@ -83,3 +83,16 @@ export interface Tilkoeb {
   billede: Billede | null;
   raekkefolge: number;
 }
+
+// Tilbehør & Reservedele — produkter i butikken (pris inkl. montering).
+export interface Tilbehoer {
+  _id: string;
+  navn: string;
+  slug: string;
+  pris: number;
+  prisInklMontering: boolean;
+  kategori: string;
+  billeder: Billede[];
+  kortBeskrivelse: string;
+  beskrivelse: PortableBlock[] | null;
+}
