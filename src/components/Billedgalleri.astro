@@ -10,7 +10,7 @@ const foerste = billeder[0];
 <div class="galleri">
   <div class="galleri-stort">
     {foerste ? (
-      <img id="galleri-hoved" src={foerste.url} alt={foerste.alt} width="1200" height="900" />
+      <img id="galleri-hoved" src={foerste.url} alt={foerste.alt} width="1200" height="900" role="button" tabindex="0" aria-label="Åbn billedet i stor visning" />
     ) : (
       <img id="galleri-hoved" src="/assets/butik-hjul.jpg" alt="Cykel" width="1200" height="900" />
     )}
@@ -32,9 +32,18 @@ const foerste = billeder[0];
   )}
 </div>
 
+<!-- Lightbox: åbner billedet i stor visning ved tryk -->
+<div class="lightbox" id="lightbox" hidden aria-hidden="true">
+  <button class="lightbox-luk" type="button" aria-label="Luk stor visning">×</button>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
 <script>
   const hoved = document.getElementById('galleri-hoved') as HTMLImageElement | null;
   const thumbs = document.querySelectorAll<HTMLButtonElement>('.galleri-thumb');
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+
   thumbs.forEach((t) => {
     t.addEventListener('click', () => {
       if (hoved) {
@@ -44,5 +53,35 @@ const foerste = billeder[0];
       thumbs.forEach((x) => x.classList.remove('aktiv'));
       t.classList.add('aktiv');
     });
+  });
+
+  function aabnLightbox() {
+    if (!lb || !lbImg || !hoved) return;
+    lbImg.src = hoved.src;
+    lbImg.alt = hoved.alt;
+    lb.hidden = false;
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function lukLightbox() {
+    if (!lb) return;
+    lb.hidden = true;
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  hoved?.addEventListener('click', aabnLightbox);
+  hoved?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      aabnLightbox();
+    }
+  });
+  lb?.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    if (t === lb || t.closest('.lightbox-luk')) lukLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lb && !lb.hidden) lukLightbox();
   });
 </script>

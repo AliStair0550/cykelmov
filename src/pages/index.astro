@@ -6,10 +6,16 @@ import CykelKort from '../components/CykelKort.astro';
 import YdelseKort from '../components/YdelseKort.astro';
 import CykelGennemByen from '../components/CykelGennemByen.astro';
 import StructuredData from '../components/StructuredData.astro';
-import { hentFremhaevede, hentYdelser } from '../lib/data';
+import { hentFremhaevede, hentYdelser, hentCyklerEfterKoen } from '../lib/data';
+import { kr } from '../lib/format';
 import { site } from '../lib/site';
 
 const fremhaevede = await hentFremhaevede(3);
+// "Fra"-pris pr. køn beregnes ud fra det faktiske lager (ikke hardcodet).
+const minPris = (liste: { pris: number }[]) =>
+  liste.length ? Math.min(...liste.map((c) => c.pris)) : 0;
+const dameFra = minPris(await hentCyklerEfterKoen('dame'));
+const herreFra = minPris(await hentCyklerEfterKoen('herre'));
 // Fire faste ydelser på forsiden, i denne rækkefølge.
 const forsideYdelseSlugs = ['serviceeftersyn', 'punkteringslapning', 'slangeskift', 'gearjustering'];
 const alleYdelser = await hentYdelser();
@@ -78,7 +84,7 @@ const localBusiness = {
     badge="Op til<br>-47%<br>lige nu"
     badgeNote="2 års gratis service"
   >
-    <a href="/cykler/" class="btn btn-signal">Bestil cykel online <span class="pil">→</span></a>
+    <a href="/cykler/" class="btn btn-signal">Bestil cykel online</a>
     <a href="/tilbehoer/" class="btn btn-lys">Tilbehør &amp; dele</a>
     <a href="/vaerksted/" class="btn btn-ghost" style="color:#fff">Værksted</a>
   </CykelbaneHero>
@@ -105,14 +111,14 @@ const localBusiness = {
           <div class="bg" style="background-image:url('/assets/dame-hero.jpg')"></div>
           <h3>Damecykler</h3>
           <p>Klassiske københavnercykler med kurv og oprejst holdning. Byen er din.</p>
-          <span class="pris-fra">Fra 3.799 kr.</span>
+          {dameFra > 0 && <span class="pris-fra">Fra {kr(dameFra)}</span>}
         </a>
         <a href="/cykler/herre/" class="portal portal-herre reveal">
           <span class="tag">Herre</span>
           <div class="bg" style="background-image:url('/assets/herre-hero.avif')"></div>
           <h3>Herrecykler</h3>
           <p>Cykel med karakter. Bygget til brosten og modvind.</p>
-          <span class="pris-fra">Fra 4.999 kr.</span>
+          {herreFra > 0 && <span class="pris-fra">Fra {kr(herreFra)}</span>}
         </a>
         <a href="/vaerksted/" class="portal portal-vaerksted reveal">
           <span class="tag">Værksted</span>
@@ -186,7 +192,7 @@ const localBusiness = {
           <li><span class="tjek">✓</span><span><b>Gennemsigtige priser</b> Prisen på skiltet er prisen, du betaler. Altid.</span></li>
           <li><span class="tjek">✓</span><span><b>Gratis eftersyn efter 1-2 måneder</b> Vi strammer, justerer og smører, uden beregning.</span></li>
           <li><span class="tjek">✓</span><span><b>Samme komponenter som de store mærker</b> Shimano-gear, rustfri kæder og Kevlar-dæk med refleks.</span></li>
-          <li><span class="tjek">✓</span><span><b>Indbyt din gamle cykel</b> Få den vurderet og træk beløbet fra din nye.</span></li>
+          <li><span class="tjek">✓</span><span><b>Byt din gamle cykel</b> Få den vurderet og træk beløbet fra din nye.</span></li>
         </ul>
       </div>
       <div class="tryghed-foto reveal">
