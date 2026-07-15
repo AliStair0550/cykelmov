@@ -8,8 +8,8 @@ export const site = {
   tagline: 'Gadens cykelbutik',
   slogan: 'Cykelmov, gadens cykelbutik',
   url: (import.meta.env.PUBLIC_SITE_URL as string) || 'https://cykelmov.dk',
-  telefon: '31 72 78 88',
-  telefonE164: '+4531727888',
+  telefon: '31 32 70 55',
+  telefonE164: '+4531327055',
   email: 'cykelmov@gmail.com',
   adresse: {
     gade: 'Nørrebrogade 74, st. tv.',
