@@ -1,6 +1,8 @@
-# www → apex (cykelmov.dk er den kanoniske adresse). Host-matchet fuld-URL,
-# så KUN www rammes — apex-forespørgsler laver ingen loop.
-https://www.cykelmov.dk/*   https://cykelmov.dk/:splat   301!
+# BEMÆRK www → cykelmov.dk: Cloudflare Pages _redirects matcher KUN på sti,
+# ikke hostname (testet: host-regler fyrer ikke). www→apex skal derfor sættes
+# op som en Redirect Rule i Cloudflare-dashboardet:
+#   Rules → Redirect Rules → Create → When hostname equals "www.cykelmov.dk"
+#   → Static/Dynamic redirect til https://cykelmov.dk + bevar sti → 301.
 
 # Gamle WooCommerce-URL'er → nye sider (301, permanent)
 # Cloudflare Pages evaluerer oppefra og ned; specifikke regler før catch-all.
