@@ -1,3 +1,7 @@
+# www → apex (cykelmov.dk er den kanoniske adresse). Host-matchet fuld-URL,
+# så KUN www rammes — apex-forespørgsler laver ingen loop.
+https://www.cykelmov.dk/*   https://cykelmov.dk/:splat   301!
+
 # Gamle WooCommerce-URL'er → nye sider (301, permanent)
 # Cloudflare Pages evaluerer oppefra og ned; specifikke regler før catch-all.
 
