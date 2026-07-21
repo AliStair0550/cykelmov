@@ -17,6 +17,21 @@ export function rabatProcent(pris: number, foerpris: number | null): number | nu
   return Math.round(((foerpris - pris) / foerpris) * 100);
 }
 
+/** Lav en ren, URL-sikker slug (dansk). Robust mod rodede Sanity-slugs
+ *  (mellemrum, store bogstaver, æøå, specialtegn, foran/bagved-mellemrum). */
+export function slugify(s: string): string {
+  return (s || '')
+    .trim()
+    .toLowerCase()
+    .replace(/æ/g, 'ae')
+    .replace(/ø/g, 'oe')
+    .replace(/å/g, 'aa')
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 /** Kort tekstuddrag fra Portable Text (første almindelige afsnit). */
 export function uddrag(blocks: PortableBlock[] | null | undefined, maxLen = 160): string {
   if (!Array.isArray(blocks)) return '';

@@ -6,6 +6,7 @@
 import { sanityClient } from './sanity';
 import { alleCykler, alleVaerksted, alleTilkoeb, alleTilbehoer } from './queries';
 import { mapCykel, mapYdelse, mapTilkoeb, mapTilbehoer } from './map';
+import { slugify } from './format';
 import { demoCykler, demoYdelser, demoTilkoeb, demoTilbehoer } from './demo';
 import type { Cykel, Koen, Tilbehoer, Tilkoeb, Ydelse } from './types';
 
@@ -28,7 +29,19 @@ export function hentCykler(): Promise<Cykel[]> {
         console.warn('[data] Sanity returnerede ingen cykler, bruger demo-data.');
         return demoCykler;
       }
-      return docs.map(mapCykel);
+      const mapped = docs.map(mapCykel);
+      // Rens rodede slugs (mellemrum/store bogstaver/æøå) og gør dem unikke, så
+      // alle cykler får pæne URL'er uanset hvad der er indtastet i Sanity.
+      const brugte = new Set<string>();
+      for (const c of mapped) {
+        const base = slugify(c.slug) || slugify(c.titel) || 'cykel';
+        let unik = base;
+        let n = 2;
+        while (brugte.has(unik)) unik = `${base}-${n++}`;
+        brugte.add(unik);
+        c.slug = unik;
+      }
+      return mapped;
     } catch (err) {
       console.warn('[data] Kunne ikke hente cykler fra Sanity, bruger demo-data:', (err as Error).message);
       return demoCykler;
