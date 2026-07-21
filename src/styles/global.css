@@ -352,7 +352,7 @@ section{padding:96px 0}
 
 /* ---------- Footer ---------- */
 .site-footer{background:var(--asfalt);color:var(--kridt);padding:70px 0 0}
-.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:36px;padding-bottom:50px}
 .footer-grid h4{font-family:var(--font-label);text-transform:uppercase;font-size:.8rem;letter-spacing:.12em;color:var(--signal);margin-bottom:16px}
 .footer-grid a{display:block;padding:5px 0;color:rgba(245,243,237,.75);font-size:.94rem;transition:color .15s;overflow-wrap:anywhere}
 .footer-grid a:hover{color:#fff}
@@ -598,6 +598,12 @@ section{padding:96px 0}
 .rig-tekst ol li{margin-bottom:8px}
 .rig-tekst a{color:var(--cobalt);text-decoration:underline}
 .rig-tekst strong{font-weight:700}
+/* Pristabel (artikler) */
+.pris-tabel{width:100%;border-collapse:collapse;margin:10px 0 20px;font-size:1rem}
+.pris-tabel th,.pris-tabel td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--linje)}
+.pris-tabel th{font-family:var(--font-label);text-transform:uppercase;font-size:.74rem;letter-spacing:.05em;color:var(--grå)}
+.pris-tabel td{color:#2c2c34}
+.pris-tabel tbody tr:last-child td{border-bottom:none;font-weight:700}
 
 /* Sektionsoverskrift på produktside */
 .blok-titel{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.08em;font-size:.86rem;color:var(--grå);margin-bottom:16px}

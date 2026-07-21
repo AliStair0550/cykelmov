@@ -1,0 +1,115 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { hentCykler, hentCyklerEfterKoen } from '../../lib/data';
+import { kr } from '../../lib/format';
+
+// Priser læses fra sortimentet (samme data som kategorisiderne), så tallene
+// altid er reelle og opdaterer sig selv.
+const dame = await hentCyklerEfterKoen('dame');
+const herre = await hentCyklerEfterKoen('herre');
+const alle = await hentCykler();
+const spaend = (liste: { pris: number }[]): [number, number] =>
+  liste.length ? [Math.min(...liste.map((c) => c.pris)), Math.max(...liste.map((c) => c.pris))] : [0, 0];
+const [dameMin, dameMax] = spaend(dame);
+const [herreMin, herreMax] = spaend(herre);
+const [alleMin, alleMax] = spaend(alle);
+
+const faq = [
+  {
+    q: 'Hvad koster en billig cykel i København?',
+    s: `De billigste cykler hos Cykelmov starter ved ${kr(alleMin)} Prisen stiger med gear, udstyr og mærke.`,
+  },
+  {
+    q: 'Er der garanti på cyklen?',
+    s: 'Ja. Der er 2 års garanti på alle nye cykler. Vi hjælper dig, hvis noget driller.',
+  },
+  {
+    q: 'Skal jeg selv samle cyklen?',
+    s: 'Nej. Cyklen er samlet og køreklar, når du henter den i butikken.',
+  },
+  {
+    q: 'Kan jeg bestille cykel online?',
+    s: 'Ja. Du reserverer online og henter cyklen i butikken. Du betaler først, når du står med den.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.s },
+  })),
+};
+---
+
+<Layout
+  title="Hvad koster en cykel i København"
+  titelFuld="Hvad koster en cykel i København? Prisguide 2026"
+  description="Hvad koster en cykel i København i 2026? Prisguide for damecykler og herrecykler hos Cykelmov på Nørrebro. Samlet, køreklar og med 2 års garanti."
+>
+  <StructuredData slot="head" data={faqSchema} />
+
+  <section class="side-hero" style="padding:110px 0 60px">
+    <div class="wrap">
+      <span class="eyebrow ingen-streg">Prisguide 2026</span>
+      <h1 class="display-l" style="margin-top:14px">Hvad koster en cykel i København?</h1>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <article class="rig-tekst">
+        <p>
+          En cykel hos Cykelmov koster fra {kr(alleMin)} til {kr(alleMax)} Prisen afhænger af model,
+          gear og udstyr. Damecykler starter ved {kr(dameMin)} og herrecykler ved {kr(herreMin)} Alle
+          cykler er samlet og køreklar, når du henter dem i butikken på Nørrebro.
+        </p>
+
+        <h3>Prisspænd på cykler i København</h3>
+        <p>Tabellen viser de aktuelle priser på vores cykler. Tallene opdaterer sig i takt med sortimentet.</p>
+        <table class="pris-tabel">
+          <thead>
+            <tr><th>Kategori</th><th>Prisspænd</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="/cykler/dame/">Damecykler</a></td><td>fra {kr(dameMin)} til {kr(dameMax)}</td></tr>
+            <tr><td><a href="/cykler/herre/">Herrecykler</a></td><td>fra {kr(herreMin)} til {kr(herreMax)}</td></tr>
+            <tr><td>Alle cykler</td><td>fra {kr(alleMin)} til {kr(alleMax)}</td></tr>
+          </tbody>
+        </table>
+        <p>Cykelmov har også brugte cykler. Spørg i butikken efter de aktuelle modeller og priser.</p>
+
+        <h3>Hvad dækker prisen hos Cykelmov?</h3>
+        <p>Prisen dækker mere end selve cyklen. Du får:</p>
+        <ul>
+          <li>En cykel der er samlet og køreklar fra butikken.</li>
+          <li>2 års garanti på cyklen.</li>
+          <li>Gratis serviceaftale, så vi holder din cykel kørende.</li>
+        </ul>
+        <p>
+          Du betaler først, når du henter cyklen. Skal cyklen justeres senere, klarer vores
+          <a href="/vaerksted/"> værksted</a> det til faste priser.
+        </p>
+
+        <h3>Ofte stillede spørgsmål</h3>
+        <div class="faq">
+          {faq.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <div class="svar">{f.s}</div>
+            </details>
+          ))}
+        </div>
+
+        <p style="margin-top:28px">
+          Klar til at finde din cykel? Se <a href="/cykler/dame/">damecykler</a> og
+          <a href="/cykler/herre/">herrecykler</a>, eller book en tid hos
+          <a href="/vaerksted/">værkstedet</a>.
+        </p>
+      </article>
+    </div>
+  </section>
+</Layout>
