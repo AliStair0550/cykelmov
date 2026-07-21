@@ -138,19 +138,31 @@ const ogAbsolut = new URL(ogBillede, Astro.site ?? site.url).href;
               headers: { Accept: 'text/html' },
             });
             if (res.ok || res.redirected) {
-              // GA4-event ved gennemført booking (kører uanset om Web3Forms lykkedes)
+              // GA4-event ved gennemført booking. Vi navigerer FØRST, når eventet
+              // er sendt (event_callback), ellers når beaconen ikke afsted inden
+              // redirect. Timeout-fallback sikrer, at brugeren aldrig hænger.
               const bookingType =
                 (f.querySelector('[name="type"]') as HTMLInputElement | null)?.value || 'cykel';
               const pris = Number(
                 (f.querySelector('[name="pris"]') as HTMLInputElement | null)?.value || 0,
               );
-              if (typeof gtag === 'function') {
-                if (bookingType === 'ydelse')
-                  gtag('event', 'booking_vaerksted', { value: pris, currency: 'DKK' });
-                else if (bookingType === 'cykel')
-                  gtag('event', 'reservation_cykel', { value: pris, currency: 'DKK' });
+              let navigeret = false;
+              const naviger = () => {
+                if (navigeret) return;
+                navigeret = true;
+                window.location.href = '/reserver/?tak=1';
+              };
+              if (typeof gtag === 'function' && (bookingType === 'cykel' || bookingType === 'ydelse')) {
+                const eventNavn = bookingType === 'ydelse' ? 'booking_vaerksted' : 'reservation_cykel';
+                gtag('event', eventNavn, {
+                  value: pris,
+                  currency: 'DKK',
+                  event_callback: naviger,
+                });
+                window.setTimeout(naviger, 1000);
+              } else {
+                naviger();
               }
-              window.location.href = '/reserver/?tak=1';
               return;
             }
             throw new Error('status ' + res.status);
