@@ -42,6 +42,7 @@ function tilkoebIkon(navn: string): string {
         <input type="hidden" name="type" id="rf-type" value="cykel" />
         <input type="hidden" name="objekt" id="rf-objekt" value="" />
         <input type="hidden" name="reference" id="rf-reference" value="" />
+        <input type="hidden" name="pris" id="rf-pris" value="0" />
         <!-- Honeypot mod spam (Web3Forms botcheck) -->
         <input type="checkbox" name="botcheck" class="hidden" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
@@ -210,6 +211,9 @@ function tilkoebIkon(navn: string): string {
 
         // Tilkøb: kun ved cykel-reservation. Nulstil valg ved hver åbning.
         cykelPris = parseInt((pris || '').replace(/\D/g, ''), 10) || 0;
+        // Pris med i formularen, så GA4-eventet kan sende value (tal) + DKK.
+        const prisFelt = document.getElementById('rf-pris') as HTMLInputElement | null;
+        if (prisFelt) prisFelt.value = String(cykelPris);
         tilkoebInputs.forEach((i) => {
           i.checked = false;
           i.closest('.tilkoeb-val')?.classList.remove('valgt');

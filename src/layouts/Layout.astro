@@ -41,6 +41,16 @@ const ogAbsolut = new URL(ogBillede, Astro.site ?? site.url).href;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NYT1TE3QL0" is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NYT1TE3QL0');
+    </script>
+
     <title>{fuldTitel}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -74,22 +84,6 @@ const ogAbsolut = new URL(ogBillede, Astro.site ?? site.url).href;
       rel="stylesheet"
     />
 
-    <!-- GA4 (measurement ID sættes ét sted i site.ts). gtag-stub defineres
-         altid, så events kan køes; selve biblioteket loades kun med et rigtigt
-         G-ID, så placeholderen ikke laver ugyldige kald. -->
-    <script define:vars={{ ga4Id: site.ga4Id }}>
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function () { window.dataLayer.push(arguments); };
-      gtag('js', new Date());
-      if (ga4Id && ga4Id.indexOf('G-') === 0) {
-        gtag('config', ga4Id);
-        const s = document.createElement('script');
-        s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + ga4Id;
-        document.head.appendChild(s);
-      }
-    </script>
-
     <slot name="head" />
   </head>
   <body class={bodyKlasse}>
@@ -99,6 +93,9 @@ const ogAbsolut = new URL(ogBillede, Astro.site ?? site.url).href;
     {medModal && <ReserverModal />}
 
     <script>
+      // gtag defineres globalt af GA4-snippettet i <head>.
+      declare function gtag(...args: unknown[]): void;
+
       // Burger-menu
       const burger = document.querySelector('.burger');
       const navLinks = document.querySelector('.nav-links');
@@ -141,13 +138,17 @@ const ogAbsolut = new URL(ogBillede, Astro.site ?? site.url).href;
               headers: { Accept: 'text/html' },
             });
             if (res.ok || res.redirected) {
-              // GA4-event ved gennemført booking (afhænger af type)
+              // GA4-event ved gennemført booking (kører uanset om Web3Forms lykkedes)
               const bookingType =
                 (f.querySelector('[name="type"]') as HTMLInputElement | null)?.value || 'cykel';
-              const w = window as unknown as { gtag?: (...a: unknown[]) => void };
-              if (typeof w.gtag === 'function') {
-                if (bookingType === 'ydelse') w.gtag('event', 'booking_vaerksted');
-                else if (bookingType === 'cykel') w.gtag('event', 'reservation_cykel');
+              const pris = Number(
+                (f.querySelector('[name="pris"]') as HTMLInputElement | null)?.value || 0,
+              );
+              if (typeof gtag === 'function') {
+                if (bookingType === 'ydelse')
+                  gtag('event', 'booking_vaerksted', { value: pris, currency: 'DKK' });
+                else if (bookingType === 'cykel')
+                  gtag('event', 'reservation_cykel', { value: pris, currency: 'DKK' });
               }
               window.location.href = '/reserver/?tak=1';
               return;
@@ -185,16 +186,13 @@ const ogAbsolut = new URL(ogBillede, Astro.site ?? site.url).href;
       );
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-      // GA4: klik på telefon-links (klik_ring) og Google Maps-links (klik_rute)
+      // GA4: klik på telefon-links (klik_ring)
       document.addEventListener('click', (e) => {
         const a = (e.target as HTMLElement)?.closest('a');
         if (!a) return;
-        const href = a.getAttribute('href') || '';
-        const w = window as unknown as { gtag?: (...a: unknown[]) => void };
-        if (typeof w.gtag !== 'function') return;
-        if (href.startsWith('tel:')) w.gtag('event', 'klik_ring');
-        else if (/maps\.google|google\.[a-z.]+\/maps|goo\.gl\/maps/.test(href))
-          w.gtag('event', 'klik_rute');
+        if ((a.getAttribute('href') || '').startsWith('tel:') && typeof gtag === 'function') {
+          gtag('event', 'klik_ring');
+        }
       });
     </script>
   </body>
