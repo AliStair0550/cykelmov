@@ -1,0 +1,28 @@
+# Gamle WooCommerce-URL'er → nye sider (301, permanent)
+# Cloudflare Pages evaluerer oppefra og ned; specifikke regler før catch-all.
+
+# Kendte kategorier → relevante nye kategorisider
+/produkt-kategori/damecykler/*    /cykler/dame/    301
+/produkt-kategori/herrecykler/*   /cykler/herre/   301
+/produkt-kategori/boernecykler/*  /cykler/boern/   301
+/produkt-kategori/tilbehor/*      /tilbehoer/      301
+/produkt-kategori/tilbehoer/*     /tilbehoer/      301
+/produkt-kategori/reservedele/*   /tilbehoer/      301
+/produkt-kategori/vaerksted/*     /vaerksted/      301
+/produkt-kategori/service/*       /vaerksted/      301
+/kategori/damecykler/*    /cykler/dame/    301
+/kategori/herrecykler/*   /cykler/herre/   301
+/kategori/boernecykler/*  /cykler/boern/   301
+/kategori/tilbehor/*      /tilbehoer/      301
+/kategori/reservedele/*   /tilbehoer/      301
+/kategori/vaerksted/*     /vaerksted/      301
+
+# Alt andet under produkt/kategori → cykelkataloget
+/produkt-kategori/*   /cykler/   301
+/kategori/*           /cykler/   301
+/produkt/*            /cykler/   301
+/vare/*               /cykler/   301
+
+# Shop → forsiden
+/shop/*   /   301
+/shop     /   301

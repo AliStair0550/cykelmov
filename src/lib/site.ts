@@ -8,6 +8,9 @@ export const site = {
   tagline: 'Gadens cykelbutik',
   slogan: 'Cykelmov, gadens cykelbutik',
   url: (import.meta.env.PUBLIC_SITE_URL as string) || 'https://cykelmov.dk',
+  // GA4 measurement ID — ét sted. Indsæt det rigtige "G-XXXXXXX" her, så
+  // aktiveres tracking automatisk (ellers loades GA4 ikke).
+  ga4Id: 'INDSAET_ID',
   telefon: '31 32 70 55',
   telefonE164: '+4531327055',
   email: 'cykelmov@gmail.com',
