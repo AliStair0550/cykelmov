@@ -40,6 +40,9 @@ const builder = sanityKonfigureret ? imageUrlBuilder({ projectId, dataset }) : n
 
 /** Byg en billed-URL fra et Sanity-image. Returnerer null hvis ikke konfigureret. */
 export function urlFor(kilde: SanityImage | undefined | null) {
-  if (!builder || !kilde) return null;
+  // Uden asset (fx et tomt billedfelt i Sanity) kaster image-builderen
+  // "Unable to resolve image URL". Returnér null i stedet, så ét ødelagt
+  // billede ikke vælter hele build'et og tvinger fallback til demo-data.
+  if (!builder || !kilde || !kilde.asset) return null;
   return builder.image(kilde as never);
 }

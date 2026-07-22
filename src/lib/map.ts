@@ -17,7 +17,7 @@ function resolveBillede(img: SanityImage, fallbackAlt: string): Billede {
 export function mapCykel(doc: any): Cykel {
   const titel = doc?.titel ?? 'Cykel';
   const billeder: Billede[] = Array.isArray(doc?.billeder)
-    ? doc.billeder.filter(Boolean).map((b: SanityImage) => resolveBillede(b, titel))
+    ? doc.billeder.filter((b: SanityImage) => b?.asset).map((b: SanityImage) => resolveBillede(b, titel))
     : [];
 
   return {
@@ -51,7 +51,7 @@ export function mapYdelse(doc: any): Ydelse {
     fastPris: Boolean(doc?.fastPris),
     estimeretTid: doc?.estimeretTid ?? null,
     beskrivelse: Array.isArray(doc?.beskrivelse) ? doc.beskrivelse : null,
-    billede: doc?.billede ? resolveBillede(doc.billede, navn) : null,
+    billede: doc?.billede?.asset ? resolveBillede(doc.billede, navn) : null,
     raekkefolge: Number(doc?.raekkefolge ?? 999),
   };
 }
@@ -71,7 +71,7 @@ function resolveTilbehoerBillede(img: SanityImage, fallbackAlt: string): Billede
 export function mapTilbehoer(doc: any): Tilbehoer {
   const navn = doc?.navn ?? 'Produkt';
   const billeder: Billede[] = Array.isArray(doc?.billeder)
-    ? doc.billeder.filter(Boolean).map((b: SanityImage) => resolveTilbehoerBillede(b, navn))
+    ? doc.billeder.filter((b: SanityImage) => b?.asset).map((b: SanityImage) => resolveTilbehoerBillede(b, navn))
     : [];
   return {
     _id: doc?._id ?? '',
@@ -93,7 +93,7 @@ export function mapTilkoeb(doc: any): Tilkoeb {
     navn,
     pris: Number(doc?.pris ?? 0),
     beskrivelse: doc?.beskrivelse ?? null,
-    billede: doc?.billede ? resolveBillede(doc.billede, navn) : null,
+    billede: doc?.billede?.asset ? resolveBillede(doc.billede, navn) : null,
     raekkefolge: Number(doc?.raekkefolge ?? 999),
   };
 }
