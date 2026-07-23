@@ -54,6 +54,7 @@ export const typeLabel: Record<string, string> = {
   gravel: 'Gravel',
   elcykel: 'Elcykel',
   klapcykel: 'Klapcykel',
+  boernecykel: 'Børnecykel',
 };
 
 export const statusLabel: Record<string, string> = {

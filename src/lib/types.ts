@@ -5,7 +5,14 @@
 
 export type Koen = 'herre' | 'dame' | 'boern';
 export type CykelStatus = 'paa_lager' | 'kommer_snart' | 'udsolgt';
-export type CykelType = 'by' | 'mountainbike' | 'racer' | 'gravel' | 'elcykel' | 'klapcykel';
+export type CykelType =
+  | 'by'
+  | 'mountainbike'
+  | 'racer'
+  | 'gravel'
+  | 'elcykel'
+  | 'klapcykel'
+  | 'boernecykel';
 
 export interface Billede {
   url: string; // stor visning

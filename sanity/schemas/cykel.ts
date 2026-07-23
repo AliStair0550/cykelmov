@@ -39,6 +39,7 @@ export default defineType({
           { title: 'Gravel', value: 'gravel' },
           { title: 'Elcykel', value: 'elcykel' },
           { title: 'Klapcykel', value: 'klapcykel' },
+          { title: 'Børnecykel', value: 'boernecykel' },
         ],
       },
       validation: (r) => r.required(),
