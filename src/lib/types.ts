@@ -56,6 +56,8 @@ export interface Cykel {
   fremhaev: boolean;
   seoTitel: string | null;
   seoBeskrivelse: string | null;
+  /** Sanitys _updatedAt (ISO). Bruges til <lastmod> i sitemap. */
+  opdateret?: string | null;
 }
 
 export type YdelseKategori =
@@ -79,6 +81,8 @@ export interface Ydelse {
   beskrivelse: PortableBlock[] | null;
   billede: Billede | null;
   raekkefolge: number;
+  /** Sanitys _updatedAt (ISO). Bruges til <lastmod> i sitemap. */
+  opdateret?: string | null;
 }
 
 // Tilkøb/tilbehør der kan vælges ved reservation af en cykel.
@@ -102,4 +106,6 @@ export interface Tilbehoer {
   billeder: Billede[];
   kortBeskrivelse: string;
   beskrivelse: PortableBlock[] | null;
+  /** Sanitys _updatedAt (ISO). Bruges til <lastmod> i sitemap. */
+  opdateret?: string | null;
 }

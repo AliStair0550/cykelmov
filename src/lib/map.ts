@@ -37,6 +37,7 @@ export function mapCykel(doc: any): Cykel {
     fremhaev: Boolean(doc?.fremhaev),
     seoTitel: doc?.seoTitel ?? null,
     seoBeskrivelse: doc?.seoBeskrivelse ?? null,
+    opdateret: doc?._updatedAt ?? null,
   };
 }
 
@@ -53,6 +54,7 @@ export function mapYdelse(doc: any): Ydelse {
     beskrivelse: Array.isArray(doc?.beskrivelse) ? doc.beskrivelse : null,
     billede: doc?.billede?.asset ? resolveBillede(doc.billede, navn) : null,
     raekkefolge: Number(doc?.raekkefolge ?? 999),
+    opdateret: doc?._updatedAt ?? null,
   };
 }
 
@@ -83,6 +85,7 @@ export function mapTilbehoer(doc: any): Tilbehoer {
     billeder,
     kortBeskrivelse: doc?.kortBeskrivelse ?? '',
     beskrivelse: Array.isArray(doc?.beskrivelse) ? doc.beskrivelse : null,
+    opdateret: doc?._updatedAt ?? null,
   };
 }
 

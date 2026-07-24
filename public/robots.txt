@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cykelmov.dk/sitemap-index.xml
+Sitemap: https://cykelmov.dk/sitemap.xml
