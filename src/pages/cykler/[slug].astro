@@ -31,7 +31,8 @@ const bodyKlasse = cykel.koen === 'dame' ? 'dame-side' : cykel.koen === 'herre' 
 const knapKlasse =
   cykel.koen === 'dame' ? 'btn btn-hindbaer' : cykel.koen === 'herre' ? 'btn btn-signal' : 'btn btn-cobalt';
 
-const sideUrl = new URL(`/cykler/${cykel.slug}`, Astro.site ?? undefined).href;
+// Efterstillet skråstreg, så schema-URL'en matcher sidens canonical.
+const sideUrl = new URL(`/cykler/${cykel.slug}/`, Astro.site ?? undefined).href;
 const schema = produktSchema(cykel, sideUrl);
 
 // Specifikationsrækker
