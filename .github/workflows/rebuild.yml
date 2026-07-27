@@ -1,0 +1,31 @@
+name: Genopbyg site (sikkerhedsnet)
+
+# Sitet er statisk og bygges fra Sanity. Sanity-webhooken bør udloese en
+# Cloudflare-deploy ved publish OG sletning, men den har vaeret ustabil.
+# Dette workflow genopbygger planlagt som ekstra sikkerhed, saa fx en
+# slettet cykel aldrig kan haenge ved i mere end et doegn.
+#
+# AKTIVERING: saet repo-secreten CLOUDFLARE_DEPLOY_HOOK (Settings ->
+# Secrets and variables -> Actions). Uden den springer jobbet bare over.
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # dagligt kl. 04:00 UTC
+  workflow_dispatch: {} # tillad manuel koersel fra Actions-fanen
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Udloes Cloudflare Pages deploy
+        env:
+          HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "Secreten CLOUDFLARE_DEPLOY_HOOK er ikke sat - springer over."
+            echo "Saet den under Settings -> Secrets and variables -> Actions."
+            exit 0
+          fi
+          echo "Udloeser deploy..."
+          curl -fsS -X POST "$HOOK" -o /dev/null -w "HTTP %{http_code}\n"
+          echo "Deploy udloest."
