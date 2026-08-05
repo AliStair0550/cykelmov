@@ -30,7 +30,7 @@ const aar = 2026;
     <div>
       <h4>Butik</h4>
       <a href="/om/">Om Cykelmov</a>
-      <a href="/aabningstider/" class="footer-cta">Se åbningstider <span aria-hidden="true">→</span></a>
+      <a href="/aabningstider/">Åbningstider</a>
       <a href="/kontakt/">Kontakt</a>
       <a href={`tel:${site.telefonE164}`}>{site.telefon}</a>
       <a href={`mailto:${site.email}`}>{site.email}</a>
@@ -46,18 +46,3 @@ const aar = 2026;
     <span><a href="/handelsbetingelser/" class="footer-jura">Handelsbetingelser</a> · <a href="/privatlivspolitik/" class="footer-jura">Privatlivspolitik</a></span>
   </div>
 </footer>
-
-<style>
-  /* CTA-linket skiller sig ud fra de øvrige footer-links. */
-  .site-footer .footer-cta {
-    color: var(--signal, #f5c518);
-    font-weight: 700;
-  }
-  .site-footer .footer-cta span {
-    display: inline-block;
-    transition: transform 0.18s ease;
-  }
-  .site-footer .footer-cta:hover span {
-    transform: translateX(3px);
-  }
-</style>

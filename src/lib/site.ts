@@ -21,13 +21,13 @@ export const site = {
   },
   maps: 'https://maps.google.com/?q=N%C3%B8rrebrogade+74,+2200+K%C3%B8benhavn+N',
   aabningstider: [
-    { dage: 'Man-fre', tid: '10.00 - 18.00' },
+    { dage: 'Man-fre', tid: '9.00 - 18.00' },
     { dage: 'Lørdag', tid: '10.30 - 17.00' },
-    { dage: 'Søndag', tid: 'Lukket, vi cykler selv' },
+    { dage: 'Søndag', tid: 'Lukket' },
   ],
   // Struktureret til LocalBusiness/JSON-LD.
   aabningJsonLd: [
-    { dage: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '10:00', closes: '18:00' },
+    { dage: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '18:00' },
     { dage: ['Saturday'], opens: '10:30', closes: '17:00' },
   ],
 } as const;
