@@ -1,0 +1,196 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StructuredData from '../components/StructuredData.astro';
+import { site } from '../lib/site';
+
+// LocalBusiness-schema med åbningstider — godt for et hours-panel i Google.
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'BicycleStore',
+  name: site.navn,
+  url: site.url + '/aabningstider/',
+  telephone: site.telefonE164,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.adresse.gade,
+    postalCode: site.adresse.postnr,
+    addressLocality: site.adresse.by,
+    addressCountry: site.adresse.land,
+  },
+  openingHoursSpecification: site.aabningJsonLd.map((o) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: o.dage,
+    opens: o.opens,
+    closes: o.closes,
+  })),
+};
+---
+
+<Layout
+  title="Åbningstider"
+  description="Se Cykelmovs åbningstider. Man-fre 10.00-18.00, lørdag 10.30-17.00, søndag lukket. Butikken ligger på Nørrebrogade 74, 2200 København N."
+>
+  <StructuredData slot="head" data={localBusiness} />
+
+  <section class="side-hero">
+    <div class="wrap">
+      <span class="eyebrow">Åbningstider</span>
+      <h1 class="display-xl" style="margin-top:14px">Hvornår har<br />vi åbent?</h1>
+      <p class="lead">Kig forbi butikken på Nørrebrogade 74. Her er vores åbningstider.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="aabning-kort reveal">
+        <div class="aabning-status" id="status-badge" hidden></div>
+
+        <ul class="aabning-liste">
+          {
+            site.aabningstider.map((a, i) => (
+              <li data-raekke={i}>
+                <span class="dag">{a.dage}</span>
+                <span class="tid">{a.tid}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="aabning-kontakt">
+          <p class="adresse">
+            {site.adresse.gade}<br />
+            {site.adresse.postnr} {site.adresse.by}
+          </p>
+          <div class="knapper">
+            <a href={site.maps} class="btn btn-cobalt">Find vej <span class="pil">→</span></a>
+            <a href={`tel:${site.telefonE164}`} class="btn btn-ghost">Ring {site.telefon}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script define:vars={{ hours: site.aabningJsonLd }}>
+    // Beregn åbent/lukket ud fra København-tid, uanset besøgendes tidszone.
+    const fmt = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Copenhagen',
+      weekday: 'long',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+    const dele = fmt.formatToParts(new Date());
+    const ugedag = dele.find((p) => p.type === 'weekday').value;
+    const nuMin = Number(dele.find((p) => p.type === 'hour').value) * 60 + Number(dele.find((p) => p.type === 'minute').value);
+
+    const spec = hours.find((h) => h.dage.includes(ugedag));
+    let aaben = false;
+    if (spec) {
+      const [oh, om] = spec.opens.split(':').map(Number);
+      const [ch, cm] = spec.closes.split(':').map(Number);
+      aaben = nuMin >= oh * 60 + om && nuMin < ch * 60 + cm;
+    }
+
+    const badge = document.getElementById('status-badge');
+    if (badge) {
+      badge.hidden = false;
+      badge.textContent = aaben ? 'Åbent nu' : 'Lukket lige nu';
+      badge.classList.add(aaben ? 'er-aaben' : 'er-lukket');
+    }
+
+    // Fremhæv dagens række (0 = Man-fre, 1 = Lørdag, 2 = Søndag).
+    let raekke = 2;
+    if (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].includes(ugedag)) raekke = 0;
+    else if (ugedag === 'Saturday') raekke = 1;
+    document.querySelector(`[data-raekke="${raekke}"]`)?.classList.add('idag');
+  </script>
+
+  <style>
+    .aabning-kort {
+      max-width: 34rem;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid rgba(29, 62, 227, 0.12);
+      border-radius: 20px;
+      padding: 30px 30px 34px;
+      box-shadow: 0 18px 50px -30px rgba(29, 62, 227, 0.4);
+    }
+    .aabning-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 7px 15px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+    .aabning-status::before {
+      content: '';
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .aabning-status.er-aaben {
+      color: #0f7a41;
+      background: rgba(23, 158, 84, 0.12);
+    }
+    .aabning-status.er-lukket {
+      color: #7a2530;
+      background: rgba(214, 69, 90, 0.1);
+    }
+    .aabning-liste {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .aabning-liste li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 14px;
+      border-radius: 12px;
+      border-bottom: 1px solid rgba(20, 20, 30, 0.08);
+    }
+    .aabning-liste li:last-child {
+      border-bottom: 0;
+    }
+    .aabning-liste .dag {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .aabning-liste .tid {
+      color: #3c3c46;
+      font-variant-numeric: tabular-nums;
+    }
+    .aabning-liste li.idag {
+      background: rgba(29, 62, 227, 0.07);
+    }
+    .aabning-liste li.idag .dag {
+      color: var(--cobalt, #1d3ee3);
+    }
+    .aabning-liste li.idag .dag::after {
+      content: ' · I dag';
+      color: var(--cobalt, #1d3ee3);
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+    .aabning-kontakt {
+      margin-top: 26px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(20, 20, 30, 0.08);
+    }
+    .aabning-kontakt .adresse {
+      color: #3c3c46;
+      margin: 0 0 18px;
+      line-height: 1.5;
+    }
+    .aabning-kontakt .knapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+</Layout>

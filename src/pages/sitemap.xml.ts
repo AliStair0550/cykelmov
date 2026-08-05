@@ -72,6 +72,7 @@ export const GET: APIRoute = async () => {
 
   // Statiske informationssider.
   poster.push({ loc: abs('/om/') });
+  poster.push({ loc: abs('/aabningstider/') });
   poster.push({ loc: abs('/kontakt/') });
   poster.push({ loc: abs('/handelsbetingelser/') });
   poster.push({ loc: abs('/privatlivspolitik/') });
