@@ -31,19 +31,28 @@ const faqSchema = {
 };
 
 const adresseKort = site.adresse.gade.replace(', st. tv.', '');
+
+// Galleri-billeder (i den rækkefølge Mohammed bad om: Brugt1, Brugt3, Brugt5, Brugt4).
+const galleri = [
+  { src: '/assets/brugt-1.jpg', alt: 'Brugt herrecykel hos Cykelmov' },
+  { src: '/assets/brugt-2.jpg', alt: 'Brugt herrecykel hos Cykelmov' },
+  { src: '/assets/brugt-3.jpg', alt: 'Brugt damecykel med kurv hos Cykelmov' },
+  { src: '/assets/brugt-4.jpg', alt: 'Brugt damecykel med kurv hos Cykelmov' },
+];
 ---
 
 <Layout
   title="Brugte cykler i København"
   titelFuld="Brugte cykler København | Efterset og klar | Cykelmov"
   description="Brugte kvalitetscykler på Nørrebro. Gennemgået i eget værksted, klar til gaden. Priser fra 1500 kr. Kom forbi Nørrebrogade 74."
+  headerMoerk
 >
   <StructuredData slot="head" data={faqSchema} />
 
-  <section class="side-hero" style="padding:110px 0 60px">
+  <section class="brugt-hero">
     <div class="wrap">
       <span class="eyebrow ingen-streg">Brugte cykler</span>
-      <h1 class="display-l" style="margin-top:14px">Brugte cykler i København</h1>
+      <h1 class="display-l">Brugte cykler i København</h1>
     </div>
   </section>
 
@@ -55,23 +64,36 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
           vores eget værksted, inden den kommer på gulvet. Du får en cykel, der er klar til gaden, til
           en pris der giver mening.
         </p>
+      </article>
+    </div>
+  </section>
 
-        <h2>Hvad koster en brugt cykel hos os</h2>
-        <p>Prisen afhænger af mærke, stand og alder. Som tommelfingerregel:</p>
-        <table class="pris-tabel">
-          <thead>
-            <tr><th>Kategori</th><th>Pris</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Brugte damecykler</td><td>fra 1500 kr.</td></tr>
-            <tr><td>Brugte herrecykler</td><td>fra 1500 kr.</td></tr>
-          </tbody>
-        </table>
-        <p>
-          Lageret skifter hver uge. Ring på <a href={`tel:${site.telefonE164}`}>{site.telefon}</a> og
-          hør, hvad vi har hjemme lige nu, eller kom forbi.
-        </p>
+  <section class="brugt-pris-sektion">
+    <div class="wrap">
+      <div class="brugt-pris-grid reveal">
+        <div class="brugt-pris-tekst rig-tekst">
+          <h2>Hvad koster en brugt cykel hos os</h2>
+          <p>Prisen afhænger af mærke, stand og alder. Som tommelfingerregel:</p>
+          <p class="brugt-pris-linje">Brugte cykler, både herre- og damecykler, fra 1500 kr.</p>
+          <p>
+            Lageret skifter hver uge. Ring på <a href={`tel:${site.telefonE164}`}>{site.telefon}</a> og
+            hør, hvad vi har hjemme lige nu, eller kom forbi.
+          </p>
+        </div>
+        <div class="brugt-galleri">
+          {
+            galleri.map((b) => (
+              <img src={b.src} alt={b.alt} loading="lazy" width="600" height="450" />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section>
+    <div class="wrap">
+      <article class="rig-tekst">
         <h2>Sådan gør vi cyklerne klar</h2>
         <p>
           Ingen cykel kommer på gulvet uden en tur gennem værkstedet. Vi tjekker bremser, gear, dæk,
@@ -120,7 +142,7 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
           <div class="brugt-knapper">
             <a href={site.maps} class="btn btn-cobalt">Find vej <span class="pil">→</span></a>
             <a href={`tel:${site.telefonE164}`} class="btn btn-ghost">Ring {site.telefon}</a>
-            <a href="/vaerksted/" class="btn btn-lys">Se værkstedet</a>
+            <a href="/vaerksted/" class="btn btn-ghost">Se værkstedet</a>
           </div>
         </div>
         <div class="brugt-tider">
@@ -135,13 +157,79 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
               ))
             }
           </ul>
-          <a href="/aabningstider/" class="brugt-tider-link">Se åbningstider</a>
         </div>
       </div>
     </div>
   </section>
 
   <style>
+    /* Cover-hero med billede + mørk gradient, så teksten forbliver læsbar. */
+    .brugt-hero {
+      position: relative;
+      color: var(--kridt);
+      padding: 150px 0 90px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(16, 16, 20, 0.82), rgba(16, 16, 20, 0.4) 58%, rgba(16, 16, 20, 0.2)),
+        url('/assets/brugt-cover.jpg') center / cover no-repeat;
+    }
+    .brugt-hero .eyebrow {
+      color: var(--signal);
+    }
+    .brugt-hero h1 {
+      max-width: 18ch;
+      margin-top: 14px;
+    }
+    @media (max-width: 700px) {
+      .brugt-hero {
+        padding: 120px 0 60px;
+        background:
+          linear-gradient(180deg, rgba(16, 16, 20, 0.55), rgba(16, 16, 20, 0.78)),
+          url('/assets/brugt-cover.jpg') center / cover no-repeat;
+      }
+    }
+
+    /* Pris-sektion med galleri ved siden af. */
+    .brugt-pris-sektion {
+      padding-top: 6px;
+    }
+    .brugt-pris-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 44px;
+      align-items: center;
+    }
+    .brugt-pris-tekst h2 {
+      margin-top: 0;
+    }
+    .brugt-pris-linje {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--cobalt, #1d3ee3);
+    }
+    .brugt-galleri {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .brugt-galleri img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: #fff;
+      border: 1px solid var(--linje);
+      border-radius: 14px;
+      padding: 6px;
+    }
+    @media (max-width: 820px) {
+      .brugt-pris-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+
+    /* CTA nederst. */
     .brugt-cta-sektion {
       padding: 10px 0 80px;
     }
@@ -185,7 +273,7 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
     }
     .brugt-tider ul {
       list-style: none;
-      margin: 0 0 14px;
+      margin: 0;
       padding: 0;
     }
     .brugt-tider li {
@@ -204,12 +292,6 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
     .brugt-tider .tid {
       color: #3c3c46;
       font-variant-numeric: tabular-nums;
-    }
-    .brugt-tider-link {
-      color: var(--cobalt, #1d3ee3);
-      text-decoration: underline;
-      font-weight: 700;
-      font-size: 0.95rem;
     }
     @media (max-width: 760px) {
       .brugt-cta {
