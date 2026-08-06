@@ -14,11 +14,14 @@ const spaend = (liste: { pris: number }[]): [number, number] =>
 const [dameMin, dameMax] = spaend(dame);
 const [herreMin, herreMax] = spaend(herre);
 const [alleMin, alleMax] = spaend(alle);
+// Gulvpris for "billigste cykel". Brugte cykler starter ved 1500 kr; den
+// billige 450 kr-børneløbecykel tæller ikke med som "en cykel" her.
+const prisFra = 1500;
 
 const faq = [
   {
     q: 'Hvad koster en billig cykel i København?',
-    s: `De billigste cykler hos Cykelmov starter ved ${kr(alleMin)} Prisen stiger med gear, udstyr og mærke.`,
+    s: `De billigste cykler hos Cykelmov starter ved ${kr(prisFra)} Prisen stiger med gear, udstyr og mærke.`,
   },
   {
     q: 'Er der garanti på cyklen?',
@@ -63,7 +66,7 @@ const faqSchema = {
     <div class="wrap">
       <article class="rig-tekst">
         <p>
-          En cykel hos Cykelmov koster fra {kr(alleMin)} til {kr(alleMax)} Prisen afhænger af model,
+          En cykel hos Cykelmov koster fra {kr(prisFra)} til {kr(alleMax)} Prisen afhænger af model,
           gear og udstyr. Damecykler starter ved {kr(dameMin)} og herrecykler ved {kr(herreMin)} Alle
           cykler er samlet og køreklar, når du henter dem i butikken på Nørrebro.
         </p>
@@ -77,7 +80,7 @@ const faqSchema = {
           <tbody>
             <tr><td><a href="/cykler/dame/">Damecykler</a></td><td>fra {kr(dameMin)} til {kr(dameMax)}</td></tr>
             <tr><td><a href="/cykler/herre/">Herrecykler</a></td><td>fra {kr(herreMin)} til {kr(herreMax)}</td></tr>
-            <tr><td>Alle cykler</td><td>fra {kr(alleMin)} til {kr(alleMax)}</td></tr>
+            <tr><td>Alle cykler</td><td>fra {kr(prisFra)} til {kr(alleMax)}</td></tr>
           </tbody>
         </table>
         <p>Cykelmov har også <a href="/brugte-cykler/">brugte cykler</a>. De er gennemgået i vores eget værksted og klar til gaden. Priser fra 1500 kr.</p>
