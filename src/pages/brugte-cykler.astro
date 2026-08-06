@@ -1,0 +1,224 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StructuredData from '../components/StructuredData.astro';
+import { site } from '../lib/site';
+
+// FAQ til FAQPage-schema. Spørgsmålet om garanti afventer bekræftelse fra
+// Mohammed og er derfor bevidst udeladt, indtil vi har et konkret svar.
+const faq = [
+  {
+    q: 'Har I altid brugte cykler?',
+    s: 'Ja, men udvalget skifter hver uge. Ring eller kom forbi og se, hvad vi har.',
+  },
+  {
+    q: 'Kan jeg prøve cyklen først?',
+    s: 'Ja. Tag den en tur på Nørrebrogade, inden du beslutter dig.',
+  },
+  {
+    q: 'Køber I brugte cykler?',
+    s: 'Ja, vi tager cykler i bytte når du køber, og vi giver en vurdering med det samme.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.s },
+  })),
+};
+
+const adresseKort = site.adresse.gade.replace(', st. tv.', '');
+---
+
+<Layout
+  title="Brugte cykler i København"
+  titelFuld="Brugte cykler København | Efterset og klar | Cykelmov"
+  description="Brugte kvalitetscykler på Nørrebro. Gennemgået i eget værksted, klar til gaden. Priser fra 1500 kr. Kom forbi Nørrebrogade 74."
+>
+  <StructuredData slot="head" data={faqSchema} />
+
+  <section class="side-hero" style="padding:110px 0 60px">
+    <div class="wrap">
+      <span class="eyebrow ingen-streg">Brugte cykler</span>
+      <h1 class="display-l" style="margin-top:14px">Brugte cykler i København</h1>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <article class="rig-tekst">
+        <p>
+          Vi har altid brugte cykler i butikken på Nørrebrogade 74. Hver eneste er gennemgået i
+          vores eget værksted, inden den kommer på gulvet. Du får en cykel, der er klar til gaden, til
+          en pris der giver mening.
+        </p>
+
+        <h2>Hvad koster en brugt cykel hos os</h2>
+        <p>Prisen afhænger af mærke, stand og alder. Som tommelfingerregel:</p>
+        <table class="pris-tabel">
+          <thead>
+            <tr><th>Kategori</th><th>Pris</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Brugte damecykler</td><td>fra 1500 kr.</td></tr>
+            <tr><td>Brugte herrecykler</td><td>fra 1500 kr.</td></tr>
+          </tbody>
+        </table>
+        <p>
+          Lageret skifter hver uge. Ring på <a href={`tel:${site.telefonE164}`}>{site.telefon}</a> og
+          hør, hvad vi har hjemme lige nu, eller kom forbi.
+        </p>
+
+        <h2>Sådan gør vi cyklerne klar</h2>
+        <p>
+          Ingen cykel kommer på gulvet uden en tur gennem værkstedet. Vi tjekker bremser, gear, dæk,
+          kæde og lås. Det der er slidt, bliver skiftet. Du kan se, hvad der er lavet på den enkelte
+          cykel.
+        </p>
+
+        <h2>Derfor brugt fra butik og ikke fra nettet</h2>
+        <p>
+          Du kan prøve cyklen, før du køber. Du taler med en mekaniker, ikke en sælger på en annonce.
+          Og du har en butik at komme tilbage til, hvis noget driller. Det har du ikke på DBA.
+        </p>
+
+        <h2>Byt din gamle cykel</h2>
+        <p>
+          Skal du have en ny eller nyere cykel, tager vi gerne din gamle i bytte. Kom forbi med den,
+          så giver vi dig en pris med det samme.
+        </p>
+
+        <h2>Ofte stillede spørgsmål</h2>
+        <div class="faq">
+          {
+            faq.map((f) => (
+              <details>
+                <summary>{f.q}</summary>
+                <div class="svar">{f.s}</div>
+              </details>
+            ))
+          }
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA nederst -->
+  <section class="brugt-cta-sektion">
+    <div class="wrap">
+      <div class="brugt-cta reveal">
+        <div class="brugt-cta-tekst">
+          <h2>Kom forbi eller ring</h2>
+          <p>
+            Kom forbi {adresseKort} i {site.adresse.by} eller ring på
+            <a href={`tel:${site.telefonE164}`}>{site.telefon}</a>. Vi finder en cykel, der passer til
+            dig.
+          </p>
+          <div class="brugt-knapper">
+            <a href={site.maps} class="btn btn-cobalt">Find vej <span class="pil">→</span></a>
+            <a href={`tel:${site.telefonE164}`} class="btn btn-ghost">Ring {site.telefon}</a>
+            <a href="/vaerksted/" class="btn btn-lys">Se værkstedet</a>
+          </div>
+        </div>
+        <div class="brugt-tider">
+          <h3>Åbningstider</h3>
+          <ul>
+            {
+              site.aabningstider.map((a) => (
+                <li>
+                  <span class="dag">{a.dage}</span>
+                  <span class="tid">{a.tid}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <a href="/aabningstider/" class="brugt-tider-link">Se åbningstider</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .brugt-cta-sektion {
+      padding: 10px 0 80px;
+    }
+    .brugt-cta {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 30px;
+      align-items: center;
+      background: #fff;
+      border: 1px solid rgba(29, 62, 227, 0.12);
+      border-radius: 20px;
+      padding: 34px;
+      box-shadow: 0 18px 50px -30px rgba(29, 62, 227, 0.4);
+    }
+    .brugt-cta-tekst h2 {
+      font-size: 1.65rem;
+      margin: 0 0 12px;
+    }
+    .brugt-cta-tekst p {
+      color: #2c2c34;
+      margin: 0 0 20px;
+      max-width: 46ch;
+    }
+    .brugt-cta-tekst a {
+      color: var(--cobalt, #1d3ee3);
+      text-decoration: underline;
+    }
+    .brugt-knapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brugt-knapper .btn {
+      text-decoration: none;
+    }
+    .brugt-tider {
+      background: rgba(29, 62, 227, 0.05);
+      border-radius: 14px;
+      padding: 22px 24px;
+    }
+    .brugt-tider h3 {
+      font-size: 1.05rem;
+      margin: 0 0 14px;
+    }
+    .brugt-tider ul {
+      list-style: none;
+      margin: 0 0 14px;
+      padding: 0;
+    }
+    .brugt-tider li {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(20, 20, 30, 0.08);
+    }
+    .brugt-tider li:last-child {
+      border-bottom: 0;
+    }
+    .brugt-tider .dag {
+      font-weight: 700;
+    }
+    .brugt-tider .tid {
+      color: #3c3c46;
+      font-variant-numeric: tabular-nums;
+    }
+    .brugt-tider-link {
+      color: var(--cobalt, #1d3ee3);
+      text-decoration: underline;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 760px) {
+      .brugt-cta {
+        grid-template-columns: 1fr;
+        padding: 26px;
+      }
+    }
+  </style>
+</Layout>

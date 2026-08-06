@@ -588,6 +588,7 @@ section{padding:96px 0}
 
 /* Lang beskrivelse (portable text) */
 .rig-tekst{max-width:68ch}
+.rig-tekst h2{font-size:1.65rem;margin:38px 0 14px}
 .rig-tekst h3{font-size:1.4rem;margin:28px 0 12px}
 .rig-tekst h4{font-family:var(--font-display);font-weight:800;font-size:1.12rem;margin:22px 0 10px}
 .rig-tekst p{margin-bottom:16px;color:#2c2c34;font-size:1.02rem}

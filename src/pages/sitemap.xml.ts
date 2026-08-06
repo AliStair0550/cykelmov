@@ -67,7 +67,8 @@ export const GET: APIRoute = async () => {
     poster.push({ loc: abs(`/vaerksted/${y.slug}/`), lastmod: y.opdateret });
   }
 
-  // Artikler.
+  // Landingssider + artikler.
+  poster.push({ loc: abs('/brugte-cykler/') });
   poster.push({ loc: abs('/artikler/hvad-koster-en-cykel/') });
 
   // Statiske informationssider.
