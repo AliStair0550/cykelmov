@@ -1,0 +1,164 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { hentCykler } from '../../lib/data';
+import { kr } from '../../lib/format';
+
+// Anbefalinger: rigtige, publicerede cykler med Shimano Nexus-navgear (valgt
+// manuelt), men navn/pris/link slaas op i Sanity ved build, saa de altid er
+// korrekte. Findes en model ikke laengere, falder den bare ud af listen.
+const alle = await hentCykler();
+const udvalgte = [
+  {
+    slug: 'amstedam-isla-dame-cykel-shimano-3gear-nexus',
+    hvorfor:
+      'Klassisk bycykel med tre indvendige Shimano Nexus-gear. Gearene sidder beskyttet i navet, hvor brostenens støv og stød ikke når dem. Den oprejste kørestilling gør, at du ser huller og løse sten i god tid.',
+  },
+  {
+    slug: 'amsterdam-lux-damecykel-3-gear-shimano-nexus',
+    hvorfor:
+      'Samme beskyttede Nexus-navgear i en lidt mere udstyret udgave. Den stive, tunge ramme ligger roligt hen over brostenene i stedet for at hoppe. God til den samme brostensrute hver dag.',
+  },
+  {
+    slug: 'amsterdam-herre-cykel-3-gear-shimano-nexus',
+    hvorfor:
+      'Herreudgaven med tre Shimano Nexus-gear i navet. Kraftig ramme, der tager de værste stød fra brostenene. Bygget til at holde på byens hårde underlag.',
+  },
+  {
+    slug: 'amsterdam-herre-cykel-7-gear-shimano-nexus',
+    hvorfor:
+      'Vil du have flere gear til bakker og længere ture, er det her syv-trins Nexus-nav. Samme beskyttede navgear, bare med større spænd. Den mest alsidige af vores anbefalinger.',
+  },
+];
+const anbefalinger = udvalgte
+  .map((u) => ({ ...u, cykel: alle.find((c) => c.slug === u.slug) }))
+  .filter((u) => u.cykel);
+
+const faq = [
+  {
+    q: 'Hvilken dæktykkelse er bedst til brosten?',
+    s: 'Minimum 37 mm og kør med lidt lavere tryk end på asfalt. Så dæmper dækket i stedet for hjulet.',
+  },
+  {
+    q: 'Holder gearene til brosten?',
+    s: 'Navgear som Shimano Nexus ligger beskyttet inde i navet og tåler stød langt bedre end udvendige gear.',
+  },
+  {
+    q: 'Hvor ofte skal en brostenscykel efterses?',
+    s: 'Tjek skruer og eger et par gange om året. Køber du cyklen hos os, er eftersynet gratis.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.s },
+  })),
+};
+---
+
+<Layout
+  title="Bedste bycykel til brosten"
+  titelFuld="Bedste bycykel til brosten 2026 | Testet på Nørrebro"
+  description="Brosten slider på cykler. Vi har testet vores bycykler på Nørrebros gader og fundet dem, der holder. Se anbefalingerne her."
+>
+  <StructuredData slot="head" data={faqSchema} />
+
+  <section class="side-hero" style="padding:110px 0 60px">
+    <div class="wrap">
+      <span class="eyebrow ingen-streg">Testet på Nørrebro</span>
+      <h1 class="display-l" style="margin-top:14px">Bedste bycykel til brosten</h1>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <article class="rig-tekst">
+        <p>
+          Brosten er hårde ved en cykel. Løse skruer, skæve hjul og ømme håndled, hvis cyklen er
+          forkert bygget. Vi ligger på Nørrebrogade og reparerer brostensskader hver uge, så vi ved,
+          hvad der holder. Her er det, du skal kigge efter, og de cykler fra vores eget sortiment,
+          der klarer brosten bedst.
+        </p>
+
+        <h2>Det skal cyklen have for at klare brosten</h2>
+        <p>
+          <strong>Et stålstel eller et kraftigt aluminiumsstel.</strong> Det dæmper stødene fra
+          brostenene, så de ikke går direkte op i dine håndled.
+        </p>
+        <p>
+          <strong>Brede dæk med luft nok.</strong> Mindst 37 mm. Brede dæk ruller hen over
+          brostenene i stedet for ned i hver eneste fuge.
+        </p>
+        <p>
+          <strong>Skærmede gear som Shimano Nexus.</strong> Gearene sidder inde i baghjulets nav,
+          hvor støv og stød ikke når dem. De tåler brosten langt bedre end udvendige gear.
+        </p>
+        <p>
+          <strong>En god sadel, gerne med fjedre.</strong> Fjedrene tager de stød, dækkene ikke
+          fanger, og skåner ryggen på de lange ture.
+        </p>
+
+        <h2>Vores anbefalinger fra butikken</h2>
+        <p>
+          Alle fire kører på Shimano Nexus-navgear og har den solide, oprejste byggemåde, der klarer
+          brosten bedst. Priserne er dem, du betaler i butikken lige nu.
+        </p>
+        {
+          anbefalinger.map(({ cykel, hvorfor }) => (
+            <div class="anbefaling">
+              <h3>
+                <a href={`/cykler/${cykel!.slug}/`}>{cykel!.titel}</a>
+              </h3>
+              <p class="anbefaling-pris">{kr(cykel!.pris)}</p>
+              <p>{hvorfor}</p>
+            </div>
+          ))
+        }
+
+        <h2>Hvis din cykel allerede har taget skade</h2>
+        <p>
+          Mærker du løse skruer, et ottetal i hjulet eller gear, der springer, er det brostenene, der
+          har sat sig. Kom forbi vores <a href="/vaerksted/">værksted</a>, så retter vi det til faste
+          priser.
+        </p>
+
+        <h2>Ofte stillede spørgsmål</h2>
+        <div class="faq">
+          {
+            faq.map((f) => (
+              <details>
+                <summary>{f.q}</summary>
+                <div class="svar">{f.s}</div>
+              </details>
+            ))
+          }
+        </div>
+
+        <p style="margin-top:28px">
+          Vil du vide, hvad en cykel ellers koster i København, så se vores
+          <a href="/artikler/hvad-koster-en-cykel/"> prisguide</a>.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <style>
+    .anbefaling {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--linje);
+    }
+    .anbefaling h3 {
+      margin: 0 0 4px;
+    }
+    .anbefaling-pris {
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: var(--cobalt, #1d3ee3);
+      margin: 0 0 8px;
+    }
+  </style>
+</Layout>

@@ -70,6 +70,7 @@ export const GET: APIRoute = async () => {
   // Landingssider + artikler.
   poster.push({ loc: abs('/brugte-cykler/') });
   poster.push({ loc: abs('/artikler/hvad-koster-en-cykel/') });
+  poster.push({ loc: abs('/artikler/bedste-bycykel-til-brosten/') });
 
   // Statiske informationssider.
   poster.push({ loc: abs('/om/') });
