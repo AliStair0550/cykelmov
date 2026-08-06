@@ -191,19 +191,21 @@ const galleri = [
 
     /* Stramme afstande, saa der ikke opstaar store huller mellem teksterne. */
     .brugt-intro {
-      padding: 46px 0 16px;
+      padding: 44px 0 14px;
     }
     .brugt-pris-sektion {
-      padding: 16px 0 32px;
+      padding: 14px 0 30px;
     }
     .brugt-tekst {
-      padding: 20px 0 68px;
+      padding: 16px 0 68px;
     }
+    /* Galleriet er en enkelt lav raekke, saa det ikke bliver hoejere end
+       teksten og skaber et stort hul foer naeste afsnit. Lodret centreret. */
     .brugt-pris-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 44px;
-      align-items: start;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 40px;
+      align-items: center;
     }
     .brugt-pris-tekst h2 {
       margin-top: 0;
@@ -217,14 +219,10 @@ const galleri = [
       font-size: 1.35rem;
       color: var(--cobalt, #1d3ee3);
     }
-    /* Mindre billeder: galleriet er smallere og hoejre-stillet. */
     .brugt-galleri {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      max-width: 380px;
-      width: 100%;
-      margin-left: auto;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
     .brugt-galleri img {
       display: block;
@@ -232,21 +230,15 @@ const galleri = [
       aspect-ratio: 4 / 3;
       object-fit: cover;
       border: 1px solid var(--linje);
-      border-radius: 12px;
-    }
-    /* Tredje billede centreres under de to oeverste. */
-    .brugt-galleri img:nth-child(3) {
-      grid-column: 1 / -1;
-      justify-self: center;
-      width: calc(50% - 6px);
+      border-radius: 10px;
     }
     @media (max-width: 820px) {
       .brugt-pris-grid {
         grid-template-columns: 1fr;
-        gap: 22px;
+        gap: 20px;
       }
       .brugt-galleri {
-        margin: 0 auto;
+        max-width: 440px;
       }
     }
 
