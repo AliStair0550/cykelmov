@@ -32,12 +32,11 @@ const faqSchema = {
 
 const adresseKort = site.adresse.gade.replace(', st. tv.', '');
 
-// Galleri-billeder (i den rækkefølge Mohammed bad om: Brugt1, Brugt3, Brugt5, Brugt4).
+// Galleri-billeder: ægte fotos af butikken og de brugte cykler.
 const galleri = [
-  { src: '/assets/brugt-1.jpg', alt: 'Brugt herrecykel hos Cykelmov' },
-  { src: '/assets/brugt-2.jpg', alt: 'Brugt herrecykel hos Cykelmov' },
-  { src: '/assets/brugt-3.jpg', alt: 'Brugt damecykel med kurv hos Cykelmov' },
-  { src: '/assets/brugt-4.jpg', alt: 'Brugt damecykel med kurv hos Cykelmov' },
+  { src: '/assets/brugt-1.jpg', alt: 'Cykelmovs butik på Nørrebrogade 74 med brugte cykler udenfor' },
+  { src: '/assets/brugt-2.jpg', alt: 'Brugte cykler klar til salg hos Cykelmov' },
+  { src: '/assets/brugt-3.jpg', alt: 'Cykelmovs facade på Nørrebrogade med brugte cykler foran' },
 ];
 ---
 
@@ -45,6 +44,7 @@ const galleri = [
   title="Brugte cykler i København"
   titelFuld="Brugte cykler København | Efterset og klar | Cykelmov"
   description="Brugte kvalitetscykler på Nørrebro. Gennemgået i eget værksted, klar til gaden. Priser fra 1500 kr. Kom forbi Nørrebrogade 74."
+  ogBillede="/assets/brugt-cover.jpg"
   headerMoerk
 >
   <StructuredData slot="head" data={faqSchema} />
@@ -56,7 +56,7 @@ const galleri = [
     </div>
   </section>
 
-  <section>
+  <section class="brugt-intro">
     <div class="wrap">
       <article class="rig-tekst">
         <p>
@@ -91,7 +91,7 @@ const galleri = [
     </div>
   </section>
 
-  <section>
+  <section class="brugt-tekst">
     <div class="wrap">
       <article class="rig-tekst">
         <h2>Sådan gør vi cyklerne klar</h2>
@@ -189,18 +189,27 @@ const galleri = [
       }
     }
 
-    /* Pris-sektion med galleri ved siden af. */
+    /* Stramme afstande, saa der ikke opstaar store huller mellem teksterne. */
+    .brugt-intro {
+      padding: 46px 0 16px;
+    }
     .brugt-pris-sektion {
-      padding-top: 6px;
+      padding: 16px 0 32px;
+    }
+    .brugt-tekst {
+      padding: 20px 0 68px;
     }
     .brugt-pris-grid {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
+      grid-template-columns: 1.2fr 0.8fr;
       gap: 44px;
-      align-items: center;
+      align-items: start;
     }
     .brugt-pris-tekst h2 {
       margin-top: 0;
+    }
+    .brugt-pris-tekst p:last-child {
+      margin-bottom: 0;
     }
     .brugt-pris-linje {
       font-family: var(--font-display);
@@ -208,24 +217,36 @@ const galleri = [
       font-size: 1.35rem;
       color: var(--cobalt, #1d3ee3);
     }
+    /* Mindre billeder: galleriet er smallere og hoejre-stillet. */
     .brugt-galleri {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 12px;
+      max-width: 380px;
+      width: 100%;
+      margin-left: auto;
     }
     .brugt-galleri img {
+      display: block;
       width: 100%;
       aspect-ratio: 4 / 3;
-      object-fit: contain;
-      background: #fff;
+      object-fit: cover;
       border: 1px solid var(--linje);
-      border-radius: 14px;
-      padding: 6px;
+      border-radius: 12px;
+    }
+    /* Tredje billede centreres under de to oeverste. */
+    .brugt-galleri img:nth-child(3) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: calc(50% - 6px);
     }
     @media (max-width: 820px) {
       .brugt-pris-grid {
         grid-template-columns: 1fr;
-        gap: 28px;
+        gap: 22px;
+      }
+      .brugt-galleri {
+        margin: 0 auto;
       }
     }
 
