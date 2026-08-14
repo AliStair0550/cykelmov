@@ -29,6 +29,15 @@ function feedBillede(url: string): string {
   return /auto=format/.test(url) ? url.replace(/auto=format/, 'fm=jpg') : url;
 }
 
+// g:id er produktets PERMANENTE noegle i Merchant Center. Vi bruger Sanitys
+// _id: det er kort og aendrer sig ALDRIG for et eksisterende dokument, heller
+// ikke hvis slug eller titel redigeres (i modsaetning til slug'en, der kunne
+// blive over Googles 50-tegns graense). Saniteres til kun sikre tegn
+// (bogstaver, tal, _ og -), saa Google ikke afviser det.
+function feedId(id: string): string {
+  return (id || '').replace(/[^A-Za-z0-9_-]/g, '-');
+}
+
 const KATEGORI = 'Sporting Goods > Outdoor Recreation > Cycling > Bicycles';
 
 export const GET: APIRoute = async () => {
@@ -45,7 +54,7 @@ export const GET: APIRoute = async () => {
 
       return [
         '    <item>',
-        `      <g:id>${xmlEscape(c.slug)}</g:id>`,
+        `      <g:id>${xmlEscape(feedId(c._id))}</g:id>`,
         `      <g:title>${xmlEscape(c.titel)}</g:title>`,
         `      <g:description>${xmlEscape(beskrivelse)}</g:description>`,
         `      <g:link>${xmlEscape(link)}</g:link>`,
