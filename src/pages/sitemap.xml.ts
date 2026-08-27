@@ -71,6 +71,7 @@ export const GET: APIRoute = async () => {
   poster.push({ loc: abs('/brugte-cykler/') });
   poster.push({ loc: abs('/artikler/hvad-koster-en-cykel/') });
   poster.push({ loc: abs('/artikler/bedste-bycykel-til-brosten/') });
+  poster.push({ loc: abs('/artikler/salg-af-brugt-cykel/') });
 
   // Statiske informationssider.
   poster.push({ loc: abs('/om/') });

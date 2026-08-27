@@ -1,0 +1,146 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { site } from '../../lib/site';
+
+// FAQ til FAQPage-schema. Spørgsmålet "Skal cyklen virke?" er markeret
+// [BEKRÆFT] af ejeren og udelades bevidst, indtil vi har det rigtige svar.
+const faq = [
+  {
+    q: 'Kan jeg bytte uden at købe ny?',
+    s: 'Indbytning hænger sammen med et køb. Du bytter din gamle cykel, når du køber en anden hos os.',
+  },
+  {
+    q: 'Hvad med elcykler?',
+    s: 'Kom forbi med den, så kigger vi på den. En elcykels pris afhænger meget af batteri og motor, så den vurderer vi individuelt.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.s },
+  })),
+};
+
+const adresseKort = site.adresse.gade.replace(', st. tv.', '');
+---
+
+<Layout
+  title="Sælg brugt cykel i København"
+  titelFuld="Sælg brugt cykel i København, eller byt den | Cykelmov"
+  description="Sælg eller byt din brugte cykel i København. Se den ærlige sammenligning af DBA og indbytning hos Cykelmov, og hvad din gamle cykel kan give."
+>
+  <StructuredData slot="head" data={faqSchema} />
+
+  <section class="side-hero" style="padding:110px 0 60px">
+    <div class="wrap">
+      <span class="eyebrow ingen-streg">Byt eller sælg</span>
+      <h1 class="display-l" style="margin-top:14px">Sælg din brugte cykel i København. Eller byt den til en ny</h1>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <article class="rig-tekst">
+        <p>
+          Du har tre muligheder med din gamle cykel: sælge den selv, aflevere den til os i bytte,
+          eller lade den ruste. Her er den ærlige sammenligning.
+        </p>
+
+        <h2>Sådan fungerer indbytning hos os</h2>
+        <p>
+          Det er enkelt. Du kommer forbi butikken med din gamle cykel. Vi kigger på den og giver dig
+          en pris med det samme. Beløbet trækker vi direkte fra den cykel, du køber hos os. Du slipper
+          for at lægge annonce op, vise cyklen frem for fremmede og vente på en køber.
+        </p>
+
+        <h2>Byt eller sælg selv på DBA</h2>
+        <p>
+          Du kan sagtens sælge cyklen selv på DBA. Ærligt talt får du ofte lidt mere den vej. Men det
+          koster tid. Du skal skrive annoncen, svare på beskeder, vise cyklen frem og tage risikoen
+          ved fremmede i din opgang. Indbytning tager fem minutter, og pengene trækkes direkte fra
+          prisen på din nye cykel. Du vælger selv, om de ekstra kroner er tiden værd.
+        </p>
+
+        <h2>Hvad sker der med din gamle cykel</h2>
+        <p>
+          Din gamle cykel ender ikke på lossepladsen. Vi sætter den i stand i vores eget værksted og
+          giver den nyt liv hos en ny ejer. Se vores klargjorte
+          <a href="/brugte-cykler/"> brugte cykler</a> her.
+        </p>
+
+        <h2>Ofte stillede spørgsmål</h2>
+        <div class="faq">
+          {
+            faq.map((f) => (
+              <details>
+                <summary>{f.q}</summary>
+                <div class="svar">{f.s}</div>
+              </details>
+            ))
+          }
+        </div>
+
+        <p style="margin-top:28px">
+          Skal du samtidig finde en ny cykel, så se vores <a href="/cykler/dame/">damecykler</a> og
+          <a href="/cykler/herre/">herrecykler</a>.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="salg-cta-sektion">
+    <div class="wrap">
+      <div class="salg-cta reveal">
+        <div>
+          <h2>Kom forbi med cyklen</h2>
+          <p>
+            Kom forbi {adresseKort} i {site.adresse.by} med din gamle cykel, så giver vi dig en pris
+            med det samme.
+          </p>
+        </div>
+        <div class="salg-cta-knapper">
+          <a href={site.maps} class="btn btn-cobalt">Find vej <span class="pil">→</span></a>
+          <a href={`tel:${site.telefonE164}`} class="btn btn-ghost">Ring {site.telefon}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .salg-cta-sektion {
+      padding: 4px 0 80px;
+    }
+    .salg-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 40px;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border: 1px solid rgba(29, 62, 227, 0.12);
+      border-radius: 20px;
+      padding: 30px 34px;
+      box-shadow: 0 18px 50px -30px rgba(29, 62, 227, 0.4);
+    }
+    .salg-cta h2 {
+      font-size: 1.5rem;
+      margin: 0 0 8px;
+    }
+    .salg-cta p {
+      color: #2c2c34;
+      margin: 0;
+      max-width: 46ch;
+    }
+    .salg-cta-knapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+</Layout>
