@@ -95,8 +95,9 @@ export function byggMail(navn: string): string {
         </td></tr>
         <tr><td style="padding:32px;color:#141419;font-size:16px;line-height:1.6;">
           <p style="margin:0 0 16px;">${hej} Tak fordi du valgte os.</p>
-          <p style="margin:0 0 16px;">Er der noget med cyklen eller reparationen, så ring på ${esc(tlf)}. Vi løser det med det samme.</p>
-          <p style="margin:0 0 26px;">Hvis du er glad for os, betyder en anmeldelse på Google alt for en lille butik.</p>
+          <p style="margin:0 0 16px;">Er der noget med cyklen eller reparationen, så ring på ${esc(tlf)}. Så finder vi ud af det.</p>
+          <p style="margin:0 0 14px;">Hvis du er glad for os, betyder en anmeldelse på Google alt for en lille butik.</p>
+          <p style="margin:0 0 24px;font-size:22px;line-height:1;letter-spacing:6px;">🚲 🚲 🚲 🚲 🚲</p>
           <p style="margin:0 0 30px;">
             <a href="${ANMELDELSE_URL}" style="display:inline-block;background:#1D3EE3;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;padding:14px 28px;border-radius:999px;">Giv os en anmeldelse</a>
           </p>
