@@ -610,6 +610,8 @@ section{padding:96px 0}
 .byt-badge{display:flex;gap:12px;align-items:flex-start;background:rgba(29,62,227,.06);border:1px solid rgba(29,62,227,.14);border-radius:14px;padding:14px 16px;margin:18px 0 6px;color:#2c2c34;font-size:.95rem;line-height:1.45;text-decoration:none;transition:background .18s ease}
 .byt-badge:hover{background:rgba(29,62,227,.11)}
 .byt-badge-ikon{font-size:1.25rem;line-height:1.2;flex:none}
+.byt-badge-pil{margin-left:auto;align-self:center;color:var(--cobalt);font-weight:700;font-size:1.15rem;flex:none;transition:transform .18s ease}
+.byt-badge:hover .byt-badge-pil{transform:translateX(3px)}
 .byt-stribe{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;text-align:center;width:fit-content;max-width:100%;margin:32px auto 0;background:#ebe8e1;color:#2c2c34;border:1px solid var(--linje);border-radius:999px;padding:11px 22px;text-decoration:none;font-size:1rem;transition:background .18s ease}
 .byt-stribe:hover{background:#e3dfd5}
 .byt-stribe strong{color:var(--cobalt);white-space:nowrap}

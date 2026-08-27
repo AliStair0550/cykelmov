@@ -36,13 +36,15 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
   title="Sælg brugt cykel i København"
   titelFuld="Sælg brugt cykel i København, eller byt den | Cykelmov"
   description="Sælg eller byt din brugte cykel i København. Se den ærlige sammenligning af DBA og indbytning hos Cykelmov, og hvad din gamle cykel kan give."
+  ogBillede="/assets/salg-cover.jpg"
+  headerMoerk
 >
   <StructuredData slot="head" data={faqSchema} />
 
-  <section class="side-hero" style="padding:110px 0 60px">
+  <section class="salg-hero">
     <div class="wrap">
       <span class="eyebrow ingen-streg">Byt eller sælg</span>
-      <h1 class="display-l" style="margin-top:14px">Sælg din brugte cykel i København. Eller byt den til en ny</h1>
+      <h1 class="display-l">Byt din brugte cykel til en ny</h1>
     </div>
   </section>
 
@@ -117,6 +119,32 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
   </section>
 
   <style>
+    /* Cover-hero med billede + moerk gradient, saa teksten forbliver laesbar. */
+    .salg-hero {
+      position: relative;
+      color: var(--kridt);
+      padding: 150px 0 90px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(16, 16, 20, 0.82), rgba(16, 16, 20, 0.42) 58%, rgba(16, 16, 20, 0.28)),
+        url('/assets/salg-cover.jpg') center 42% / cover no-repeat;
+    }
+    .salg-hero .eyebrow {
+      color: var(--signal);
+    }
+    .salg-hero h1 {
+      max-width: 20ch;
+      margin-top: 14px;
+    }
+    @media (max-width: 700px) {
+      .salg-hero {
+        padding: 120px 0 60px;
+        background:
+          linear-gradient(180deg, rgba(16, 16, 20, 0.5), rgba(16, 16, 20, 0.78)),
+          url('/assets/salg-cover.jpg') center 42% / cover no-repeat;
+      }
+    }
+
     .salg-cta-sektion {
       padding: 4px 0 80px;
     }
