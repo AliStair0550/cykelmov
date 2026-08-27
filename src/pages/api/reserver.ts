@@ -130,6 +130,7 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
   if (projectId && token) {
     const doc: Record<string, unknown> = {
       _type: 'foresporgsel',
+      type,
       navn,
       telefon,
       email,

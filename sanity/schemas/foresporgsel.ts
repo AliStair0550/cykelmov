@@ -30,6 +30,19 @@ export default defineType({
       description: 'Valgte tilkøb (fx lås, lygtesæt).',
       readOnly: true,
     }),
+    defineField({
+      name: 'type',
+      title: 'Type',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Cykelreservation', value: 'cykel' },
+          { title: 'Værkstedsbooking', value: 'ydelse' },
+          { title: 'Kontakt', value: 'kontakt' },
+        ],
+      },
+      readOnly: true,
+    }),
     defineField({ name: 'navn', title: 'Navn', type: 'string', readOnly: true }),
     defineField({ name: 'telefon', title: 'Telefon', type: 'string', readOnly: true }),
     defineField({ name: 'email', title: 'E-mail', type: 'string', readOnly: true }),
@@ -49,6 +62,14 @@ export default defineType({
         layout: 'radio',
       },
       initialValue: 'ny',
+    }),
+    defineField({
+      name: 'mailSendtAt',
+      title: 'Tak-mail sendt',
+      type: 'datetime',
+      readOnly: true,
+      description:
+        'Sættes automatisk, når tak-mailen er sendt. Forhindrer, at der sendes en mail igen ved gentagne statusskift.',
     }),
   ],
   orderings: [

@@ -616,6 +616,9 @@ section{padding:96px 0}
 .byt-stribe:hover{background:#e3dfd5}
 .byt-stribe strong{color:var(--cobalt);white-space:nowrap}
 
+/* Lille samtykke-/hjaelpetekst under formularfelter */
+.felt-note{font-size:.8rem;line-height:1.45;color:var(--grå,#7a7a83);margin:7px 0 0}
+
 /* Sektionsoverskrift på produktside */
 .blok-titel{font-family:var(--font-label);text-transform:uppercase;letter-spacing:.08em;font-size:.86rem;color:var(--grå);margin-bottom:16px}
 
