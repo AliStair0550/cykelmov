@@ -43,7 +43,17 @@ const KATEGORI = 'Sporting Goods > Outdoor Recreation > Cycling > Bicycles';
 export const GET: APIRoute = async () => {
   const cykler = await hentCykler();
 
-  const items = cykler
+  // Feedet skal KUN indeholde cykler. hentCykler henter allerede udelukkende
+  // dokumenter af typen "cykel" (perspective: published) — tilbehoer og
+  // vaerkstedsydelser er andre dokumenttyper og kan aldrig komme med. Som
+  // ekstra robusthed medtager vi kun rigtige, salgbare cykler: dem med en
+  // gyldig URL, en positiv pris og mindst ét billede. Det holder ufuldstaendige
+  // dokumenter ude, saa Google Merchant ikke afviser dem.
+  const salgbare = cykler.filter(
+    (c) => Boolean(c.slug) && Number(c.pris) > 0 && (c.billeder?.length ?? 0) > 0,
+  );
+
+  const items = salgbare
     .map((c) => {
       const link = abs(`/cykler/${c.slug}/`);
       const image = feedBillede(c.billeder?.[0]?.url ?? '');
