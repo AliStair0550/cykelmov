@@ -7,6 +7,7 @@ import { hentYdelser } from '../../lib/data';
 import { ydelsePris } from '../../lib/format';
 import { absUrl } from '../../lib/schema';
 import { site, kategoriIkon } from '../../lib/site';
+import { vaerkstedTekst } from '../../lib/vaerkstedTekst';
 import type { Ydelse } from '../../lib/types';
 
 export async function getStaticPaths() {
@@ -29,6 +30,10 @@ const kategoriLabel: Record<string, string> = {
   akut: 'Akut hjælp',
 };
 const prisTekst = ydelsePris(ydelse.fraPris, ydelse.fastPris);
+
+// Servicespecifik brødtekst (2+ afsnit) til indeksering. Findes teksten ikke
+// for denne slug, falder vi tilbage til Sanitys PortableText-beskrivelse.
+const artikel = vaerkstedTekst[ydelse.slug];
 
 const alle = await hentYdelser();
 const andre = alle.filter((y) => y._id !== ydelse._id).slice(0, 3);
@@ -56,9 +61,20 @@ const heroBillede =
   (ydelse.raekkefolge % 2 === 0 ? '/assets/vaerksted-2.jpg' : '/assets/vaerksted-1.jpg');
 const heroAlt = ydelse.billede?.alt ?? 'Cykelmovs værksted på Nørrebro';
 const ogBillede = absUrl(heroBillede);
+
+// Unik meta description: brug den servicespecifikke intro, forkortet til ~155
+// tegn ved ordgrænse. Fald tilbage til den formeltekst, hvis artiklen mangler.
+function metaBesk(): string {
+  if (!artikel) return `${ydelse.navn} hos Cykelmov på Nørrebro, ${prisTekst}. Book tid online, ofte samme dag.`;
+  const raa = artikel.p1;
+  if (raa.length <= 158) return raa;
+  const kort = raa.slice(0, 155);
+  return kort.slice(0, kort.lastIndexOf(' ')).replace(/[,.;:–-]$/, '') + '…';
+}
+const beskrivelse = metaBesk();
 ---
 
-<Layout title={ydelse.navn} description={`${ydelse.navn} hos Cykelmov på Nørrebro, ${prisTekst}. Book tid online, ofte samme dag.`} ogBillede={ogBillede}>
+<Layout title={ydelse.navn} description={beskrivelse} ogBillede={ogBillede}>
   <StructuredData slot="head" data={schema} />
 
   <section class="produkt-side">
@@ -86,7 +102,15 @@ const ogBillede = absUrl(heroBillede);
           </div>
 
           <div class="rig-tekst" style="margin-bottom:24px">
-            <PortableText value={ydelse.beskrivelse} />
+            {artikel ? (
+              <>
+                <p>{artikel.p1}</p>
+                <h2>{artikel.h2}</h2>
+                <p>{artikel.p2}</p>
+              </>
+            ) : (
+              <PortableText value={ydelse.beskrivelse} />
+            )}
           </div>
 
           <div class="produkt-handling">
