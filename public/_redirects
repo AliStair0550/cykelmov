@@ -4,6 +4,11 @@
 #   Rules → Redirect Rules → Create → When hostname equals "www.cykelmov.dk"
 #   → Static/Dynamic redirect til https://cykelmov.dk + bevar sti → 301.
 
+# Rodet gammel værksteds-slug (mellemrum + æ) → ren slug (301)
+/vaerksted/K%C3%A6de%20rustfri%20skift/   /vaerksted/kaede-rustfri-skift/   301
+/vaerksted/K%C3%A6de%20rustfri%20skift    /vaerksted/kaede-rustfri-skift/   301
+/vaerksted/Kæde%20rustfri%20skift/        /vaerksted/kaede-rustfri-skift/   301
+
 # Gamle WooCommerce-URL'er → nye sider (301, permanent)
 # Cloudflare Pages evaluerer oppefra og ned; specifikke regler før catch-all.
 

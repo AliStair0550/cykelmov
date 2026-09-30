@@ -33,6 +33,11 @@ const knapKlasse =
 
 // Efterstillet skråstreg, så schema-URL'en matcher sidens canonical.
 const sideUrl = new URL(`/cykler/${cykel.slug}/`, Astro.site ?? undefined).href;
+// Dubletsider (samme titel) peger canonical på den primære cykel i gruppen.
+const canonicalUrl = new URL(
+  `/cykler/${cykel.canonicalSlug ?? cykel.slug}/`,
+  Astro.site ?? undefined,
+).href;
 const schema = produktSchema(cykel, sideUrl);
 
 // Specifikationsrækker
@@ -55,6 +60,7 @@ const ogBillede = cykel.billeder[0] ? absUrl(cykel.billeder[0].url) : '/assets/h
   description={cykel.seoBeskrivelse ?? `${cykel.kortBeskrivelse} Bestil online hos Cykelmov og afhent i butikken på Nørrebrogade 74.`}
   ogBillede={ogBillede}
   bodyKlasse={bodyKlasse}
+  canonical={canonicalUrl}
 >
   <StructuredData slot="head" data={schema} />
 

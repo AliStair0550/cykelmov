@@ -43,6 +43,9 @@ export interface Cykel {
   _id: string;
   titel: string;
   slug: string;
+  /** Slug på den primære cykel i en dubletgruppe (samme titel). Bruges til
+   *  canonical, så Google indekserer én pr. gruppe. = slug for primære selv. */
+  canonicalSlug?: string;
   koen: Koen;
   type: CykelType;
   brand: string;

@@ -41,6 +41,18 @@ export function hentCykler(): Promise<Cykel[]> {
         brugte.add(unik);
         c.slug = unik;
       }
+      // Dubletter (samme titel) konsolideres via canonical: den første i hver
+      // titel-gruppe er primær, resten peger på den. Så indekserer Google én
+      // pr. gruppe i stedet for at udelade dem som "duplikat uden canonical".
+      const primaer = new Map<string, string>();
+      const titelNoegle = (t: string) => (t || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      for (const c of mapped) {
+        const k = titelNoegle(c.titel);
+        if (!primaer.has(k)) primaer.set(k, c.slug);
+      }
+      for (const c of mapped) {
+        c.canonicalSlug = primaer.get(titelNoegle(c.titel)) ?? c.slug;
+      }
       return mapped;
     } catch (err) {
       console.warn('[data] Kunne ikke hente cykler fra Sanity, bruger demo-data:', (err as Error).message);
@@ -58,7 +70,19 @@ export function hentYdelser(): Promise<Ydelse[]> {
     try {
       const docs = await sanityClient.fetch(alleVaerksted);
       if (!Array.isArray(docs) || docs.length === 0) return demoYdelser;
-      return docs.map(mapYdelse);
+      const mapped = docs.map(mapYdelse);
+      // Rens rodede slugs (mellemrum/store bogstaver/æøå) og gør dem unikke, så
+      // alle ydelser får pæne URL'er (fx "Kæde rustfri skift" -> kaede-rustfri-skift).
+      const brugte = new Set<string>();
+      for (const y of mapped) {
+        const base = slugify(y.slug) || slugify(y.navn) || 'ydelse';
+        let unik = base;
+        let n = 2;
+        while (brugte.has(unik)) unik = `${base}-${n++}`;
+        brugte.add(unik);
+        y.slug = unik;
+      }
+      return mapped;
     } catch (err) {
       console.warn('[data] Kunne ikke hente ydelser fra Sanity, bruger demo-data:', (err as Error).message);
       return demoYdelser;
