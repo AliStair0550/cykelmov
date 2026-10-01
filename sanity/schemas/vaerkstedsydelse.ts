@@ -24,7 +24,6 @@ export default defineType({
           { title: 'Gear og kæde', value: 'gear' },
           { title: 'Bremser', value: 'bremser' },
           { title: 'Elcykel', value: 'elcykel' },
-          { title: 'Tilbehør', value: 'tilbehoer' },
         ],
       },
       validation: (r) => r.required(),

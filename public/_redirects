@@ -15,6 +15,20 @@
 /vaerksted/akut-reparation/   /vaerksted/   301
 /vaerksted/akut-reparation    /vaerksted/   301
 
+# Udgået kategori: Montering-ydelser (montering inkl. ved køb) → tilbehørsbutikken (301)
+/vaerksted/montering-cykelkurv/     /tilbehoer/   301
+/vaerksted/montering-cykelkurv      /tilbehoer/   301
+/vaerksted/montering-barnestol/     /tilbehoer/   301
+/vaerksted/montering-barnestol      /tilbehoer/   301
+/vaerksted/montering-bagagebaerer/  /tilbehoer/   301
+/vaerksted/montering-bagagebaerer   /tilbehoer/   301
+/vaerksted/montering-skaerme/       /tilbehoer/   301
+/vaerksted/montering-skaerme        /tilbehoer/   301
+/vaerksted/montering-lygter/        /tilbehoer/   301
+/vaerksted/montering-lygter         /tilbehoer/   301
+/vaerksted/montering-laas/          /tilbehoer/   301
+/vaerksted/montering-laas           /tilbehoer/   301
+
 # Rodet gammel værksteds-slug (mellemrum + æ) → ren slug (301)
 /vaerksted/K%C3%A6de%20rustfri%20skift/   /vaerksted/kaede-rustfri-skift/   301
 /vaerksted/K%C3%A6de%20rustfri%20skift    /vaerksted/kaede-rustfri-skift/   301

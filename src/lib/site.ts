@@ -80,5 +80,4 @@ export const kategoriIkon: Record<string, string> = {
   gear: '⚙️',
   bremser: '🛑',
   elcykel: '⚡',
-  tilbehoer: '🧰',
 };

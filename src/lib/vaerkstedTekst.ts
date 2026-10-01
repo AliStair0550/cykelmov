@@ -36,10 +36,20 @@ export const vaerkstedTekst: Record<string, VaerkstedArtikel> = {
     h2: 'Både udvendige og indvendige gear',
     p2: 'Vi justerer både klassiske udvendige gear og indvendige navgear som Shimano Nexus. Er wiren tæret eller strakt, skifter vi den, så justeringen holder. De fleste gearjusteringer klarer vi, mens du venter, eller samme dag – book tid online på Nørrebrogade 74.',
   },
+  'stramning-af-bremser': {
+    p1: 'Er bremsen blevet blød, eller tager det for langt at bremse, er det ofte bare et spørgsmål om opstramning. Vi strammer bremsewiren op og justerer klodserne, så bremsen griber tidligt og fast igen – uden at skulle skifte dele.',
+    h2: 'Hurtigt og billigt',
+    p2: 'Stramning er den lille, billige justering, der gør en mærkbar forskel i hverdagen og i trafikken. Er klodserne derimod slidt helt ned, anbefaler vi et bremseskift i stedet og siger det med det samme. Ofte klarer vi stramningen, mens du venter på Nørrebrogade 74.',
+  },
   bremseskift: {
-    p1: 'Bremseskift dækker udskiftning af slidte bremsedele, så du får fuld opbremsning tilbage. Vi monterer nye klodser eller bremsesko, skifter tærede eller strakte bremsewirer og justerer bremsen, så den griber blødt og sikkert – uanset om du har fælgbremser, skivebremser eller fodbremse.',
+    p1: 'Bremseskift dækker udskiftning af slidte bremsedele på én bremse – for eller bag – så du får fuld opbremsning tilbage. Vi monterer nye klodser eller bremsesko, skifter tærede eller strakte bremsewirer og justerer bremsen, så den griber blødt og sikkert, uanset om du har fælgbremser, skivebremser eller fodbremse.',
     h2: 'Når bremsen føles slap',
-    p2: 'Skal du klemme håndtaget helt ind til styret, hyler bremsen, eller trækker cyklen skævt, når du bremser, er det tid til nye dele. Bremserne er det vigtigste på cyklen, og vi går aldrig på kompromis med dem. Book tid online, så er cyklen ofte klar igen samme dag.',
+    p2: 'Skal du klemme håndtaget helt ind til styret, hyler bremsen, eller trækker cyklen skævt, er det tid til nye dele. Skal begge bremser skiftes, gør vi det samlet til en fast pakkepris, og trænger bremsen bare til at blive strammet op, klarer vi det hurtigt og billigt. Book tid online, så er cyklen ofte klar igen samme dag.',
+  },
+  'bremseskift-begge-bremser': {
+    p1: 'Skal både for- og bagbremse skiftes, får du det hele gjort samlet til én fast pakkepris. Vi monterer nye klodser eller bremsesko på begge bremser, skifter tærede wirer og justerer, så cyklen bremser ens og sikkert i begge ender.',
+    h2: 'Begge bremser, én fast pris',
+    p2: 'Det er typisk billigere at få skiftet begge bremser på én gang end at tage dem hver for sig – og du er sikker på, at hele cyklens opbremsning er i topform. Vil du kun have skiftet den ene, finder du Bremseskift, én bremse som separat ydelse. Book tid online på Nørrebrogade 74.',
   },
   kaedeskift: {
     p1: 'En slidt kæde ødelægger langsomt de dyre tandhjul på kassette og klinge. Ved et kædeskift måler vi kædens slid, monterer en ny kæde i den rigtige længde og kontrollerer, at den spiller sammen med resten af drivlinjen, så gearskiftet bliver skarpt igen.',
@@ -90,36 +100,6 @@ export const vaerkstedTekst: Record<string, VaerkstedArtikel> = {
     p1: 'Ligesom en telefon får elcyklens motorsystem løbende opdateringer fra producenten. En softwareopdatering kan forbedre motorens ydelse, batteristyring og rækkevidde og rette fejl, der får motoren til at sætte ud eller vise fejlkoder på displayet.',
     h2: 'Hvis din motor understøtter det',
     p2: 'Vi opdaterer motor og system på de mærker, hvor producenten stiller opdateringer til rådighed. Oplever du fejlkoder, ujævn understøttelse eller uventet strømforbrug, er en opdatering ofte det første, vi prøver. Book tid online, så tjekker vi, om der er en opdatering klar til din cykel.',
-  },
-  'montering-cykelkurv': {
-    p1: 'Vi monterer din nye cykelkurv, så den sidder solidt og sikkert – uanset om det er en frontkurv på styret, en fastspændt kurv over forhjulet eller en kurv på bagagebæreren. Vi sikrer, at kurven ikke gnider mod hjul eller kabler og ikke rasler løs, når du kører over brosten.',
-    h2: 'Kurv med eller uden beslag',
-    p2: 'Har kurven brug for et særligt beslag eller en adapter til din styrtype, finder vi den rigtige løsning. Køber du kurven hos os, monterer vi den ofte med det samme. Kom forbi værkstedet på Nørrebrogade 74, eller book tid online.',
-  },
-  'montering-barnestol': {
-    p1: 'En barnestol skal sidde helt fast og korrekt – der er ingen slinger i valsen, når det handler om at have barnet med. Vi monterer barnestolen efter forskrifterne, spænder beslag og fæste ordentligt og kontrollerer, at stolen sidder stabilt og ikke er i vejen for ben, bremser eller hjul.',
-    h2: 'Tryghed for både barn og forælder',
-    p2: 'Vi tjekker, at din cykel passer til stolen, og at vægtgrænserne overholdes, og viser dig, hvordan sele og fodstøtter justeres til barnet. Er du i tvivl om for- eller bagmontering, rådgiver vi ud fra din cykel. Book tid online på værkstedet på Nørrebro.',
-  },
-  'montering-bagagebaerer': {
-    p1: 'En bagagebærer gør cyklen langt mere brugbar til hverdag – til tasken, kurven, barnestolen eller indkøbet. Vi monterer bagagebæreren solidt på stellet med de rigtige beslag, så den kan bære fuld last uden at rasle eller flytte sig.',
-    h2: 'Passer til din cykel',
-    p2: 'Alle cykler er ikke ens, så vi finder den rigtige bagagebærer og de beslag, der passer til netop dit stel og dine huller. Skal der også monteres kurv eller barnestol ovenpå, klarer vi det i samme ombæring. Kig forbi værkstedet på Nørrebrogade 74.',
-  },
-  'montering-skaerme': {
-    p1: 'Skærme holder vejvand, mudder og skidt væk fra tøj og ryg og gør cyklen brugbar i al slags vejr. Vi monterer for- og bagskærme, der passer til dine dæk og dit stel, og justerer afstanden, så de ikke gnider mod hjulet eller klaprer, når du kører.',
-    h2: 'Slut med den våde stribe op ad ryggen',
-    p2: 'Vi sikrer, at stænklapper og stivere sidder fast, og at skærmene flugter pænt med hjulet hele vejen rundt. Har din cykel begrænset plads mellem dæk og stel, finder vi skærme, der passer. Book tid online på værkstedet på Nørrebro.',
-  },
-  'montering-lygter': {
-    p1: 'Lys er lovpligtigt, når det er mørkt, og livsvigtigt i trafikken. Vi monterer dine for- og baglygter, så de lyser i den rigtige vinkel og sidder fast, hvad enten det er batterilygter, genopladelige lygter eller fastmonteret dynamolys.',
-    h2: 'Se og bliv set',
-    p2: 'Skal du have dynamolys, trækker vi ledningerne pænt og skjult langs stellet og tester, at lyset virker i både for- og bagende. Vi rådgiver om godt, kraftigt lys, der holder. Kom forbi værkstedet på Nørrebrogade 74, eller book tid online.',
-  },
-  'montering-laas': {
-    p1: 'En fastmonteret ringlås eller rammelås er den nemme hverdagslås, du aldrig glemmer hjemme. Vi monterer låsen solidt på stellet, så den sidder fast og ikke gnider mod dæk eller eger, og sikrer, at den låser og låser op, som den skal.',
-    h2: 'God sikring mod cykeltyveri',
-    p2: 'Vi rådgiver om forsikringsgodkendte låse og om kombinationen af rammelås og en solid bøjlelås eller kædelås, der giver den bedste beskyttelse i byen. Køber du låsen hos os, monterer vi den ofte med det samme på Nørrebro. Book eventuelt tid online.',
   },
   vinterklargoering: {
     p1: 'Vinterklargøring beskytter cyklen mod salt, fugt og kulde, så den holder til at blive brugt hele den mørke sæson. Vi renser og smører drivlinjen med vinterolie, der ikke skylles væk, tjekker bremser og dæk til glat føre og sikrer, at lyset virker.',

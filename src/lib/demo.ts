@@ -287,7 +287,9 @@ export const demoYdelser: Ydelse[] = [
   mkY('kaede-og-drivlinjerens', 'Kæde og drivlinjerens', 'gear', 149, true, '30 min', 'Grundig rens og smøring af kæde, kassette og krank.', 2),
   mkY('kaedeskift', 'Kædeskift', 'gear', 299, true, '30 min', 'Udskiftning af slidt kæde for bedre gearskift og længere levetid på tandhjul.', 3),
   // Bremser
-  mkY('bremseskift', 'Bremseskift', 'bremser', 199, true, '30 min', 'Justering og skift af bremser, klodser, kabler og bremsekraft.', 1),
+  mkY('stramning-af-bremser', 'Stramning af bremser', 'bremser', 49, true, 'Mens du venter', 'Hurtig opstramning og justering af bremserne, så de griber igen.', 1),
+  mkY('bremseskift', 'Bremseskift, én bremse', 'bremser', 199, true, '30 min', 'Nye klodser, kabler og justering på én bremse – for eller bag.', 2),
+  mkY('bremseskift-begge-bremser', 'Bremseskift, begge bremser', 'bremser', 299, true, '45 min', 'Skift af både for- og bagbremse, samlet til fast pris.', 3),
   // Dæk og hjul
   mkY('slangeskift', 'Slangeskift', 'daek', 249, false, 'Mens du venter', 'Ny slange monteres hurtigt. Lapning fra 99 hvis muligt.', 9, lokalBillede('/assets/vaerksted-daek.jpg', 'Cykeldæk på lager i værkstedet')),
   mkY('punkteringslapning', 'Punkteringslapning', 'daek', 99, true, '15 min', 'Vi lapper slangen, hvis skaden kan repareres.', 10),
@@ -297,13 +299,6 @@ export const demoYdelser: Ydelse[] = [
   mkY('elcykel-service', 'Elcykel service', 'elcykel', 699, false, '1 til 2 dage', 'Komplet service af både mekanik og elektronik.', 13),
   mkY('batteritest', 'Batteritest', 'elcykel', 199, true, null, 'Test af batteriets kapacitet og generelle sundhed.', 14),
   mkY('softwareopdatering', 'Softwareopdatering', 'elcykel', 249, false, null, 'Opdatering af motor og system, hvis producenten understøtter det.', 15),
-  // Tilbehør
-  mkY('montering-cykelkurv', 'Montering af cykelkurv', 'tilbehoer', 149, false, null, null, 16),
-  mkY('montering-barnestol', 'Montering af barnestol', 'tilbehoer', 249, false, null, null, 17),
-  mkY('montering-bagagebaerer', 'Montering af bagagebærer', 'tilbehoer', 199, false, null, null, 18),
-  mkY('montering-skaerme', 'Montering af skærme', 'tilbehoer', 199, false, null, null, 19),
-  mkY('montering-lygter', 'Montering af lygter', 'tilbehoer', 99, false, null, null, 20),
-  mkY('montering-laas', 'Montering af lås', 'tilbehoer', 99, false, null, null, 21),
   mkY('vinterklargoering', 'Vinterklargøring', 'service', 399, false, null, 'Rens, smøring og beskyttelse mod salt og fugt.', 23),
 ];
 

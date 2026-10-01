@@ -13,9 +13,8 @@ const kategoriLabel: Record<string, string> = {
   gear: 'Gear og kæde',
   bremser: 'Bremser',
   elcykel: 'Elcykel',
-  tilbehoer: 'Tilbehør',
 };
-const kategoriRaekke = ['service', 'daek', 'gear', 'bremser', 'elcykel', 'tilbehoer'];
+const kategoriRaekke = ['service', 'daek', 'gear', 'bremser', 'elcykel'];
 const grupper = kategoriRaekke
   .map((kat) => ({ kat, label: kategoriLabel[kat], ydelser: ydelser.filter((y) => y.kategori === kat) }))
   .filter((g) => g.ydelser.length > 0);

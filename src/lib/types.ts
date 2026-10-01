@@ -68,8 +68,7 @@ export type YdelseKategori =
   | 'daek'
   | 'gear'
   | 'bremser'
-  | 'elcykel'
-  | 'tilbehoer';
+  | 'elcykel';
 
 export interface Ydelse {
   _id: string;
