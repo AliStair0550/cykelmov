@@ -36,7 +36,8 @@ export const site = {
 export const nav = [
   { href: '/cykler/dame/', label: 'Damecykler', match: '/cykler/dame' },
   { href: '/cykler/herre/', label: 'Herrecykler', match: '/cykler/herre' },
-  { href: '/cykler/boern/', label: 'Børnecykler', match: '/cykler/boern' },
+  // Børnecykler er bevidst udeladt af topmenuen (kun 1 på lager). Findes stadig
+  // i bundmenuen og på /cykler/boern/ samt i Sanity.
   { href: '/brugte-cykler/', label: 'Brugte cykler', match: '/brugte-cykler' },
 ] as const;
 
