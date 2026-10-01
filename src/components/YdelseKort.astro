@@ -2,6 +2,7 @@
 import type { Ydelse } from '../lib/types';
 import { uddrag, ydelsePris } from '../lib/format';
 import { kategoriIkon } from '../lib/site';
+import { vaerkstedTekst } from '../lib/vaerkstedTekst';
 import ReserverKnap from './ReserverKnap.astro';
 
 export interface Props {
@@ -11,7 +12,14 @@ export interface Props {
 }
 const { ydelse, medLink = true } = Astro.props;
 const href = `/vaerksted/${ydelse.slug}/`;
-const tekst = uddrag(ydelse.beskrivelse, 150);
+// Samme kilde som detaljesiden: den servicespecifikke intro. Fald tilbage til
+// Sanity-beskrivelsen for evt. ydelser uden egen tekst.
+const artikel = vaerkstedTekst[ydelse.slug];
+const tekst = artikel
+  ? artikel.p1.length > 150
+    ? artikel.p1.slice(0, 149).trimEnd() + '…'
+    : artikel.p1
+  : uddrag(ydelse.beskrivelse, 150);
 const pris = ydelsePris(ydelse.fraPris, ydelse.fastPris);
 ---
 

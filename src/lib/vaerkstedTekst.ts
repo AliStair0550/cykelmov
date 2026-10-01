@@ -71,6 +71,11 @@ export const vaerkstedTekst: Record<string, VaerkstedArtikel> = {
     h2: 'Vælg det rigtige dæk',
     p2: 'Vi rådgiver om dæktype efter din kørsel – ekstra punkteringssikre bydæk, dæk med refleks efter dansk lov eller dæk med greb til grus og skovsti. Har vi dit dæk på lager, skifter vi det ofte samme dag. Book tid online på værkstedet på Nørrebrogade 74.',
   },
+  'daek-og-slange': {
+    p1: 'Skal dækket skiftes, er slangen næsten altid værd at skifte med det samme – den er alligevel afmonteret, og en gammel slange i et nyt dæk punkterer let igen. Med denne pakke får du både nyt dæk og ny slange monteret samlet til én fast pris.',
+    h2: 'Dæk og slange i ét hug',
+    p2: 'Vi vælger dæk og slange i den rigtige størrelse til din cykel, kontrollerer fælg og fælgbånd og sender dig af sted med fuldt greb og ro i maven. Vil du kun have skiftet det ene, finder du Slangeskift og Dækskift som separate ydelser. Book tid online på værkstedet på Nørrebrogade 74.',
+  },
   hjulopretning: {
     p1: 'Slår hjulet fra side til side, gnider mod bremsen eller har fået et "ottetal" efter et kantstenshop, kan det oftest rettes op. Vi finindstiller egernes spænding, så hjulet kører rundt og lige igen, og kontrollerer samtidig, at ingen eger er knækket eller løse.',
     h2: 'Undgå at et skævt hjul bliver værre',
