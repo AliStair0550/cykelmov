@@ -305,8 +305,6 @@ export const demoYdelser: Ydelse[] = [
   mkY('montering-lygter', 'Montering af lygter', 'tilbehoer', 99, false, null, null, 20),
   mkY('montering-laas', 'Montering af lås', 'tilbehoer', 99, false, null, null, 21),
   mkY('vinterklargoering', 'Vinterklargøring', 'service', 399, false, null, 'Rens, smøring og beskyttelse mod salt og fugt.', 23),
-  // Akut hjælp
-  mkY('akut-reparation', 'Akut reparation', 'akut', 299, false, null, 'Spring køen over. Vi prioriterer din cykel samme dag, når det er muligt.', 24),
 ];
 
 // Fallback-tilkøb. Erstattes af rigtige tilkøb (med billeder) fra Sanity,

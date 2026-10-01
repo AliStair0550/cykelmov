@@ -9,13 +9,12 @@ const ydelser = await hentYdelser();
 
 const kategoriLabel: Record<string, string> = {
   service: 'Service',
-  reparation: 'Reparation',
   daek: 'Dæk og hjul',
+  reparation: 'Reparation',
   elcykel: 'Elcykel',
   tilbehoer: 'Tilbehør',
-  akut: 'Akut hjælp',
 };
-const kategoriRaekke = ['service', 'reparation', 'daek', 'elcykel', 'tilbehoer', 'akut'];
+const kategoriRaekke = ['service', 'daek', 'reparation', 'elcykel', 'tilbehoer'];
 const grupper = kategoriRaekke
   .map((kat) => ({ kat, label: kategoriLabel[kat], ydelser: ydelser.filter((y) => y.kategori === kat) }))
   .filter((g) => g.ydelser.length > 0);
@@ -24,7 +23,7 @@ const faq = [
   {
     sp: 'Hvad koster et slangeskift?',
     svar:
-      '249 kr. inklusive ny slange og montering. Kan slangen lappes, klarer vi det for 99 kr., som regel mens du venter.',
+      '149 kr. inklusive ny slange og montering. Kan slangen lappes, klarer vi det for 99 kr., som regel mens du venter.',
   },
   {
     sp: 'Kan I lave min cykel samme dag?',

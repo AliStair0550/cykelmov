@@ -22,11 +22,10 @@ const { ydelse } = Astro.props;
 
 const kategoriLabel: Record<string, string> = {
   service: 'Service',
-  reparation: 'Reparation',
   daek: 'Dæk og hjul',
+  reparation: 'Reparation',
   elcykel: 'Elcykel',
   tilbehoer: 'Tilbehør',
-  akut: 'Akut hjælp',
 };
 const prisTekst = ydelsePris(ydelse.fraPris, ydelse.fastPris);
 

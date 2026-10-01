@@ -126,11 +126,6 @@ export const vaerkstedTekst: Record<string, VaerkstedArtikel> = {
     h2: 'Kør trygt gennem vinteren',
     p2: 'Salt og fugt er cyklens værste fjender og tærer især på kæde, wirer og bremser. En vinterklargøring holder rusten væk og sparer dig for dyre reparationer til foråret. Book tid online på værkstedet på Nørrebrogade 74.',
   },
-  'akut-reparation': {
-    p1: 'Er cyklen gået i stykker, og kan du ikke undvære den, springer du køen over med en akut reparation. Vi prioriterer din cykel og ser på den samme dag, når det overhovedet kan lade sig gøre, så du hurtigt er mobil igen.',
-    h2: 'Når det haster',
-    p2: 'Ring til værkstedet først, så vi ved, at du er på vej og kan gøre plads – så finder vi hurtigt fejlen og giver dig en klar melding om, hvad der skal til, og hvad det koster, før vi går i gang. Du finder os på Nørrebrogade 74.',
-  },
   'eftersyn-lille-service': {
     p1: 'Lille service er det oplagte eftersyn mellem de store. Vi justerer gear og bremser, strammer det, der har løsnet sig, smører kæden og kontrollerer hjul, dæk og lygter, så cyklen kører let og sikkert i hverdagen.',
     h2: 'Den løbende vedligeholdelse',
