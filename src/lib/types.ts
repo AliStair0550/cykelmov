@@ -63,6 +63,21 @@ export interface Cykel {
   opdateret?: string | null;
 }
 
+// Brugt cykel — simpelt produkt til /brugte-cykler/ (billede, titel, pris).
+// Solgte cykler vises nederst med et "Solgt"-mærke.
+export interface BrugtCykel {
+  _id: string;
+  titel: string;
+  pris: number;
+  /** Kort linje under titlen (gear, stand, størrelse). Kan være tom. */
+  beskrivelse: string;
+  billede: Billede | null;
+  solgt: boolean;
+  raekkefolge: number;
+  /** Sanitys _updatedAt (ISO). */
+  opdateret?: string | null;
+}
+
 export type YdelseKategori =
   | 'service'
   | 'daek'

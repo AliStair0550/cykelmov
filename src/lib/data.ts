@@ -4,13 +4,14 @@
 // Komponenter og sider importerer kun herfra.
 // ============================================================
 import { sanityClient } from './sanity';
-import { alleCykler, alleVaerksted, alleTilkoeb, alleTilbehoer } from './queries';
-import { mapCykel, mapYdelse, mapTilkoeb, mapTilbehoer } from './map';
+import { alleCykler, alleBrugteCykler, alleVaerksted, alleTilkoeb, alleTilbehoer } from './queries';
+import { mapCykel, mapBrugtCykel, mapYdelse, mapTilkoeb, mapTilbehoer } from './map';
 import { slugify } from './format';
-import { demoCykler, demoYdelser, demoTilkoeb, demoTilbehoer } from './demo';
-import type { Cykel, Koen, Tilbehoer, Tilkoeb, Ydelse } from './types';
+import { demoCykler, demoBrugteCykler, demoYdelser, demoTilkoeb, demoTilbehoer } from './demo';
+import type { BrugtCykel, Cykel, Koen, Tilbehoer, Tilkoeb, Ydelse } from './types';
 
 let _cykler: Promise<Cykel[]> | null = null;
+let _brugte: Promise<BrugtCykel[]> | null = null;
 let _ydelser: Promise<Ydelse[]> | null = null;
 let _tilkoeb: Promise<Tilkoeb[]> | null = null;
 let _tilbehoer: Promise<Tilbehoer[]> | null = null;
@@ -60,6 +61,26 @@ export function hentCykler(): Promise<Cykel[]> {
     }
   })();
   return _cykler;
+}
+
+/** Alle brugte cykler, tilgængelige først og solgte nederst. */
+export function hentBrugteCykler(): Promise<BrugtCykel[]> {
+  if (_brugte) return _brugte;
+  _brugte = (async () => {
+    if (!sanityClient) return demoBrugteCykler;
+    try {
+      const docs = await sanityClient.fetch(alleBrugteCykler);
+      if (!Array.isArray(docs) || docs.length === 0) return demoBrugteCykler;
+      // Sortér defensivt igen: tilgængelige før solgte (uanset GROQ/manglende felt).
+      return docs
+        .map(mapBrugtCykel)
+        .sort((a, b) => Number(a.solgt) - Number(b.solgt) || a.raekkefolge - b.raekkefolge);
+    } catch (err) {
+      console.warn('[data] Kunne ikke hente brugte cykler fra Sanity, bruger demo-data:', (err as Error).message);
+      return demoBrugteCykler;
+    }
+  })();
+  return _brugte;
 }
 
 /** Alle værkstedsydelser, sorteret efter rækkefølge. */

@@ -4,10 +4,14 @@
 // Samme 6 cykler + 4 ydelser findes som NDJSON i sanity/seed/ til
 // import i det rigtige Sanity-datasæt.
 // ============================================================
-import type { Billede, Cykel, PortableBlock, Tilbehoer, Tilkoeb, Ydelse } from './types';
+import type { Billede, BrugtCykel, Cykel, PortableBlock, Tilbehoer, Tilkoeb, Ydelse } from './types';
 
 // Tilbehør hentes altid fra Sanity; tom fallback hvis Sanity er utilgængelig.
 export const demoTilbehoer: Tilbehoer[] = [];
+
+// Brugte cykler oprettes i Sanity; tom fallback, så siden viser køb/sælg-sektionen
+// uden varer, indtil Mohammed har lagt de første ind.
+export const demoBrugteCykler: BrugtCykel[] = [];
 
 function lokalBillede(path: string, alt: string): Billede {
   return { url: path, thumbUrl: path, alt };

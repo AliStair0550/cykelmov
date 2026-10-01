@@ -20,6 +20,7 @@ export default defineConfig({
           .title('Indhold')
           .items([
             S.documentTypeListItem('cykel').title('Cykler'),
+            S.documentTypeListItem('brugtCykel').title('Brugte cykler'),
             S.documentTypeListItem('vaerkstedsydelse').title('Værkstedsydelser'),
             S.documentTypeListItem('tilkoeb').title('Tilkøb'),
             S.documentTypeListItem('tilbehoer').title('Tilbehør & Reservedele'),
