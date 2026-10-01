@@ -128,8 +128,7 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
           <span class="eyebrow ingen-streg">Til salg nu</span>
           <h2 class="display-l">Brugte cykler til salg</h2>
           <p class="lead" style="margin-top:12px;max-width:52ch">
-            Hver cykel er gennemgået i vores eget værksted – bremser, gear, dæk, kæde og lås – inden
-            den kommer på gulvet. Klar til gaden, til en pris der giver mening.
+            Udvalget skifter hver uge. Se, hvad vi har hjemme lige nu – eller ring og hør nærmere.
           </p>
         </div>
       </div>
@@ -163,6 +162,18 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
           ))}
         </div>
       )}
+    </div>
+  </section>
+
+  <!-- BREAKER: tryghed ved brugtkøb -->
+  <section class="usp-baand brugt-breaker">
+    <div class="wrap">
+      <div class="usp-grid">
+        <div class="usp reveal"><div class="tal">Efterset</div><h3>I eget værksted</h3><p>Bremser, gear, dæk, kæde og lås tjekket, inden cyklen kommer på gulvet.</p></div>
+        <div class="usp reveal"><div class="tal">Prøvetur</div><h3>Prøv før du køber</h3><p>Tag cyklen en tur på Nørrebrogade, inden du beslutter dig.</p></div>
+        <div class="usp reveal"><div class="tal">Byt</div><h3>Tag din gamle i bytte</h3><p>Vi trækker bytteprisen fra, så du kun betaler forskellen.</p></div>
+        <div class="usp reveal"><div class="tal">10+ år</div><h3>Erfaren butik</h3><p>En fysisk butik at vende tilbage til, hvis noget skulle drille.</p></div>
+      </div>
     </div>
   </section>
 
@@ -300,8 +311,8 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
       display: grid;
       place-items: center;
       border-radius: 50%;
-      background: rgba(34, 197, 94, 0.14);
-      color: #15803d;
+      background: var(--cobalt, #1d3ee3);
+      color: #fff;
       font-size: 0.8rem;
     }
     @media (max-width: 760px) {
@@ -407,8 +418,14 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
       text-decoration: underline;
     }
 
+    /* Mørkt breaker-bånd mellem galleri og FAQ — lidt strammere end standard. */
+    .brugt-breaker {
+      padding: 52px 0;
+      margin-top: 14px;
+    }
+
     .brugt-tekst {
-      padding: 20px 0 60px;
+      padding: 40px 0 60px;
     }
 
     /* CTA nederst. */
