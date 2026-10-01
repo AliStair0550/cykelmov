@@ -121,11 +121,6 @@ export const vaerkstedTekst: Record<string, VaerkstedArtikel> = {
     h2: 'God sikring mod cykeltyveri',
     p2: 'Vi rådgiver om forsikringsgodkendte låse og om kombinationen af rammelås og en solid bøjlelås eller kædelås, der giver den bedste beskyttelse i byen. Køber du låsen hos os, monterer vi den ofte med det samme på Nørrebro. Book eventuelt tid online.',
   },
-  foraarsklargoering: {
-    p1: 'Efter en vinter med salt, fugt og måske et par måneder i kælderen trænger de fleste cykler til en kærlig hånd. Forårsklargøring er et komplet eftersyn, hvor vi renser vintersaltet af, smører drivlinjen, justerer gear og bremser og tjekker dæk, lygter og lufttryk.',
-    h2: 'Klar til sæsonen',
-    p2: 'Vi finder de vinterskader, der ellers først viser sig midt i sommeren, og gør cyklen sikker og let at køre på igen. Book tid online i god tid – foråret er højsæson på værkstedet, og så slipper du for ventetid, når solen kommer.',
-  },
   vinterklargoering: {
     p1: 'Vinterklargøring beskytter cyklen mod salt, fugt og kulde, så den holder til at blive brugt hele den mørke sæson. Vi renser og smører drivlinjen med vinterolie, der ikke skylles væk, tjekker bremser og dæk til glat føre og sikrer, at lyset virker.',
     h2: 'Kør trygt gennem vinteren',

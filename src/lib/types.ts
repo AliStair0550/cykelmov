@@ -69,7 +69,6 @@ export type YdelseKategori =
   | 'daek'
   | 'elcykel'
   | 'tilbehoer'
-  | 'saeson'
   | 'akut';
 
 export interface Ydelse {

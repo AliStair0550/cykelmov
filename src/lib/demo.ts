@@ -304,9 +304,7 @@ export const demoYdelser: Ydelse[] = [
   mkY('montering-skaerme', 'Montering af skærme', 'tilbehoer', 199, false, null, null, 19),
   mkY('montering-lygter', 'Montering af lygter', 'tilbehoer', 99, false, null, null, 20),
   mkY('montering-laas', 'Montering af lås', 'tilbehoer', 99, false, null, null, 21),
-  // Sæson
-  mkY('foraarsklargoering', 'Forårsklargøring', 'saeson', 599, false, null, 'Perfekt efter vinteren med fuldt eftersyn, smøring og justering.', 22),
-  mkY('vinterklargoering', 'Vinterklargøring', 'saeson', 399, false, null, 'Rens, smøring og beskyttelse mod salt og fugt.', 23),
+  mkY('vinterklargoering', 'Vinterklargøring', 'service', 399, false, null, 'Rens, smøring og beskyttelse mod salt og fugt.', 23),
   // Akut hjælp
   mkY('akut-reparation', 'Akut reparation', 'akut', 299, false, null, 'Spring køen over. Vi prioriterer din cykel samme dag, når det er muligt.', 24),
 ];

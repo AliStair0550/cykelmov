@@ -80,6 +80,5 @@ export const kategoriIkon: Record<string, string> = {
   daek: '🛞',
   elcykel: '⚡',
   tilbehoer: '🧰',
-  saeson: '🗓️',
   akut: '🚨',
 };

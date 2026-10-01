@@ -24,7 +24,6 @@ export default defineType({
           { title: 'Dæk og hjul', value: 'daek' },
           { title: 'Elcykel', value: 'elcykel' },
           { title: 'Tilbehør', value: 'tilbehoer' },
-          { title: 'Sæson', value: 'saeson' },
           { title: 'Akut hjælp', value: 'akut' },
         ],
       },
