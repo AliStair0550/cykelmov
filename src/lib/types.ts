@@ -65,8 +65,9 @@ export interface Cykel {
 
 export type YdelseKategori =
   | 'service'
-  | 'reparation'
   | 'daek'
+  | 'gear'
+  | 'bremser'
   | 'elcykel'
   | 'tilbehoer';
 

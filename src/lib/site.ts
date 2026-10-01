@@ -76,8 +76,9 @@ export const tidValg = [
 // Symbol pr. værkstedskategori. Vises i booking-boksen for ydelser (uden foto).
 export const kategoriIkon: Record<string, string> = {
   service: '🔧',
-  reparation: '⚙️',
   daek: '🛞',
+  gear: '⚙️',
+  bremser: '🛑',
   elcykel: '⚡',
   tilbehoer: '🧰',
 };

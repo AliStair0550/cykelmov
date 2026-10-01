@@ -51,11 +51,6 @@ export const vaerkstedTekst: Record<string, VaerkstedArtikel> = {
     h2: 'Blødere gearskifte og længere levetid',
     p2: 'En ren og korrekt smurt drivlinje kører lettere, larmer mindre og holder markant længere. Det er en billig vane, der forlænger tiden mellem dyre kæde- og kassetteskift. Kombinér den gerne med et serviceeftersyn – book online på Nørrebrogade 74.',
   },
-  bremseklodser: {
-    p1: 'Bremseklodser er en sliddel, der skal skiftes med jævne mellemrum. Vi monterer nye klodser, der passer til netop din bremse, og justerer dem, så de rammer fælgen eller skiven korrekt og giver fuld, jævn opbremsning uden at slæbe.',
-    h2: 'Hør efter metallyden',
-    p2: 'Piber eller skurrer bremsen, eller kan du se, at gummiet er slidt ned til slidmarkeringen, skal klodserne skiftes – venter du, slider metal mod fælg og ødelægger den. Vi har klodser til de fleste cykler på lager og kan ofte skifte dem med det samme på værkstedet.',
-  },
   slangeskift: {
     p1: 'Er slangen sprunget, og kan punkteringen ikke lappes, monterer vi en ny slange i den rigtige størrelse. Vi tjekker samtidig dækket indvendigt for det, der forårsagede punkteringen – glasskår, en søm eller et slidt dæk – så du ikke punkterer igen på vej hjem.',
     h2: 'Hurtigt fikset, ofte mens du venter',

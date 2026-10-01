@@ -20,8 +20,9 @@ export default defineType({
       options: {
         list: [
           { title: 'Service', value: 'service' },
-          { title: 'Reparation', value: 'reparation' },
           { title: 'Dæk og hjul', value: 'daek' },
+          { title: 'Gear og kæde', value: 'gear' },
+          { title: 'Bremser', value: 'bremser' },
           { title: 'Elcykel', value: 'elcykel' },
           { title: 'Tilbehør', value: 'tilbehoer' },
         ],

@@ -8,6 +8,13 @@
 /vaerksted/foraarsklargoering/   /vaerksted/   301
 /vaerksted/foraarsklargoering    /vaerksted/   301
 
+# Udgået ydelse: Bremseklodser lagt sammen med Bremseskift (301)
+/vaerksted/bremseklodser/   /vaerksted/bremseskift/   301
+/vaerksted/bremseklodser    /vaerksted/bremseskift/   301
+# Udgået ydelse: Akut reparation fjernet → prislisten (301)
+/vaerksted/akut-reparation/   /vaerksted/   301
+/vaerksted/akut-reparation    /vaerksted/   301
+
 # Rodet gammel værksteds-slug (mellemrum + æ) → ren slug (301)
 /vaerksted/K%C3%A6de%20rustfri%20skift/   /vaerksted/kaede-rustfri-skift/   301
 /vaerksted/K%C3%A6de%20rustfri%20skift    /vaerksted/kaede-rustfri-skift/   301

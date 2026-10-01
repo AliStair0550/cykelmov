@@ -282,12 +282,12 @@ export const demoYdelser: Ydelse[] = [
   mkY('serviceeftersyn', 'Serviceeftersyn', 'service', 499, false, 'Samme dag', 'Fuld gennemgang af gear, bremser, kæde, hjul og lys. Justering, smøring og ærlig rådgivning om eventuelle sliddele.', 1, lokalBillede('/assets/vaerksted-vaerktoej.jpg', 'Værktøj i Cykelmovs værksted')),
   mkY('stort-service', 'Stort service', 'service', 899, false, '1 dag', 'Komplet service med justering af alle bevægelige dele, opstramning, smøring og grundigt sikkerhedstjek. Ideelt én gang om året.', 2),
   mkY('sikkerhedstjek', 'Sikkerhedstjek', 'service', 199, true, '20 min', 'Et hurtigt eftersyn af bremser, gear, hjul og dæk. Perfekt inden ferie eller hvis cyklen har stået stille.', 3),
-  // Reparation
-  mkY('gearjustering', 'Gearjustering', 'reparation', 149, false, '30 til 45 min', 'Præcis justering af gear og kabler, så cyklen skifter let og præcist.', 4),
-  mkY('bremseservice', 'Bremseservice', 'reparation', 199, false, '30 min', 'Justering af bremser samt kontrol af klodser, kabler og bremsekraft.', 5),
-  mkY('kaedeskift', 'Kædeskift', 'reparation', 299, false, '30 min', 'Udskiftning af slidt kæde for bedre gearskift og længere levetid på tandhjul.', 6),
-  mkY('kaede-og-drivlinjerens', 'Kæde og drivlinjerens', 'reparation', 199, false, '30 min', 'Grundig rens og smøring af kæde, kassette og krank.', 7),
-  mkY('bremseklodser', 'Bremseklodser', 'reparation', 249, false, '30 min', 'Udskiftning af bremseklodser inklusive justering.', 8),
+  // Gear og kæde
+  mkY('gearjustering', 'Gearjustering', 'gear', 99, true, '30 til 45 min', 'Præcis justering af gear og kabler, så cyklen skifter let og præcist.', 1),
+  mkY('kaede-og-drivlinjerens', 'Kæde og drivlinjerens', 'gear', 149, true, '30 min', 'Grundig rens og smøring af kæde, kassette og krank.', 2),
+  mkY('kaedeskift', 'Kædeskift', 'gear', 299, true, '30 min', 'Udskiftning af slidt kæde for bedre gearskift og længere levetid på tandhjul.', 3),
+  // Bremser
+  mkY('bremseskift', 'Bremseskift', 'bremser', 199, true, '30 min', 'Justering og skift af bremser, klodser, kabler og bremsekraft.', 1),
   // Dæk og hjul
   mkY('slangeskift', 'Slangeskift', 'daek', 249, false, 'Mens du venter', 'Ny slange monteres hurtigt. Lapning fra 99 hvis muligt.', 9, lokalBillede('/assets/vaerksted-daek.jpg', 'Cykeldæk på lager i værkstedet')),
   mkY('punkteringslapning', 'Punkteringslapning', 'daek', 99, true, '15 min', 'Vi lapper slangen, hvis skaden kan repareres.', 10),

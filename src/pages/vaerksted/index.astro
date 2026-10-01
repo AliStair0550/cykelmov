@@ -10,11 +10,12 @@ const ydelser = await hentYdelser();
 const kategoriLabel: Record<string, string> = {
   service: 'Service',
   daek: 'Dæk og hjul',
-  reparation: 'Reparation',
+  gear: 'Gear og kæde',
+  bremser: 'Bremser',
   elcykel: 'Elcykel',
   tilbehoer: 'Tilbehør',
 };
-const kategoriRaekke = ['service', 'daek', 'reparation', 'elcykel', 'tilbehoer'];
+const kategoriRaekke = ['service', 'daek', 'gear', 'bremser', 'elcykel', 'tilbehoer'];
 const grupper = kategoriRaekke
   .map((kat) => ({ kat, label: kategoriLabel[kat], ydelser: ydelser.filter((y) => y.kategori === kat) }))
   .filter((g) => g.ydelser.length > 0);
