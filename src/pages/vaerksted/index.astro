@@ -102,7 +102,6 @@ const faqSchema = {
         <div class="ydelse-gruppe">
           <div class="kat-titel reveal">
             <h3>{g.label}</h3>
-            <span>{g.ydelser.length} {g.ydelser.length === 1 ? 'ydelse' : 'ydelser'}</span>
           </div>
           <div class="ydelse-grid">
             {g.ydelser.map((y) => <YdelseKort ydelse={y} />)}
