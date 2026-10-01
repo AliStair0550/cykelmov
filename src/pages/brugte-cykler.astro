@@ -20,8 +20,16 @@ const faq = [
     s: 'Ja, men udvalget skifter hver uge. Se dem her på siden, eller ring og hør, hvad vi har hjemme lige nu.',
   },
   {
+    q: 'Hvordan gør I cyklerne klar?',
+    s: 'Ingen cykel kommer på gulvet uden en tur gennem værkstedet. Vi tjekker bremser, gear, dæk, kæde og lås, og det der er slidt, bliver skiftet – så du får en cykel, der er klar til gaden fra dag ét.',
+  },
+  {
     q: 'Kan jeg prøve cyklen først?',
     s: 'Ja. Tag den en tur på Nørrebrogade, inden du beslutter dig.',
+  },
+  {
+    q: 'Hvorfor købe brugt fra butik frem for nettet?',
+    s: 'Du kan prøve cyklen, før du køber, og du taler med en mekaniker frem for en sælger på en annonce. Og du har en butik at komme tilbage til, hvis noget driller. Det har du ikke på DBA.',
   },
 ];
 
@@ -90,14 +98,14 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
           <span class="eyebrow ingen-streg">Vi køber din cykel</span>
           <h2>Har du en brugt cykel, vi skal købe?</h2>
           <p>
-            Kom ind i butikken på {adresseKort}, så kigger en mekaniker cyklen efter og giver dig en
-            <strong>faglig vurdering på stedet</strong>. Prisen bygger på cyklens reelle stand og
-            værdi – ikke et løst gæt – så du får en <strong>god og fair pris</strong> for den.
+            Kom forbi {adresseKort} med din cykel. Så gennemgår vi den og giver dig et fair tilbud på
+            stedet, baseret på cyklens stand og værdi.
           </p>
           <p>
-            Vil du hellere have en nyere cykel? Så tager vi din gamle i bytte og trækker beløbet fra
-            prisen på din næste. Du er altid velkommen til at ringe først og høre ad.
+            Du kan også lade din gamle cykel indgå i en byttehandel, når du køber en nyere hos os. Vi
+            trækker bytteprisen fra, så du kun betaler forskellen.
           </p>
+          <p>Du er altid velkommen til at ringe først.</p>
           <div class="brugt-koeb-knapper">
             <a href={site.maps} class="btn btn-cobalt">Find vej til butikken <span class="pil">→</span></a>
             <a href={`tel:${site.telefonE164}`} class="btn btn-ghost">Ring {site.telefon}</a>
@@ -107,7 +115,6 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
           <li><span class="tjek">✓</span> Faglig vurdering af en mekaniker</li>
           <li><span class="tjek">✓</span> Fair pris efter cyklens stand</li>
           <li><span class="tjek">✓</span> Svar og pris med det samme</li>
-          <li><span class="tjek">✓</span> Køb kontant eller byt til en nyere</li>
         </ul>
       </div>
     </div>
@@ -163,19 +170,6 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
   <section class="brugt-tekst">
     <div class="wrap">
       <article class="rig-tekst">
-        <h2>Sådan gør vi cyklerne klar</h2>
-        <p>
-          Ingen cykel kommer på gulvet uden en tur gennem værkstedet. Vi tjekker bremser, gear, dæk,
-          kæde og lås. Det der er slidt, bliver skiftet, så du får en cykel, der er klar til gaden fra
-          dag ét.
-        </p>
-
-        <h2>Derfor brugt fra butik og ikke fra nettet</h2>
-        <p>
-          Du kan prøve cyklen, før du køber. Du taler med en mekaniker, ikke en sælger på en annonce.
-          Og du har en butik at komme tilbage til, hvis noget driller. Det har du ikke på DBA.
-        </p>
-
         <h2>Ofte stillede spørgsmål</h2>
         <div class="faq">
           {faq.map((f) => (
