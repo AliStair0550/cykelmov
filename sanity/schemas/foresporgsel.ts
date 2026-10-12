@@ -18,7 +18,7 @@ export default defineType({
       name: 'cykelRef',
       title: 'Cykel',
       type: 'reference',
-      to: [{ type: 'cykel' }],
+      to: [{ type: 'cykel' }, { type: 'brugtCykel' }],
       weak: true,
       readOnly: true,
     }),

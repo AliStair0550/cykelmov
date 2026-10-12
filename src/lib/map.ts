@@ -43,12 +43,16 @@ export function mapCykel(doc: any): Cykel {
 
 export function mapBrugtCykel(doc: any): BrugtCykel {
   const titel = doc?.titel ?? 'Brugt cykel';
+  const harBillede = Boolean(doc?.billede?.asset);
+  const stor = harBillede ? urlFor(doc.billede) : null;
   return {
     _id: doc?._id ?? '',
     titel,
     pris: Number(doc?.pris ?? 0),
     beskrivelse: doc?.beskrivelse ?? '',
-    billede: doc?.billede?.asset ? resolveBillede(doc.billede, titel) : null,
+    billede: harBillede ? resolveBillede(doc.billede, titel) : null,
+    // Ubeskåret og stor, så man kan se hele cyklen i lightboxen.
+    storUrl: stor ? stor.width(1600).fit('max').auto('format').quality(80).url() : '',
     solgt: Boolean(doc?.solgt),
     raekkefolge: Number(doc?.raekkefolge ?? 999),
     opdateret: doc?._updatedAt ?? null,

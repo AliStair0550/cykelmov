@@ -72,6 +72,8 @@ export interface BrugtCykel {
   /** Kort linje under titlen (gear, stand, størrelse). Kan være tom. */
   beskrivelse: string;
   billede: Billede | null;
+  /** Stor, ubeskåret billed-URL til lightbox/forstørrelse. Tom hvis intet billede. */
+  storUrl: string;
   solgt: boolean;
   raekkefolge: number;
   /** Sanitys _updatedAt (ISO). */

@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/pages/brugte-cykler.astro"
+        ],
+        "createdAt": "2026-10-12T09:23:21.932Z",
+        "reason": "Lightbox <img> src is set by JS on open; overlay is hidden until then, so it never renders as a broken image"
+      }
+    ]
+  }
+}

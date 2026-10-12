@@ -148,7 +148,16 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
             <article class={`brugt-kort reveal${b.solgt ? ' er-solgt' : ''}`}>
               <div class="brugt-kort-foto">
                 {b.billede?.url ? (
-                  <img src={b.billede.url} alt={b.billede.alt} loading="lazy" width="700" height="525" />
+                  <button
+                    type="button"
+                    class="brugt-foto-knap"
+                    data-stor={b.storUrl || b.billede.url}
+                    data-alt={b.billede.alt}
+                    aria-label={`Se større billede af ${b.titel}`}
+                  >
+                    <img src={b.billede.url} alt={b.billede.alt} loading="lazy" width="700" height="525" />
+                    <span class="zoom-ikon" aria-hidden="true">⤢</span>
+                  </button>
                 ) : (
                   <div class="intet-foto" aria-hidden="true">🚲</div>
                 )}
@@ -238,6 +247,45 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
       </div>
     </div>
   </section>
+
+  <!-- Lightbox til forstørrelse af cykelbilleder -->
+  <div class="brugt-lightbox" id="brugt-lightbox" hidden>
+    <button class="brugt-lightbox-luk" id="brugt-lightbox-luk" type="button" aria-label="Luk">✕</button>
+    <img id="brugt-lightbox-img" src="" alt="" />
+  </div>
+
+  <script>
+    (() => {
+      const lb = document.getElementById('brugt-lightbox');
+      const lbImg = document.getElementById('brugt-lightbox-img');
+      const lbLuk = document.getElementById('brugt-lightbox-luk');
+      if (!lb || !lbImg || !lbLuk) return;
+      const aaben = (src, alt) => {
+        lbImg.setAttribute('src', src);
+        lbImg.setAttribute('alt', alt || '');
+        lb.hidden = false;
+        document.body.style.overflow = 'hidden';
+        lbLuk.focus();
+      };
+      const luk = () => {
+        lb.hidden = true;
+        lbImg.setAttribute('src', '');
+        document.body.style.overflow = '';
+      };
+      document.querySelectorAll('.brugt-foto-knap').forEach((btn) => {
+        btn.addEventListener('click', () =>
+          aaben(btn.getAttribute('data-stor') || '', btn.getAttribute('data-alt') || ''),
+        );
+      });
+      // Klik på baggrund eller luk-knap lukker; klik på selve billedet gør ikke.
+      lb.addEventListener('click', (e) => {
+        if (e.target !== lbImg) luk();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !lb.hidden) luk();
+      });
+    })();
+  </script>
 
   <style>
     /* Cover-hero med billede + mørk gradient, så teksten forbliver læsbar. */
@@ -421,6 +469,83 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
       margin-top: 12px;
       width: 100%;
       justify-content: center;
+    }
+
+    /* Klikbart foto → lightbox */
+    .brugt-foto-knap {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      border: none;
+      background: none;
+      cursor: zoom-in;
+      position: relative;
+    }
+    .brugt-foto-knap img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .zoom-ikon {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(16, 16, 20, 0.6);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      pointer-events: none;
+    }
+    .brugt-foto-knap:hover .zoom-ikon,
+    .brugt-foto-knap:focus-visible .zoom-ikon {
+      opacity: 1;
+    }
+
+    .brugt-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(10, 10, 14, 0.9);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .brugt-lightbox[hidden] {
+      display: none;
+    }
+    .brugt-lightbox img {
+      max-width: min(1100px, 94vw);
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    }
+    .brugt-lightbox-luk {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .brugt-lightbox-luk:hover {
+      background: rgba(255, 255, 255, 0.28);
     }
     .brugt-tom {
       background: rgba(29, 62, 227, 0.05);
