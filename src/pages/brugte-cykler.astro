@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import StructuredData from '../components/StructuredData.astro';
+import ReserverKnap from '../components/ReserverKnap.astro';
 import { site } from '../lib/site';
 import { kr } from '../lib/format';
 import { absUrl } from '../lib/schema';
@@ -157,6 +158,18 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
                 <h3>{b.titel}</h3>
                 {b.beskrivelse && <p class="brugt-kort-besk">{b.beskrivelse}</p>}
                 <span class="brugt-kort-pris">{kr(b.pris)}</span>
+                {!b.solgt && (
+                  <ReserverKnap
+                    type="cykel"
+                    navn={b.titel}
+                    reference={b._id}
+                    pris={kr(b.pris)}
+                    billede={b.billede?.url ?? ''}
+                    ikon="🚲"
+                    klasse="btn btn-cobalt brugt-kort-knap"
+                    label="Reservér & afhent"
+                  />
+                )}
               </div>
             </article>
           ))}
@@ -403,6 +416,11 @@ const adresseKort = site.adresse.gade.replace(', st. tv.', '');
     .brugt-kort.er-solgt .brugt-kort-pris {
       color: #71717a;
       text-decoration: line-through;
+    }
+    .brugt-kort-knap {
+      margin-top: 12px;
+      width: 100%;
+      justify-content: center;
     }
     .brugt-tom {
       background: rgba(29, 62, 227, 0.05);
