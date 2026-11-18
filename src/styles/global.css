@@ -752,3 +752,6 @@ section{padding:96px 0}
   .pris-linje{flex-wrap:wrap}
   .pris-linje .btn{width:100%;justify-content:center}
 }
+/* ---------- Dag + tidspunkt i booking-modalen ---------- */
+.tid-raekke{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:10px}
+.tid-raekke select:disabled{opacity:.55}

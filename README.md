@@ -107,7 +107,10 @@ Værkstedsydelser tilføjes på samme måde under **Værkstedsydelser** (husk
 
 **Forespørgsler:** Hver reservation fra sitet lander både som mail og som et
 dokument under **Forespørgsler** i Studio, hvor status kan sættes til Ny,
-Kontaktet eller Afsluttet.
+**Cyklen er klar** (sender mailen "Din cykel er klar" til kunden) eller
+**Afsluttet** (sender tak-mailen). Begge mails sendes af `/api/tak-mail` via
+én Sanity-webhook med filteret
+`_type == "foresporgsel" && status in ["klar", "afsluttet"]`.
 
 ---
 

@@ -47,21 +47,39 @@ export default defineType({
     defineField({ name: 'telefon', title: 'Telefon', type: 'string', readOnly: true }),
     defineField({ name: 'email', title: 'E-mail', type: 'string', readOnly: true }),
     defineField({ name: 'oensketTid', title: 'Ønsket tid', type: 'string', readOnly: true }),
+    defineField({
+      name: 'oensketTidspunkt',
+      title: 'Ønsket tidspunkt (dato)',
+      type: 'datetime',
+      description: 'Det tidspunkt kunden har valgt. Bruges til sortering.',
+      readOnly: true,
+      hidden: ({ value }) => !value,
+    }),
     defineField({ name: 'besked', title: 'Besked', type: 'text', rows: 4, readOnly: true }),
     defineField({ name: 'modtaget', title: 'Modtaget', type: 'datetime', readOnly: true }),
     defineField({
       name: 'status',
       title: 'Status',
       type: 'string',
+      description:
+        '«Cyklen er klar» sender en mail til kunden om, at cyklen kan hentes. «Afsluttet» (når cyklen er hentet) sender tak-mailen. Husk at trykke Publish.',
       options: {
         list: [
           { title: 'Ny', value: 'ny' },
-          { title: 'Kontaktet', value: 'kontaktet' },
-          { title: 'Afsluttet', value: 'afsluttet' },
+          { title: '🚲 Cyklen er klar (sender mail)', value: 'klar' },
+          { title: 'Afsluttet (sender tak-mail)', value: 'afsluttet' },
         ],
         layout: 'radio',
       },
       initialValue: 'ny',
+    }),
+    defineField({
+      name: 'klarMailSendtAt',
+      title: 'Klar-mail sendt',
+      type: 'datetime',
+      readOnly: true,
+      description:
+        'Sættes automatisk, når mailen «Din cykel er klar» er sendt. Forhindrer, at den sendes igen.',
     }),
     defineField({
       name: 'mailSendtAt',
@@ -86,6 +104,7 @@ export default defineType({
       const statusTekst: Record<string, string> = {
         ny: '🔵 Ny',
         kontaktet: '🟡 Kontaktet',
+        klar: '🟢 Klar til afhentning',
         afsluttet: '✅ Afsluttet',
       };
       return {

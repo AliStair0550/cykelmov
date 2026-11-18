@@ -11,6 +11,12 @@
         ],
         "createdAt": "2026-10-12T09:23:21.932Z",
         "reason": "Lightbox <img> src is set by JS on open; overlay is hidden until then, so it never renders as a broken image"
+      },
+      {
+        "rule": "overused-font",
+        "value": "helvetica",
+        "createdAt": "2026-11-18T09:01:14.175Z",
+        "reason": "Claude: HTML email needs an email-safe system font; matches the existing tak-mail.ts stack (Helvetica,Arial) — web fonts don't load reliably in mail clients"
       }
     ]
   }

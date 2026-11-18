@@ -1,15 +1,21 @@
 // ============================================================
-// Webhook-modtager: sender én tak-mail når en forespørgsel markeres
-// "afsluttet" i Sanity. Kører on-demand på Cloudflare (Pages Function).
+// Webhook-modtager for forespørgsler i Sanity. Én webhook, to mails:
+//   status "klar"      → "Din cykel er klar"  (markeres klarMailSendtAt)
+//   status "afsluttet" → tak-mail             (markeres mailSendtAt)
+// Webhook-filter i Sanity:
+//   _type == "foresporgsel" && status in ["klar", "afsluttet"]
+// Kører on-demand på Cloudflare (Pages Function).
 //
 // Sikkerhed:  HMAC-signatur valideres med SANITY_WEBHOOK_SECRET.
-// Idempotens: sender kun hvis dokumentet ikke allerede har mailSendtAt.
-//             Efter afsendelse skrives mailSendtAt tilbage via
-//             SANITY_WRITE_TOKEN, så gentagne statusskift ALDRIG sender igen.
+// Kilde:      Dokumentet hentes direkte fra Sanity; status afgør mailen.
+// Idempotens: hver mail sendes kun hvis dens tidsstempel ikke er sat.
+//             Efter afsendelse skrives det tilbage via SANITY_WRITE_TOKEN,
+//             så gentagne statusskift ALDRIG sender samme mail igen.
 // Mail:       Resend API, afsender "Cykelmov <hej@cykelmov.dk>".
 // ============================================================
 import type { APIRoute } from 'astro';
 import { site } from '../../lib/site';
+import { byggKlarMail, klarEmne, type ForespoergselDoc } from '../../lib/klarMail';
 
 export const prerender = false;
 
@@ -128,33 +134,59 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return json({ error: 'ugyldig signatur' }, 401);
   }
 
-  let payload: { id?: string; name?: string; email?: string; type?: string; mailSendtAt?: string };
+  let payload: { id?: string; _id?: string; name?: string; email?: string };
   try {
     payload = JSON.parse(body);
   } catch {
     return json({ error: 'ugyldig json' }, 400);
   }
-  const { id, name = '', email } = payload;
-  if (!id || !email) return json({ error: 'mangler id eller email' }, 400);
+  const id = payload.id || payload._id;
+  if (!id || id.startsWith('drafts.')) return json({ error: 'mangler (publiceret) id' }, 400);
 
   if (!projectId || !writeToken) return json({ error: 'server mangler Sanity-konfig' }, 500);
   const sanityBase = `https://${projectId}.api.sanity.io/v${apiVersion}/data`;
   const sanityHead = { 'Content-Type': 'application/json', Authorization: `Bearer ${writeToken}` };
 
-  // 2) Idempotens: hent dokumentets nuværende mailSendtAt (autoritativt, ikke
-  //    kun payloaden). Er den sat, er mailen sendt før — gør intet.
+  // 2) Hent dokumentet autoritativt (status + hvilke mails der er sendt).
+  //    Fejler det, svarer vi 502, så Sanity prøver igen — vi gætter aldrig.
+  let doc: ForespoergselDoc | null = null;
   try {
-    const q = encodeURIComponent(`*[_id == "${id}"][0].mailSendtAt`);
-    const res = await fetch(`${sanityBase}/query/${dataset}?query=${q}`, { headers: sanityHead });
-    if (res.ok) {
-      const { result } = (await res.json()) as { result?: string | null };
-      if (result) return json({ status: 'sprunget over', grund: 'mailSendtAt sat', mailSendtAt: result }, 200);
-    }
+    const q = encodeURIComponent(
+      '*[_id == $id][0]{status, type, navn, email, objekt, mailSendtAt, klarMailSendtAt}',
+    );
+    const res = await fetch(
+      `${sanityBase}/query/${dataset}?query=${q}&$id=${encodeURIComponent(JSON.stringify(id))}`,
+      { headers: sanityHead },
+    );
+    if (!res.ok) return json({ error: 'kunne ikke hente dokument', status: res.status }, 502);
+    doc = ((await res.json()) as { result?: ForespoergselDoc | null }).result ?? null;
   } catch (err) {
-    console.error('[tak-mail] idempotens-tjek fejlede:', (err as Error).message);
+    return json({ error: 'sanity-kald fejlede', detail: (err as Error).message }, 502);
   }
+  if (!doc) return json({ error: 'dokument findes ikke' }, 404);
 
-  // 3) Send mailen via Resend.
+  // 3) Vælg mail ud fra status.
+  let mail: { felt: 'mailSendtAt' | 'klarMailSendtAt'; emne: string; html: string };
+  if (doc.status === 'klar') {
+    if (doc.type === 'kontakt') return json({ status: 'sprunget over', grund: 'kontakt-henvendelse' });
+    if (doc.klarMailSendtAt)
+      return json({ status: 'sprunget over', grund: 'klarMailSendtAt sat', klarMailSendtAt: doc.klarMailSendtAt });
+    mail = { felt: 'klarMailSendtAt', emne: klarEmne(doc.type), html: byggKlarMail(doc) };
+  } else if (doc.status === 'afsluttet') {
+    if (doc.mailSendtAt)
+      return json({ status: 'sprunget over', grund: 'mailSendtAt sat', mailSendtAt: doc.mailSendtAt });
+    mail = {
+      felt: 'mailSendtAt',
+      emne: 'Tak fordi du valgte Cykelmov',
+      html: byggMail(doc.navn || payload.name || ''),
+    };
+  } else {
+    return json({ status: 'sprunget over', grund: `status er ${doc.status ?? 'tom'}` });
+  }
+  const email = doc.email || payload.email;
+  if (!email) return json({ error: 'mangler email' }, 400);
+
+  // 4) Send mailen via Resend.
   if (!resendKey) return json({ error: 'server mangler RESEND_API_KEY' }, 500);
   let resendId: string | undefined;
   try {
@@ -165,8 +197,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
         from: 'Cykelmov <hej@cykelmov.dk>',
         to: [email],
         reply_to: 'hej@cykelmov.dk',
-        subject: 'Tak fordi du valgte Cykelmov',
-        html: byggMail(name),
+        subject: mail.emne,
+        html: mail.html,
       }),
     });
     if (!res.ok) {
@@ -179,21 +211,21 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return json({ error: 'resend-kald fejlede', detail: (err as Error).message }, 502);
   }
 
-  // 4) Skriv mailSendtAt tilbage. setIfMissing => selv en samtidig kørsel kan
+  // 5) Skriv tidsstemplet tilbage. setIfMissing => selv en samtidig kørsel kan
   //    ikke overskrive/dobbelt-markere.
   try {
     await fetch(`${sanityBase}/mutate/${dataset}`, {
       method: 'POST',
       headers: sanityHead,
       body: JSON.stringify({
-        mutations: [{ patch: { id, setIfMissing: { mailSendtAt: new Date().toISOString() } } }],
+        mutations: [{ patch: { id, setIfMissing: { [mail.felt]: new Date().toISOString() } } }],
       }),
     });
   } catch (err) {
-    console.error('[tak-mail] kunne ikke skrive mailSendtAt:', (err as Error).message);
+    console.error(`[tak-mail] kunne ikke skrive ${mail.felt}:`, (err as Error).message);
   }
 
-  return json({ status: 'sendt', id, resendId }, 200);
+  return json({ status: 'sendt', mail: mail.felt === 'klarMailSendtAt' ? 'klar' : 'tak', id, resendId }, 200);
 };
 
 // Afvis andre metoder pænt.

@@ -8,6 +8,7 @@
 // læses fra runtime-env (prod) eller import.meta.env (dev).
 // ============================================================
 import type { APIRoute } from 'astro';
+import { formaterTidspunkt, gyldigtTidspunkt, tilIso } from '../../lib/aabning';
 
 export const prerender = false;
 
@@ -57,8 +58,22 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
   const navn = felt(form, 'navn');
   const telefon = felt(form, 'telefon');
   const email = felt(form, 'email');
+  // Booking/reservation: konkret dag + klokkeslæt (inden for åbningstid).
+  // Kontaktformularen sender stadig det gamle "tid"-valg (TID_LABEL).
+  const dato = felt(form, 'dato');
+  const klokkeslaet = felt(form, 'klokkeslaet');
   const tidVaerdi = felt(form, 'tid');
-  const tid = TID_LABEL[tidVaerdi] ?? tidVaerdi;
+  let tid = TID_LABEL[tidVaerdi] ?? tidVaerdi.slice(0, 80);
+  let tidspunktIso = '';
+  if (dato || klokkeslaet) {
+    if (!gyldigtTidspunkt(dato, klokkeslaet)) {
+      return fejlSvar('Vælg venligst en dag og et tidspunkt inden for vores åbningstid.');
+    }
+    tid = formaterTidspunkt(dato, klokkeslaet);
+    tidspunktIso = tilIso(dato, klokkeslaet);
+  } else if (type !== 'kontakt') {
+    return fejlSvar('Vælg venligst hvornår du kommer forbi.');
+  }
   const besked = felt(form, 'besked');
   // Valgte tilkøb (checkbokse — kan være flere). Begrænses mod misbrug.
   const tilkoeb = form
@@ -137,6 +152,7 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
       besked,
       objekt: objekt || '',
       oensketTid: tid || '',
+      ...(tidspunktIso ? { oensketTidspunkt: tidspunktIso } : {}),
       modtaget: new Date().toISOString(),
       status: 'ny',
     };

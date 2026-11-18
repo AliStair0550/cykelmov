@@ -1,5 +1,5 @@
 ---
-import { tidValg } from '../lib/site';
+import { site } from '../lib/site';
 import { hentTilkoeb } from '../lib/data';
 import { kr } from '../lib/format';
 // Fælles reservations-/booking-modal. Ét eksemplar pr. side (via Layout).
@@ -90,10 +90,18 @@ function tilkoebIkon(navn: string): string {
           </p>
         </div>
         <div class="felt">
-          <label for="rf-tid" id="rf-tid-label">Hvornår vil du hente?</label>
-          <select id="rf-tid" name="tid">
-            {tidValg.map((t) => <option value={t.value}>{t.label}</option>)}
-          </select>
+          <label for="rf-dato" id="rf-tid-label">Hvornår vil du hente den?</label>
+          <div class="tid-raekke">
+            <select id="rf-dato" name="dato" required>
+              <option value="">Vælg dag</option>
+            </select>
+            <select id="rf-klokke" name="klokkeslaet" required aria-label="Tidspunkt">
+              <option value="">Kl.</option>
+            </select>
+          </div>
+          <p class="felt-note">
+            Vi har åbent {site.aabningstider.filter((a) => a.tid !== 'Lukket').map((a) => `${a.dage.toLowerCase()} ${a.tid.replace(/ /g, '')}`).join(' · ')}.
+          </p>
         </div>
         <div class="felt">
           <label for="rf-besked">Besked (valgfri)</label>
@@ -112,8 +120,38 @@ function tilkoebIkon(navn: string): string {
 </div>
 
 <script>
+  import { ledigeDatoer, tiderForDato, nuIKbh } from '../lib/aabning';
+
   const bag = document.getElementById('reserver-bag');
   if (bag) {
+    // ---- Dag + tidspunkt (kun inden for åbningstiden) ----
+    const datoValg = document.getElementById('rf-dato') as HTMLSelectElement | null;
+    const klokkeValg = document.getElementById('rf-klokke') as HTMLSelectElement | null;
+    function fyldTider() {
+      if (!datoValg || !klokkeValg) return;
+      const foer = klokkeValg.value;
+      const tider = datoValg.value ? tiderForDato(datoValg.value, nuIKbh()) : [];
+      klokkeValg.innerHTML = '';
+      klokkeValg.add(new Option(datoValg.value ? 'Vælg tid' : 'Kl.', ''));
+      tider.forEach((t) => klokkeValg.add(new Option(t.replace(':', '.'), t)));
+      klokkeValg.disabled = !datoValg.value;
+      if (tider.includes(foer)) klokkeValg.value = foer;
+    }
+    // Bygges i browseren ved hver åbning — siden er statisk, så "i dag" skal
+    // regnes ud nu, ikke ved build.
+    function fyldDatoer() {
+      if (!datoValg) return;
+      const foer = datoValg.value;
+      const datoer = ledigeDatoer(nuIKbh());
+      datoValg.innerHTML = '';
+      datoValg.add(new Option('Vælg dag', ''));
+      datoer.forEach((d) => datoValg.add(new Option(d.label, d.dato)));
+      if (datoer.some((d) => d.dato === foer)) datoValg.value = foer;
+      fyldTider();
+    }
+    datoValg?.addEventListener('change', fyldTider);
+    fyldDatoer();
+
     const titel = document.getElementById('reserver-titel');
     const objektBoks = document.getElementById('reserver-objekt');
     const objektFoto = document.getElementById('reserver-objekt-foto') as HTMLImageElement | null;
@@ -164,6 +202,7 @@ function tilkoebIkon(navn: string): string {
     }
 
     function aaben() {
+      fyldDatoer();
       bag!.classList.add('aaben');
       bag!.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
