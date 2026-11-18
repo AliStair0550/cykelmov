@@ -1,5 +1,4 @@
 ---
-import { site } from '../lib/site';
 import { hentTilkoeb } from '../lib/data';
 import { kr } from '../lib/format';
 // Fælles reservations-/booking-modal. Ét eksemplar pr. side (via Layout).
@@ -85,8 +84,8 @@ function tilkoebIkon(navn: string): string {
           <label for="rf-email">E-mail</label>
           <input id="rf-email" name="email" type="email" required autocomplete="email" placeholder="dig@eksempel.dk" />
           <p class="felt-note">
-            Vi bruger din mail til at bekræfte og følge op på din henvendelse, herunder at bede om en
-            anmeldelse. Du kan altid framelde dig.
+            Vi bruger din mail til at bekræfte din bestilling og høre om din oplevelse bagefter. Du kan
+            altid framelde dig.
           </p>
         </div>
         <div class="felt">
@@ -99,9 +98,6 @@ function tilkoebIkon(navn: string): string {
               <option value="">Kl.</option>
             </select>
           </div>
-          <p class="felt-note">
-            Vi har åbent {site.aabningstider.filter((a) => a.tid !== 'Lukket').map((a) => `${a.dage.toLowerCase()} ${a.tid.replace(/ /g, '')}`).join(' · ')}.
-          </p>
         </div>
         <div class="felt">
           <label for="rf-besked">Besked (valgfri)</label>
