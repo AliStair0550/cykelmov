@@ -101,12 +101,12 @@ export function byggMail(navn: string): string {
         </td></tr>
         <tr><td style="padding:32px;color:#141419;font-size:16px;line-height:1.6;">
           <p style="margin:0 0 16px;">${hej} Tak fordi du valgte os.</p>
-          <p style="margin:0 0 16px;">Er der noget med cyklen eller reparationen, så ring på ${esc(tlf)}. Så finder vi ud af det.</p>
           <p style="margin:0 0 14px;">Hvis du er glad for os, betyder en anmeldelse på Google alt for en lille butik.</p>
           <p style="margin:0 0 24px;font-size:22px;line-height:1;letter-spacing:6px;">🚲 🚲 🚲 🚲 🚲</p>
           <p style="margin:0 0 30px;">
-            <a href="${ANMELDELSE_URL}" style="display:inline-block;background:#1D3EE3;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;padding:14px 28px;border-radius:999px;">Giv os en anmeldelse</a>
+            <a href="${ANMELDELSE_URL}" style="display:inline-block;background:#1D3EE3;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;padding:14px 28px;border-radius:999px;">Del din oplevelse</a>
           </p>
+          <p style="margin:0 0 24px;">Er der noget med cyklen eller reparationen, så ring på ${esc(tlf)}. Så finder vi ud af det.</p>
           <p style="margin:0;color:#141419;">Venlig hilsen<br>Cykelmov<br>${esc(site.adresse.gade.replace(', st. tv.', ''))}, ${esc(site.adresse.postnr)} ${esc(site.adresse.by)}</p>
         </td></tr>
         <tr><td style="padding:18px 32px;border-top:1px solid #e6e3db;color:#8a8a93;font-size:12px;line-height:1.5;">
