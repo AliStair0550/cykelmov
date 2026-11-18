@@ -34,9 +34,7 @@ export function byggKlarMail(doc: ForespoergselDoc): string {
   const indled = vaerksted
     ? `Din cykel er færdig fra værkstedet${hvad} og står klar til at blive hentet.`
     : `Din cykel${hvad} står klar til dig i butikken.`;
-  const betal = vaerksted
-    ? 'Du betaler for arbejdet, når du henter cyklen.'
-    : 'Du betaler først, når du henter den.';
+  const betal = vaerksted ? 'Du betaler for arbejdet, når du henter cyklen.' : '';
   const adresse = `${site.adresse.gade.replace(', st. tv.', '')}, ${site.adresse.postnr} ${site.adresse.by}`;
   const tider = site.aabningstider
     .map(
@@ -55,7 +53,7 @@ export function byggKlarMail(doc: ForespoergselDoc): string {
         </td></tr>
         <tr><td style="padding:32px;color:#141419;font-size:16px;line-height:1.6;">
           <p style="margin:0 0 8px;font-size:24px;line-height:1.2;font-weight:700;">Klar til brostenene 🚲</p>
-          <p style="margin:0 0 16px;">${hej} ${indled} ${betal}</p>
+          <p style="margin:0 0 16px;">${[hej, indled, betal].filter(Boolean).join(' ')}</p>
           <p style="margin:0 0 6px;font-weight:700;">Hent den her</p>
           <p style="margin:0 0 16px;"><a href="${esc(site.maps)}" style="color:#1D3EE3;">${esc(adresse)}</a></p>
           <p style="margin:0 0 6px;font-weight:700;">Åbningstider</p>
